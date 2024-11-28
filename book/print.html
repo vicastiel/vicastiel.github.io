@@ -1,0 +1,641 @@
+<!DOCTYPE HTML>
+<html lang="fr" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>La Formation Castiel</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">La Formation Castiel</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction"><center >Introduction</a></h1>
+<h3 id="bienvenue-dans-ma-formationd-de-python-pour-le-machine-learning"><a class="header" href="#bienvenue-dans-ma-formationd-de-python-pour-le-machine-learning">Bienvenue dans ma formationd de Python pour le machine learning</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chaptitre-1--les-bases-de-python"><a class="header" href="#chaptitre-1--les-bases-de-python">Chaptitre 1 : Les bases de Python</a></h1>
+<p><strong>text</strong></p>
+<h2 id="1-variables-et-fonctions"><a class="header" href="#1-variables-et-fonctions">1. Variables et Fonctions</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="les-bases-de-python---variables-et-fonctions"><a class="header" href="#les-bases-de-python---variables-et-fonctions"><center> Les Bases de Python - Variables et Fonctions</a></h1>
+<h3 id="sommaire-"><a class="header" href="#sommaire-">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/2_1.html#1-Variables-et-Operations">Chapitre 1 :  Variables et Operations</a></li>
+<li><a href="nested/2_1.html#2-fonctions">Chapitire 2 : Fonctions</a></li>
+<li><a href="nested/2_1.html#3-exercice-et-solution">Chapitre 3 : Exercice et Solution</a></li>
+</ul>
+<hr />
+<h1 id="1-variables-et-operations"><a class="header" href="#1-variables-et-operations">1. Variables et Operations</a></h1>
+<p>Il existe 4 grands types de variables :</p>
+<ul>
+<li><strong>int</strong> (nombre entier)</li>
+<li><strong>float</strong> (nombre décimal)</li>
+<li><strong>string</strong> (chaine de characteres)</li>
+<li><strong>bool</strong> (booléen)</li>
+</ul>
+<pre><code class="language-python">x = 3 # type int 
+y = 2.5 # type float
+prenom = 'Pierre' # type string
+z = True # type Bool
+
+</code></pre>
+<h3 id="opérations-arithmétiques"><a class="header" href="#opérations-arithmétiques">Opérations arithmétiques</a></h3>
+<pre><code class="language-python">print('x + y =', x + y)
+print('x - y =', x - y)
+print('x / y =', x / y)
+print('x // y =', x // y) # division entiere (tres utile pour les tableaux Numpy)
+print('x * y =', x * y)
+print('x ^ y =', x ** y) # x puissance y
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>x + y = 5.5
+x - y = 0.5
+x / y = 1.2
+x // y = 1.0
+x * y = 7.5
+x ^ y = 15.588457268119896
+</code></pre>
+<h3 id="opérations-de-comparaison"><a class="header" href="#opérations-de-comparaison">Opérations de comparaison</a></h3>
+<pre><code class="language-python">print('égalité :', x == y)
+print('inégalité :', x != y)
+print('inférieur ou égal :', x &lt;= y)
+print('supérieur ou égal :', x &gt;= y)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>égalité : False
+inégalité : True
+inférieur ou égal : False
+supérieur ou égal : True
+</code></pre>
+<h3 id="opérations-logiques"><a class="header" href="#opérations-logiques">Opérations Logiques</a></h3>
+<pre><code class="language-python">print('ET :', False and True)
+print('OU :', False or True)
+print('OU exclusif :', False ^ True)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>ET : False
+OU : True
+OU exclusif : True
+</code></pre>
+<p>Note : Les opérations de comparaison et de logique utilisées ensemble permettent de construire des structures algorithmiques de bases (if/esle, while, ...)</p>
+<h1 id="2-fonctions"><a class="header" href="#2-fonctions">2. Fonctions</a></h1>
+<p>Une fonction anonyme est une fonction créée avec <strong>lambda</strong>. Ce type de fonction est basique et est utile pour etre intégrée au milieu de structures de controles ou bien d'autres fonctions. On l'utilise rarement.</p>
+<h3 id="exemple-dune-fonction-fx--x2"><a class="header" href="#exemple-dune-fonction-fx--x2">Exemple d'une fonction f(x) = x^2</a></h3>
+<pre><code class="language-python">f = lambda x : x**2
+
+print(f(3))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>9
+</code></pre>
+<h3 id="exemple-dune-fonction-gx-y--x2---y2"><a class="header" href="#exemple-dune-fonction-gx-y--x2---y2">Exemple d'une fonction g(x, y) = x^2 - y^2</a></h3>
+<pre><code class="language-python">g = lambda x, y : x**2 - y**2
+
+print(g(4, 2))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>12
+</code></pre>
+<p>La meilleure facon de créer une fonction est d'utiliser la structure suivante : <strong>def</strong></p>
+<h3 id="une-fonction-a-un-nom-prend-des-entrées-arguments-et-les-transforme-pour-retourner-un-résultat"><a class="header" href="#une-fonction-a-un-nom-prend-des-entrées-arguments-et-les-transforme-pour-retourner-un-résultat">une fonction a un nom, prend des entrées (arguments) et les transforme pour retourner un résultat</a></h3>
+<pre><code class="language-python">def nom_de_la_fonction(argument_1, argument_2):
+   restultat = argument_1 + argument_2
+   return restultat
+
+nom_de_la_fonction(3, 2)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>5
+</code></pre>
+<h3 id="exemple-concret--fonction-qui-calcul-lenergie-potentielle-dun-corps"><a class="header" href="#exemple-concret--fonction-qui-calcul-lenergie-potentielle-dun-corps">Exemple concret : fonction qui calcul l'energie potentielle d'un corps</a></h3>
+<pre><code class="language-python">def e_potentielle(masse, hauteur, g=9.81):
+  energie = masse * hauteur * g 
+  return energie
+
+# ici g a une valeur par défaut donc nous ne sommes pas obligé de lui donner une valeur
+e_potentielle(masse=10, hauteur=10)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>981.0
+</code></pre>
+<h1 id="3-exercice-et-solution"><a class="header" href="#3-exercice-et-solution">3. Exercice et Solution</a></h1>
+<p>Modifiez la fonction e_potentielle définie plus haut pour retourner une valeur indiquant si l'energie calculée est supérieure ou inférieur a une <strong>energie_limite</strong> passée en tant que 4eme argument</p>
+<details>
+  <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-"><a class="header" href="#solution-">Solution :</a></h3>
+<pre><code class="language-python">def e_potentielle(masse, hauteur, e_limite, g=9.81):
+    energie = masse * hauteur * g 
+    return energie &gt; e_limite
+
+e_potentielle(masse=10, hauteur=10, e_limite=800)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>True
+</code></pre>
+</details><div style="break-before: page; page-break-before: always;"></div><h1 id="les-bases-de-python---structures-de-controle"><a class="header" href="#les-bases-de-python---structures-de-controle"><center> Les Bases de Python - Structures de Controle</a></h1>
+<h3 id="sommaire--1"><a class="header" href="#sommaire--1">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/2_2.html#1.-alternatives-if-/-else-:">Chapitre 1 :  Alternatives If / Else</a></li>
+<li><a href="nested/2_2.html#2-boucle-for">Chapitire 2 : Boucle For</a></li>
+<li><a href="nested/2_2.html#3-boucle-while">Chapitre 3 : Boucle While</a></li>
+<li><a href="nested/2_2.html#4-exercice-et-solution">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<p>Dans le monde de la programmation, il existe 3 principales <strong>structures de controle</strong> pour créer des algorithmes.</p>
+<ul>
+<li>Les alternatives <strong>If / Else</strong></li>
+<li>Les boucles <strong>For</strong></li>
+<li>Les boucles <strong>While</strong></li>
+</ul>
+<h2 id="1-alternatives-if--else-"><a class="header" href="#1-alternatives-if--else-">1. Alternatives If / Else :</a></h2>
+<p>Cette structure permet de tester une séquence d'alternatives. Si une condition est respéctée, alors les instructions qui la suivent sont executée et la structure de controle est stopée, sinon la condition suivante est testée.</p>
+<pre><code class="language-python">def test_du_signe(valeur):
+  if valeur &lt; 0:
+    print('négatif')
+  elif valeur == 0:
+    print('nul')
+  else:
+    print('positif')
+</code></pre>
+<pre><code class="language-python">test_du_signe(-2)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>négatif
+</code></pre>
+<p>Note importante : Une condition est respectée si et seulement si elle correspond au résultat <strong>booléen True</strong>.</p>
+<pre><code class="language-python">valeur = -2
+print(valeur &lt; 0) # le résultat de cette comparaison est True
+
+if valeur &lt; 0:
+  print('négatif')
+
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>True
+négatif
+</code></pre>
+<p>Cela permet de développer des algorithmes avec des mélanges d'opéations Logiques et d'opérations de comparaisons. Par exemple : <em>si il fait beau et qu'il faut chaud, alors j'irai me baigner</em></p>
+<pre><code class="language-python">x = 3
+y = -1
+if (x&gt;0) and (y&gt;0):
+  print('x et y sont positifs')
+else:
+  print('x et y ne sont pas tous les 2 positifs')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>x et y ne sont pas tous les 2 positifs
+
+</code></pre>
+<h2 id="2-boucle-for"><a class="header" href="#2-boucle-for">2. Boucle For</a></h2>
+<p>Une boucle for permet de créer des algorithmes itératifs (qui effectuent une certaine tache plusieurs fois de suite). Pour ca, la boucle parcourt tous les éléments d'un objet dit <strong>itérable</strong>. Il peut s'agir d'une liste, d'un dictionnaire, d'un range, d'un tableau numpy, ou de bien d'autres objets...</p>
+<h3 id="rangedébut-fin-pas-est-une-built-in-fonction-tres-utile-de-python-qui-retourne-un-itérable"><a class="header" href="#rangedébut-fin-pas-est-une-built-in-fonction-tres-utile-de-python-qui-retourne-un-itérable">range(début, fin, pas) est une built-in fonction tres utile de python qui retourne un itérable.</a></h3>
+<pre><code class="language-python">for i in range(0, 10):
+  print(i)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</code></pre>
+<h3 id="on-peut-samuser-a-combiner-cette-boucle-avec-notre-fonction-de-tout-a-lheure"><a class="header" href="#on-peut-samuser-a-combiner-cette-boucle-avec-notre-fonction-de-tout-a-lheure">on peut s'amuser a combiner cette boucle avec notre fonction de tout a l'heure.</a></h3>
+<pre><code class="language-python">for i in range(-10, 10, 2):
+  print(i)
+  test_du_signe(i)
+</code></pre>
+<pre><code>-10
+négatif
+-8
+négatif
+-6
+négatif
+-4
+négatif
+-2
+négatif
+0
+nul
+2
+positif
+4
+positif
+6
+positif
+8
+positif
+</code></pre>
+<h2 id="3-boucle-while"><a class="header" href="#3-boucle-while">3. Boucle While</a></h2>
+<p>Une boucle While permet d'effectuer en boucle une action, tant que la condition d'execution est validée (tant que la condition est <strong>True</strong>)</p>
+<pre><code class="language-python">x = 0
+while x &lt; 10:
+  print(x)
+  x += 1 # incrémente x de 1 (équivalent de x = x+1)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</code></pre>
+<h2 id="4-exercice-et-solution"><a class="header" href="#4-exercice-et-solution">4. Exercice et Solution</a></h2>
+<p>Implémentez la <strong>suite de Fibonacci</strong> [0, 1, 1, 2, 3, 5, 8, 13, 21, ...] qui part de 2 nombres a=0 et b=1, et qui calcule le nombre suivant en additionnant les 2 nombres précédents.</p>
+<p>Indices :</p>
+<ul>
+<li>Pour cet exercice vous aurez besoin d'une bouce <strong>While</strong></li>
+<li>Vous pouvez imprimer cette suite jusqu'a atteindre un nombre <strong>n</strong> que vous aurez choisit</li>
+<li>dans python il est possible de mettre a jour 2 variables simultannément sur la meme lignes : <strong>a, b = b, a+b</strong></li>
+</ul>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution"><a class="header" href="#solution">Solution</a></h3>
+<pre><code class="language-python">def fibonacci(n):
+    # retourne une liste contenant la suite de fibonacci jusqu'a n
+    a = 0
+    b = 1
+    while b &lt; n:
+      a, b = b, a+b
+      print(a)
+
+fibonacci(1000)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+144
+233
+377
+610
+987
+
+</code></pre>
+</details><div style="break-before: page; page-break-before: always;"></div><h1 id="les-bases-de-python---structure-de-données-listes-et-tuples"><a class="header" href="#les-bases-de-python---structure-de-données-listes-et-tuples"><center> Les Bases de Python - Structure de données (Listes et Tuples)</a></h1>
+<h3 id="sommaire--2"><a class="header" href="#sommaire--2">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/2_3.html#1-cr%C3%A9ation-de-listes-et-de-tuples">Chapitre 1 : Création de Listes et de Tuples</a></li>
+<li><a href="nested/2_3.html#2-indexing-et-slicing">Chapitire 2 : Indexing et Slicing</a></li>
+<li><a href="nested/2_3.html#3-actions-utiles-sur-les-listes">Chapitre 3 : Actions utiles sur les listes</a></li>
+<li><a href="nested/2_3.html#4-exercice-et-solution">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<p>Une structure de données est une variable capable de contenir plusieurs valeurs a la fois. Une structure de données peut former une <strong>séquence</strong> si les valeurs qui la composent sont rangées dans un certains ordre. C'est le cas des <strong>listes</strong> et des <strong>tuples</strong>. A l'inverse un <strong>Dictionnaire</strong> ne forme pas une séquence.</p>
+<h1 id="1-création-de-listes-et-de-tuples"><a class="header" href="#1-création-de-listes-et-de-tuples">1. Création de Listes et de Tuples</a></h1>
+<p>une liste ou un tuple peuvent contenir tout types de valeurs (int, float, bool, string). On dit que ce sont des structures hétérogenes.</p>
+<p>La différence entre les 2 est qu'une liste est <strong>mutable</strong> alors qu'un Tuple ne l'est pas (on ne peut pas le changer apres qu'il soit crée)</p>
+<h3 id="listes"><a class="header" href="#listes">Listes</a></h3>
+<pre><code class="language-python">liste_1 = [1, 4, 2, 7, 35, 84]
+villes = ['Paris', 'Berlin', 'Londres', 'Bruxelles']
+nested_list = [liste_1, villes] # une liste peut meme contenir des listes ! On appelle cela une nested list
+
+#Tuples
+tuple_1 = (1, 2, 6, 2)
+</code></pre>
+<pre><code class="language-python">print(villes)
+print(nested_list)
+print(tuple_1)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>['Paris', 'Berlin', 'Londres', 'Bruxelles']
+[[1, 4, 2, 7, 35, 84], ['Paris', 'Berlin', 'Londres', 'Bruxelles']]
+(1, 2, 6, 2)
+
+</code></pre>
+<h1 id="2-indexing-et-slicing"><a class="header" href="#2-indexing-et-slicing">2. Indexing et Slicing</a></h1>
+<p>Dans une séquence, chaque élément est rangé selon un <strong>index</strong> (le premier index étant l'index 0)</p>
+<p>Pour acceder a un élément d'une liste ou d'un tuple, on utilise une technique appelée <strong>Indexing</strong></p>
+<p>Pour acceder a plusieurs éléments d'une liste ou d'un tuple, on utilie une technique appelée <strong>Slicing</strong></p>
+<h3 id="indexing"><a class="header" href="#indexing">INDEXING</a></h3>
+<pre><code class="language-python">print('séquence complete:', villes)
+print('index 0:', villes[0])
+print('index 1:', villes[1])
+print('dernier index (-1):', villes[-1])
+</code></pre>
+<pre><code>séquence complete: ['Paris', 'Berlin', 'Londres', 'Bruxelles']
+index 0: Paris
+index 1: Berlin
+dernier index (-1): Bruxelles
+</code></pre>
+<h3 id="slicing-début-inclus--fin-exclus--pas"><a class="header" href="#slicing-début-inclus--fin-exclus--pas">SLICING [début (inclus) : fin (exclus) : pas]</a></h3>
+<pre><code class="language-python">print('séquence complete:', villes)
+print('index 0-2:', villes[0:3])
+print('index 1-2:', villes[1:3])
+print('ordre inverse:', villes[::-1])
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>séquence complete: ['Paris', 'Berlin', 'Londres', 'Bruxelles']
+index 0-2: ['Paris', 'Berlin', 'Londres']
+index 1-2: ['Berlin', 'Londres']
+ordre inverse: ['Bruxelles', 'Londres', 'Berlin', 'Paris']
+
+</code></pre>
+<h1 id="3-actions-utiles-sur-les-listes"><a class="header" href="#3-actions-utiles-sur-les-listes">3. Actions utiles sur les listes</a></h1>
+<pre><code class="language-python">
+villes = ['Paris', 'Berlin', 'Londres', 'Bruxelles'] # liste initiale
+print(villes)
+
+villes.append('Dublin') # Rajoute un élément a la fin de la liste
+print(villes)
+
+villes.insert(2, 'Madrid') # Rajoute un élément a l'index indiqué
+print(villes)
+
+villes.extend(['Amsterdam', 'Rome']) # Rajoute une liste a la fin de notre liste
+print(villes)
+
+print('longeur de la liste:', len(villes)) #affiche la longueur de la liste
+
+villes.sort(reverse=False) # trie la liste par ordre alphabétique / numérique
+print(villes)
+
+print(villes.count('Paris')) # compte le nombre de fois qu'un élément apparait dans la liste
+
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>['Paris', 'Berlin', 'Londres', 'Bruxelles']
+['Paris', 'Berlin', 'Londres', 'Bruxelles', 'Dublin']
+['Paris', 'Berlin', 'Madrid', 'Londres', 'Bruxelles', 'Dublin']
+['Paris', 'Berlin', 'Madrid', 'Londres', 'Bruxelles', 'Dublin', 'Amsterdam', 'Rome']
+longeur de la liste: 8
+['Amsterdam', 'Berlin', 'Bruxelles', 'Dublin', 'Londres', 'Madrid', 'Paris', 'Rome']
+1
+</code></pre>
+<p>Les listes et les tuples fonctionnent en harmonies avec les structures de controle <strong>if/else</strong> et <strong>For</strong></p>
+<pre><code class="language-python">if 'Paris' in villes:
+  print('oui')
+else:
+  print('non')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>oui
+</code></pre>
+<pre><code class="language-python">for element in villes:
+  print(element)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>Amsterdam
+Berlin
+Bruxelles
+Dublin
+Londres
+Madrid
+Paris
+Rome
+</code></pre>
+<p>La fonction <strong>enumerate</strong> est tres utile pour sortir a la fois les éléments d'une liste et leurs <strong>index</strong>. C'est une fonction tres utilisée en datascience</p>
+<pre><code class="language-python">for index, element in enumerate(villes):
+  print(index, element)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0 Amsterdam
+1 Berlin
+2 Bruxelles
+3 Dublin
+4 Londres
+5 Madrid
+6 Paris
+7 Rome
+</code></pre>
+<p>La fonction <strong>zip</strong> est aussi tres utile pour itérée a travers 2 listes en paralleles. Si une liste est plus courte que l'autre, la boucle for s'arrete a la liste la plus courte</p>
+<pre><code class="language-python">liste_2 = [312, 52, 654, 23, 65, 12, 678]
+for element_1, element_2 in zip(villes, liste_2):
+  print(element_1, element_2)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>Amsterdam 312
+Berlin 52
+Bruxelles 654
+Dublin 23
+Londres 65
+Madrid 12
+Paris 678   
+</code></pre>
+<h1 id="4-exercice-et-solution-1"><a class="header" href="#4-exercice-et-solution-1">4. Exercice et Solution</a></h1>
+<p>Transformer le code suivant qui donne la <strong>suite de Fibonacci</strong> pour enregistrer les résultats dans une liste et retourner cette liste a la fin de la fonction</p>
+<pre><code class="language-python">def fibonacci(n):
+    a = 0
+    b = 1
+    while b &lt; n:
+      a, b = b, a+b
+      print(a)
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-1"><a class="header" href="#solution-1">Solution</a></h3>
+<pre><code class="language-python">def fibonacci(n):
+    a = 0
+    b = 1
+    fib = [a] # Création d'une liste fib 
+    while b &lt; n:
+        a, b = b, a+b
+        fib.append(a) # ajoute la nouvelle valeur de a a la fin de fib
+    return fib
+
+print(fibonacci(1000))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987]
+</code></pre>
+</details> 
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
