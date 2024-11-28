@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Chapitre 3 : Matplotlib - La Formation Castiel</title>
+        <title>Numpy : Slicing et Indexing - La Formation Castiel</title>
 
 
         <!-- Custom HTML head -->
@@ -12,32 +12,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
 
-        <link rel="icon" href="favicon.svg">
-        <link rel="shortcut icon" href="favicon.png">
-        <link rel="stylesheet" href="css/variables.css">
-        <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/chrome.css">
-        <link rel="stylesheet" href="css/print.css" media="print">
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link rel="stylesheet" href="fonts/fonts.css">
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
 
 
         <!-- Provide site root to javascript -->
         <script>
-            var path_to_root = "";
+            var path_to_root = "../";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc.js"></script>
+        <script src="../toc.js"></script>
     </head>
     <body>
     <div id="body-container">
@@ -89,7 +89,7 @@
             <!-- populated by js -->
             <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
             <noscript>
-                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
             </noscript>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -123,7 +123,7 @@
                     <h1 class="menu-title">La Formation Castiel</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
 
@@ -152,44 +152,139 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="chapitre-3--matplotlib"><a class="header" href="#chapitre-3--matplotlib"><center>Chapitre 3 : Matplotlib</a></h1>
-<p>Matplotlib est l'une des bibliothèques les plus populaires pour la visualisation de données en Python. Elle permet de créer une large variété de graphiques pour analyser, comprendre et présenter vos données de manière claire et esthétique.</p>
-<hr />
-<h2 id="plan-du-chapitre"><a class="header" href="#plan-du-chapitre">Plan du chapitre</a></h2>
-<ol>
-<li>
-<p><a href="./nested/4_1.html">Matplotlib : Graphiques de Base</a><br />
-Apprenez à créer des graphiques simples tels que des lignes, des barres, des histogrammes et des nuages de points.</p>
-</li>
-<li>
-<p><a href="">Matplotlib : Top Graphiques</a><br />
-Découvrez des graphiques avancés et des techniques pour améliorer vos visualisations.</p>
-</li>
-</ol>
-<hr />
-<h2 id="objectifs-du-chapitre"><a class="header" href="#objectifs-du-chapitre">Objectifs du chapitre</a></h2>
-<p>À la fin de ce chapitre, vous serez capable de :</p>
+                        <h1 id="numpy--slicing-et-indexing"><a class="header" href="#numpy--slicing-et-indexing"><center>Numpy : Slicing et Indexing</a></h1>
+<h3 id="sommaire-"><a class="header" href="#sommaire-">Sommaire :</a></h3>
 <ul>
-<li>Utiliser Matplotlib pour créer des graphiques de base et avancés.</li>
-<li>Personnaliser vos graphiques (titres, axes, couleurs, styles).</li>
-<li>Combiner plusieurs graphiques pour une visualisation efficace.</li>
-<li>Exporter vos graphiques pour les intégrer dans des rapports ou des présentations.</li>
+<li><a href="#1-indexing-et-slicing">Chapitre 1 : Indexing et Slicing</a></li>
+<li><a href="#2-boolean-indexing">Chapitire 2 : Boolean Indexing</a></li>
+<li><a href="#3-exercices-et-solutions">Chapitre 3 : Exercices et Solutions</a></li>
 </ul>
-<hr />
-<h2 id="pourquoi-matplotlib-"><a class="header" href="#pourquoi-matplotlib-">Pourquoi Matplotlib ?</a></h2>
-<p>La visualisation des données est une étape essentielle dans tout projet d’analyse ou de machine learning. Matplotlib offre une grande flexibilité et s’intègre parfaitement avec d’autres bibliothèques comme NumPy et Pandas.</p>
-<hr />
-<p><strong>Prêt à commencer ?</strong> Rendez-vous dans la première section : <a href="./nested/4_1.html">Matplotlib : Graphiques de Base</a> !</p>
-
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<h2 id="1-indexing-et-slicing"><a class="header" href="#1-indexing-et-slicing">1. Indexing et Slicing</a></h2>
+<p>Le fonctionnement est le meme que pour les listes</p>
+<pre><code class="language-python">A = np.array([[1, 2, 3], [4, 5, 6]])
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[1 2 3]
+ [4 5 6]]
+</code></pre>
+<pre><code class="language-python"># Pour acceder a la ligne 0, colonne 1
+A[0, 1] 
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>2
+</code></pre>
+<pre><code class="language-python">victor = [1,2,3,4,5,6,7,8,9,10]
+victor[8:2:-1]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[9, 8, 7, 6, 5, 4]
+</code></pre>
+<pre><code class="language-python"># Pour selectionner les blocs de la ligne (0-1) colonne (0-1)
+A[0:2, 0:2]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[1, 2],
+       [4, 5]])
+</code></pre>
+<pre><code class="language-python">A[0:2, 0:2] = 10
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[10 10  3]
+ [10 10  6]]
+</code></pre>
+<h2 id="2-boolean-indexing"><a class="header" href="#2-boolean-indexing">2. Boolean Indexing</a></h2>
+<pre><code class="language-python">A = np.array([[1, 2, 3], [4, 5, 6]])
+ 
+print(A&lt;5) # masque booléen
+ 
+print(A[A &lt; 5]) # sous-ensemble filtré par le masque booléen
+ 
+A[A&lt;5] = 4 # convertit les valeurs sélectionnées.
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[ True  True  True]
+ [ True False False]]
+[1 2 3 4]
+[[4 4 4]
+ [4 5 6]]
+</code></pre>
+<h2 id="3-exercices-et-solutions"><a class="header" href="#3-exercices-et-solutions">3. Exercices et Solutions</a></h2>
+<h3 id="exercice-1"><a class="header" href="#exercice-1">Exercice 1</a></h3>
+<p>Remplir les 4 blocs du milieux par des "1"</p>
+<pre><code class="language-python">B = np.zeros((4, 4))
+B
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0., 0.],
+       [0., 0., 0., 0.],
+       [0., 0., 0., 0.],
+       [0., 0., 0., 0.]])
+</code></pre>
+<h3 id="exercice-2"><a class="header" href="#exercice-2">Exercice 2</a></h3>
+<p>Remplir le tableau de "1" (une ligne sur deux, une colonne sur deux)</p>
+<pre><code class="language-python">C = np.zeros((5, 5))
+C
+</code></pre>
+<h3 id="exercice-3"><a class="header" href="#exercice-3">Exercice 3</a></h3>
+<p>Sur l'image ci dessous, effectuer un slicing pour ne garder que la moitié de l'image (en son centre) et remplacer tous les pixels &gt; 150 par des pixels = 255</p>
+<pre><code class="language-python">from scipy import misc
+import matplotlib.pyplot as plt
+face = misc.face(gray=True)
+plt.imshow(face, cmap=plt.cm.gray)
+plt.show()
+face.shape
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>(768, 1024)
+</code></pre>
+<p><img src="./images/raccoon_output.png" alt="Description de l&#39;image" /></p>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-1"><a class="header" href="#solution-1">SOLUTION 1</a></h3>
+<pre><code class="language-python">B[1:3 , 1:3] = 1
+B
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0., 0.],
+       [0., 1., 1., 0.],
+       [0., 1., 1., 0.],
+       [0., 0., 0., 0.]])
+</code></pre>
+<h3 id="solution-2"><a class="header" href="#solution-2">SOLUTION 2</a></h3>
+<pre><code class="language-python">C[::2, ::2] = 1
+C
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[1., 0., 1., 0., 1.],
+       [0., 0., 0., 0., 0.],
+       [1., 0., 1., 0., 1.],
+       [0., 0., 0., 0., 0.],
+       [1., 0., 1., 0., 1.]])
+</code></pre>
+<h3 id="solution-3"><a class="header" href="#solution-3">SOLUTION 3</a></h3>
+<pre><code class="language-python">x, y = face.shape
+zoom_face = face[x//4 : -x//4, y //4: -y//4] # redimensionner en divisant chaque dimension par 4 (division entiere)
+zoom_face[zoom_face&gt;150] = 255 # boolean indexing
+plt.imshow(zoom_face, cmap=plt.cm.gray)
+plt.show()
+</code></pre>
+<p><strong>-</strong></p>
+<p><img src="./images/raccoon2_output.png" alt="Description de l&#39;image" /></p>
+</details> 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="nested/3_4.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../nested/3_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="nested/4_1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../nested/3_3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -199,11 +294,11 @@ Découvrez des graphiques avancés et des techniques pour améliorer vos visuali
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="nested/3_4.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../nested/3_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="nested/4_1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../nested/3_3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
@@ -218,13 +313,13 @@ Découvrez des graphiques avancés et des techniques pour améliorer vos visuali
         </script>
 
 
-        <script src="elasticlunr.min.js"></script>
-        <script src="mark.min.js"></script>
-        <script src="searcher.js"></script>
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
 
-        <script src="clipboard.min.js"></script>
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
 
         <!-- Custom JS scripts -->
 

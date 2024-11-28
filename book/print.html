@@ -1201,7 +1201,847 @@ Apprenez à utiliser le broadcasting, une fonctionnalité puissante pour manipul
 </ul>
 <hr />
 <p><strong>Prêt à commencer ?</strong> Rendez-vous dans la première section : <a href="">Numpy : Tableau ndarray</a> !</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-3--matplotlib-1"><a class="header" href="#chapitre-3--matplotlib-1">Chapitre 3 : Matplotlib</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="numpy--tableau-ndarray"><a class="header" href="#numpy--tableau-ndarray"><center>Numpy : Tableau ndarray</a></h1>
+<h3 id="sommaire--5"><a class="header" href="#sommaire--5">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/3_1.html#1-g%C3%A9n%C3%A9rateurs-de-tableaux-ndarray">Chapitre 1 : Générateurs de tableaux ndarray</a></li>
+<li><a href="nested/3_1.html#2-attributs-importants">Chapitire 2 : Attributs importants</a></li>
+<li><a href="nested/3_1.html#3-m%C3%A9thodes-importantes">Chapitre 3 : Méthode importantes</a></li>
+<li><a href="nested/3_1.html#4-exercice-et-solutions">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<h2 id="1-générateurs-de-tableaux-ndarray"><a class="header" href="#1-générateurs-de-tableaux-ndarray">1. Générateurs de tableaux <strong>ndarray</strong></a></h2>
+<ul>
+<li>générateur par défaut : <strong>ndarray()</strong></li>
+<li>générateur 1D : <strong>np.linspace</strong> et <strong>np.arange()</strong></li>
+<li>générateur ND : <strong>np.zeros()</strong>, <strong>np.ones()</strong>, <strong>np.random.randn()</strong> (ce sont les plus utiles)</li>
+</ul>
+<pre><code class="language-python">A = np.array([1, 2, 3]) # générateur par défaut, qui permet de convertir des listes (ou autres objets) en tableau ndarray
+A = np.zeros((2, 3)) # tableau de 0 aux dimensions 2x3
+B = np.ones((2, 3)) # tableau de 1 aux dimensions 2x3
+C = np.random.randn(2, 3) # tableau aléatoire (distribution normale) aux dimensions 2x3
+D = np.random.rand(2, 3) # tableau aléatoire (distribution uniforme)
+ 
+E = np.random.randint(0, 10, [2, 3]) # tableau d'entiers aléatoires de 0 a 10 et de dimension 2x3
+</code></pre>
+<pre><code class="language-python">A = np.ones((2, 3), dtype=np.float16) # définit le type et la place a occuper sur la mémoire
+B = np.eye(4, dtype=np.bool) # créer une matrice identité et convertit les éléments en type bool.
+</code></pre>
+<pre><code class="language-python">A = np.linspace(1,10, 10)
+B = np.arange(0, 10, 10)
+</code></pre>
+<pre><code class="language-python">print(A)
+print(B)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[ 1.  2.  3.  4.  5.  6.  7.  8.  9. 10.]
+[0]
+</code></pre>
+<h2 id="2-attributs-importants"><a class="header" href="#2-attributs-importants">2. Attributs importants</a></h2>
+<ul>
+<li>size</li>
+<li>shape</li>
+</ul>
+<pre><code class="language-python">A = np.zeros((2, 3)) # création d'un tableau de shape (2, 3)
+ 
+print(A.size) # le nombre d'éléments dans le tableau A
+print(A.shape) # les dimensions du tableau A (sous forme de Tuple)
+ 
+print(type(A.shape)) # voici la preuve que la shape est un tuple
+ 
+print(A.shape[0]) # le nombre d'éléments dans la premiere dimension de A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>6
+(2, 3)
+&lt;class 'tuple'&gt;
+2
+</code></pre>
+<h2 id="3-méthodes-importantes"><a class="header" href="#3-méthodes-importantes">3. Méthodes importantes</a></h2>
+<ul>
+<li><strong>reshape()</strong> : pour redimensionner un tableau</li>
+<li><strong>ravel()</strong> : pour applatir un tableau (qu'il ne fasse plus qu'une dimension)</li>
+<li><strong>squeeze()</strong> : quand une dimension est égale a 1, cette dimension disparait</li>
+<li><strong>concatenate()</strong> : assemble 2 tableaux ensemble selon un axes (existe aussi en hstack et vstack)</li>
+</ul>
+<pre><code class="language-python">A = np.zeros((2, 3)) # création d'un tableau de shape (2, 3)
+ 
+A = A.reshape((3, 2)) # redimensionne le tableau A (3 lignes, 2 colonnes)
+A.ravel() # Aplatit le tableau A (une seule dimension)
+A.squeeze() # élimine les dimensions "1" de A.
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0.],
+       [0., 0.],
+       [0., 0.]])
+</code></pre>
+<pre><code class="language-python">A = np.zeros((2, 3)) # création d'un tableau de shape (2, 3)
+B = np.ones((2, 3)) # création d'un tableau de shape (2, 3)
+
+np.concatenate((A, B), axis=0) # axe 0 : équivalent de np.vstack((A, B))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0.],
+       [0., 0., 0.],
+       [1., 1., 1.],
+       [1., 1., 1.]])
+</code></pre>
+<pre><code class="language-python">np.concatenate((A, B), axis=1) # axe 1 : équivalent de np.hstack((A, B))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0., 1., 1., 1.],
+       [0., 0., 0., 1., 1., 1.]])
+</code></pre>
+<h2 id="4-exercice-et-solutions"><a class="header" href="#4-exercice-et-solutions">4. Exercice et Solutions</a></h2>
+<pre><code class="language-python">def initialisation(m, n):
+    # m : nombre de lignes
+    # n : nombre de colonnes
+    # retourne une matrice aléatoire (m, n+1)
+    # avec une colonne biais (remplie de "1") tout a droite
+
+    return X
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-4"><a class="header" href="#solution-4">SOLUTION</a></h3>
+<pre><code class="language-python">def initialisation(m, n):
+    # m : nombre de lignes
+    # n : nombre de colonnes
+    # retourne une matrice aléatoire (m, n+1)
+    # avec une colonne biais (remplie de "1") tout a droite
+    X = np.random.randn(m, n)
+    X = np.concatenate((X, np.ones((X.shape[0], 1))), axis = 1)
+
+    return X
+
+initialisation(3, 4)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[-0.10764065,  0.69827025, -1.12110256,  0.78840126,  1.        ],
+       [-0.68425126,  0.02373615,  1.47735478, -0.81758181,  1.        ],
+       [-2.8762856 , -0.40033763,  0.44811493,  1.13210525,  1.        ]])
+</code></pre>
+</details> <div style="break-before: page; page-break-before: always;"></div><h1 id="numpy--slicing-et-indexing"><a class="header" href="#numpy--slicing-et-indexing"><center>Numpy : Slicing et Indexing</a></h1>
+<h3 id="sommaire--6"><a class="header" href="#sommaire--6">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/3_2.html#1-indexing-et-slicing">Chapitre 1 : Indexing et Slicing</a></li>
+<li><a href="nested/3_2.html#2-boolean-indexing">Chapitire 2 : Boolean Indexing</a></li>
+<li><a href="nested/3_2.html#3-exercices-et-solutions">Chapitre 3 : Exercices et Solutions</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<h2 id="1-indexing-et-slicing"><a class="header" href="#1-indexing-et-slicing">1. Indexing et Slicing</a></h2>
+<p>Le fonctionnement est le meme que pour les listes</p>
+<pre><code class="language-python">A = np.array([[1, 2, 3], [4, 5, 6]])
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[1 2 3]
+ [4 5 6]]
+</code></pre>
+<pre><code class="language-python"># Pour acceder a la ligne 0, colonne 1
+A[0, 1] 
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>2
+</code></pre>
+<pre><code class="language-python">victor = [1,2,3,4,5,6,7,8,9,10]
+victor[8:2:-1]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[9, 8, 7, 6, 5, 4]
+</code></pre>
+<pre><code class="language-python"># Pour selectionner les blocs de la ligne (0-1) colonne (0-1)
+A[0:2, 0:2]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[1, 2],
+       [4, 5]])
+</code></pre>
+<pre><code class="language-python">A[0:2, 0:2] = 10
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[10 10  3]
+ [10 10  6]]
+</code></pre>
+<h2 id="2-boolean-indexing"><a class="header" href="#2-boolean-indexing">2. Boolean Indexing</a></h2>
+<pre><code class="language-python">A = np.array([[1, 2, 3], [4, 5, 6]])
+ 
+print(A&lt;5) # masque booléen
+ 
+print(A[A &lt; 5]) # sous-ensemble filtré par le masque booléen
+ 
+A[A&lt;5] = 4 # convertit les valeurs sélectionnées.
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[ True  True  True]
+ [ True False False]]
+[1 2 3 4]
+[[4 4 4]
+ [4 5 6]]
+</code></pre>
+<h2 id="3-exercices-et-solutions"><a class="header" href="#3-exercices-et-solutions">3. Exercices et Solutions</a></h2>
+<h3 id="exercice-1"><a class="header" href="#exercice-1">Exercice 1</a></h3>
+<p>Remplir les 4 blocs du milieux par des "1"</p>
+<pre><code class="language-python">B = np.zeros((4, 4))
+B
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0., 0.],
+       [0., 0., 0., 0.],
+       [0., 0., 0., 0.],
+       [0., 0., 0., 0.]])
+</code></pre>
+<h3 id="exercice-2"><a class="header" href="#exercice-2">Exercice 2</a></h3>
+<p>Remplir le tableau de "1" (une ligne sur deux, une colonne sur deux)</p>
+<pre><code class="language-python">C = np.zeros((5, 5))
+C
+</code></pre>
+<h3 id="exercice-3"><a class="header" href="#exercice-3">Exercice 3</a></h3>
+<p>Sur l'image ci dessous, effectuer un slicing pour ne garder que la moitié de l'image (en son centre) et remplacer tous les pixels &gt; 150 par des pixels = 255</p>
+<pre><code class="language-python">from scipy import misc
+import matplotlib.pyplot as plt
+face = misc.face(gray=True)
+plt.imshow(face, cmap=plt.cm.gray)
+plt.show()
+face.shape
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>(768, 1024)
+</code></pre>
+<p><img src="nested/./images/raccoon_output.png" alt="Description de l&#39;image" /></p>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-1"><a class="header" href="#solution-1">SOLUTION 1</a></h3>
+<pre><code class="language-python">B[1:3 , 1:3] = 1
+B
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0., 0.],
+       [0., 1., 1., 0.],
+       [0., 1., 1., 0.],
+       [0., 0., 0., 0.]])
+</code></pre>
+<h3 id="solution-2"><a class="header" href="#solution-2">SOLUTION 2</a></h3>
+<pre><code class="language-python">C[::2, ::2] = 1
+C
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[1., 0., 1., 0., 1.],
+       [0., 0., 0., 0., 0.],
+       [1., 0., 1., 0., 1.],
+       [0., 0., 0., 0., 0.],
+       [1., 0., 1., 0., 1.]])
+</code></pre>
+<h3 id="solution-3"><a class="header" href="#solution-3">SOLUTION 3</a></h3>
+<pre><code class="language-python">x, y = face.shape
+zoom_face = face[x//4 : -x//4, y //4: -y//4] # redimensionner en divisant chaque dimension par 4 (division entiere)
+zoom_face[zoom_face&gt;150] = 255 # boolean indexing
+plt.imshow(zoom_face, cmap=plt.cm.gray)
+plt.show()
+</code></pre>
+<p><strong>-</strong></p>
+<p><img src="nested/./images/raccoon2_output.png" alt="Description de l&#39;image" /></p>
+</details> <div style="break-before: page; page-break-before: always;"></div><h1 id="numpy--mathématiques"><a class="header" href="#numpy--mathématiques"><center>Numpy : Mathématiques</a></h1>
+<ul>
+<li><a href="nested/3_3.html#1-m%C3%A9thodes-de-bases-les-plus-utiles-de-la-classe-ndarray">Chapitre 1 : Méthodes de bases (les plus utiles) de la classe ndarray</a></li>
+<li><a href="nested/3_3.html#2-numpy-statistics">Chapitire 2 : Numpy Statistics</a></li>
+<li><a href="nested/3_3.html#3-algebre-lin%C3%A9aire">Chapitre 3 : Algebre Linéaire</a></li>
+<li><a href="nested/3_3.html#4-exercice-et-solution">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<h2 id="1-méthodes-de-bases-les-plus-utiles-de-la-classe-ndarray"><a class="header" href="#1-méthodes-de-bases-les-plus-utiles-de-la-classe-ndarray">1. Méthodes de bases (les plus utiles) de la classe ndarray</a></h2>
+<pre><code class="language-python">A = np.array([[1, 2, 3], [4, 5, 6]])
+
+print(A.sum()) # effectue la somme de tous les éléments du tableau
+print(A.sum(axis=0)) # effectue la somme des colonnes (somme sur éléments des les lignes)
+print(A.sum(axis=1)) # effectue la somme des lignes (somme sur les éléments des colonnes)
+print(A.cumsum(axis=0)) # effectue la somme cumulée
+ 
+print(A.prod()) # effectue le produit
+print(A.cumprod()) # effectue le produit cumulé
+ 
+print(A.min()) # trouve le minimum du tableau
+print(A.max()) # trouve le maximum du tableau
+ 
+print(A.mean()) # calcule la moyenne
+print(A.std()) # calcule l'ecart type,
+print(A.var()) # calcule la variance
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>21
+[5 7 9]
+[ 6 15]
+[[1 2 3]
+ [5 7 9]]
+720
+[  1   2   6  24 120 720]
+1
+6
+3.5
+1.707825127659933
+2.9166666666666665
+</code></pre>
+<p>Une méthode tres importante : la méthode <strong>argsort()</strong></p>
+<pre><code class="language-python">A = np.random.randint(0, 10, [5, 5]) # tableau aléatoire
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[2 8 9 6 0]
+ [8 9 2 5 5]
+ [2 1 5 0 1]
+ [6 3 8 2 6]
+ [1 6 5 5 4]]
+</code></pre>
+<pre><code class="language-python">print(A.argsort()) # retourne les index pour trier chaque ligne du tableau 
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[4 0 3 1 2]
+ [2 3 4 0 1]
+ [3 1 4 0 2]
+ [3 1 0 4 2]
+ [0 4 2 3 1]]
+</code></pre>
+<pre><code class="language-python">print(A[:,0].argsort()) # retourne les index pour trier la colonne 0 de A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[4 0 2 3 1]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code class="language-python">A = A[A[:,0].argsort(), :] # trie les colonnes du tableau selon la colonne 0.
+A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0, 2, 8, 7, 1],
+       [3, 6, 1, 9, 1],
+       [5, 8, 2, 3, 2],
+       [5, 9, 3, 8, 1],
+       [7, 6, 5, 1, 7]])
+</code></pre>
+<h2 id="2-numpy-statistics"><a class="header" href="#2-numpy-statistics">2. Numpy Statistics</a></h2>
+<p>Correlation de Pearson :</p>
+<pre><code class="language-python">B = np.random.randn(3, 3) # nombres aléatoires 3x3
+ 
+# retourne la matrice de corrélation de B
+print(np.corrcoef(B))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[ 1.         -0.63427277  0.99937797]
+ [-0.63427277  1.         -0.66114251]
+ [ 0.99937797 -0.66114251  1.        ]]
+</code></pre>
+<pre><code class="language-python"># retourne la matrice de corrélation entre les lignes 0 et 1 de B
+print(np.corrcoef(B[:,0], B[:, 1]))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[1.         0.81847981]
+ [0.81847981 1.        ]]
+</code></pre>
+<p><strong>np.unique() :</strong></p>
+<pre><code class="language-python">np.random.seed(0)
+A = np.random.randint(0, 10, [5,5])
+A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[5, 0, 3, 3, 7],
+       [9, 3, 5, 2, 4],
+       [7, 6, 8, 8, 1],
+       [6, 7, 7, 8, 1],
+       [5, 9, 8, 9, 4]])
+</code></pre>
+<pre><code class="language-python">np.unique(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+</code></pre>
+<pre><code class="language-python">values, counts = np.unique(A, return_counts=True)
+
+for i, j in zip(values[counts.argsort()], counts[counts.argsort()]):
+    print(f'valeur {i} apparait {j}')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>valeur 0 apparait 1
+valeur 2 apparait 1
+valeur 1 apparait 2
+valeur 4 apparait 2
+valeur 6 apparait 2
+valeur 3 apparait 3
+valeur 5 apparait 3
+valeur 9 apparait 3
+valeur 7 apparait 4
+valeur 8 apparait 4
+</code></pre>
+<p>Calculs statistiques en présence de données manquates (NaN)</p>
+<pre><code class="language-python">A = np.random.randn(5, 5)
+A[0, 2] = np.nan # insere un NaN dans la matrice A
+ 
+print('ratio NaN/zise:', (np.isnan(A).sum()/A.size)) # calcule la proportion de NaN dans A
+ 
+print('moyenne sans NaN:', np.nanmean(A)) # calcule la moyenne de A en ignorant les NaN
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>ratio NaN/zise: 0.04
+moyenne sans NaN: 0.1832816316588837
+</code></pre>
+<h2 id="3-algebre-linéaire"><a class="header" href="#3-algebre-linéaire">3. Algebre Linéaire</a></h2>
+<pre><code class="language-python">A = np.ones((2,3))
+B = np.ones((3,3))
+
+print(A.T) # transposé de la matrice A (c'est un attribut de ndarray)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[1. 1.]
+ [1. 1.]
+ [1. 1.]]
+</code></pre>
+<pre><code class="language-python">print(A.dot(B)) # produit matriciel A.B
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[3. 3. 3.]
+ [3. 3. 3.]]
+</code></pre>
+<pre><code class="language-python">A = np.random.randint(0, 10, [3, 3])
+ 
+print('det=', np.linalg.det(A)) # calcule le determinant de A
+print('inv A:\n', np.linalg.inv(A)) # calcul l'inverse de A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>det= 61.00000000000001
+inv A:
+ [[ 0.08196721  0.63934426 -0.60655738]
+ [-0.13114754 -0.62295082  0.7704918 ]
+ [ 0.21311475  0.26229508 -0.37704918]]
+</code></pre>
+<pre><code class="language-python">val, vec = np.linalg.eig(A)
+print('valeur propre:\n', val) # valeur propre
+print('vecteur propre:\n', vec) # vecteur propre
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>valeur propre:
+ [ 8.91371956 -0.86320273  1.94948316]
+vecteur propre:
+ [[-0.27183844 -0.6838339   0.39494311]
+ [-0.4097407  -0.15279739 -0.73291062]
+ [-0.87075623  0.71345929  0.55395123]]
+</code></pre>
+<h2 id="4-exercice-et-solution-3"><a class="header" href="#4-exercice-et-solution-3">4. Exercice et Solution</a></h2>
+<p>Standardisez la matrice suivante, c'est a dire effectuez le calcul suivant :
+$A = \frac{A - mean(A_{colonne})}{std(A_{colonne})}$</p>
+<pre><code class="language-python">np.random.seed(0)
+A = np.random.randint(0, 100, [10, 5])
+A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[44, 47, 64, 67, 67],
+       [ 9, 83, 21, 36, 87],
+       [70, 88, 88, 12, 58],
+       [65, 39, 87, 46, 88],
+       [81, 37, 25, 77, 72],
+       [ 9, 20, 80, 69, 79],
+       [47, 64, 82, 99, 88],
+       [49, 29, 19, 19, 14],
+       [39, 32, 65,  9, 57],
+       [32, 31, 74, 23, 35]])
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-5"><a class="header" href="#solution-5">SOLUTION</a></h3>
+<pre><code class="language-python">D = (A - A.mean(axis=0)) / A.std(axis=0)
+D
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[-0.02206157,  0.        ,  0.13173823,  0.72539252,  0.10755798],
+       [-1.56637126,  1.61579632, -1.48676006, -0.33034307,  0.96802178],
+       [ 1.12513992,  1.84021247,  1.03508612, -1.14768676, -0.27965074],
+       [ 0.90452425, -0.35906585,  0.99744662,  0.0102168 ,  1.01104497],
+       [ 1.6104944 , -0.44883231, -1.33620208,  1.0659524 ,  0.32267393],
+       [-1.56637126, -1.21184724,  0.73397016,  0.7935045 ,  0.62383626],
+       [ 0.11030784,  0.76301493,  0.80924915,  1.81518411,  1.01104497],
+       [ 0.1985541 , -0.80789816, -1.56203905, -0.90929485, -2.17267111],
+       [-0.24267724, -0.67324847,  0.16937773, -1.24985473, -0.32267393],
+       [-0.55153918, -0.7181317 ,  0.50813319, -0.77307091, -1.26918412]])
+</code></pre>
+<pre><code class="language-python">print(D.mean(axis=0)) # les moyennes sont toutes = 0
+print(D.std(axis=0)) # les std sont tous = 1 
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[-2.22044605e-17 -4.44089210e-17  0.00000000e+00 -1.22124533e-16
+ -4.44089210e-17]
+[1. 1. 1. 1. 1.]
+</code></pre>
+</details><div style="break-before: page; page-break-before: always;"></div><h1 id="numpy--broadcasting"><a class="header" href="#numpy--broadcasting"><center>Numpy : Broadcasting</a></h1>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<pre><code class="language-python">A = np.ones((2, 3))
+B = 3
+print(A+B) # résultat 1
+ 
+A = np.ones((2, 3))
+B = np.ones((2, 1)) # B a une colonne, elle sera étendu sur les trois colonnes de A
+print(A+B) # résultat 2
+ 
+A = np.ones((2, 3))
+B = np.ones((2, 2))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[4. 4. 4.]
+ [4. 4. 4.]]
+[[2. 2. 2.]
+ [2. 2. 2.]]
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-3--matplotlib-1"><a class="header" href="#chapitre-3--matplotlib-1"><center>Chapitre 3 : Matplotlib</a></h1>
+<p>Matplotlib est l'une des bibliothèques les plus populaires pour la visualisation de données en Python. Elle permet de créer une large variété de graphiques pour analyser, comprendre et présenter vos données de manière claire et esthétique.</p>
+<hr />
+<h2 id="plan-du-chapitre-2"><a class="header" href="#plan-du-chapitre-2">Plan du chapitre</a></h2>
+<ol>
+<li>
+<p><a href="./nested/4_1.html">Matplotlib : Graphiques de Base</a><br />
+Apprenez à créer des graphiques simples tels que des lignes, des barres, des histogrammes et des nuages de points.</p>
+</li>
+<li>
+<p><a href="">Matplotlib : Top Graphiques</a><br />
+Découvrez des graphiques avancés et des techniques pour améliorer vos visualisations.</p>
+</li>
+</ol>
+<hr />
+<h2 id="objectifs-du-chapitre-2"><a class="header" href="#objectifs-du-chapitre-2">Objectifs du chapitre</a></h2>
+<p>À la fin de ce chapitre, vous serez capable de :</p>
+<ul>
+<li>Utiliser Matplotlib pour créer des graphiques de base et avancés.</li>
+<li>Personnaliser vos graphiques (titres, axes, couleurs, styles).</li>
+<li>Combiner plusieurs graphiques pour une visualisation efficace.</li>
+<li>Exporter vos graphiques pour les intégrer dans des rapports ou des présentations.</li>
+</ul>
+<hr />
+<h2 id="pourquoi-matplotlib-"><a class="header" href="#pourquoi-matplotlib-">Pourquoi Matplotlib ?</a></h2>
+<p>La visualisation des données est une étape essentielle dans tout projet d’analyse ou de machine learning. Matplotlib offre une grande flexibilité et s’intègre parfaitement avec d’autres bibliothèques comme NumPy et Pandas.</p>
+<hr />
+<p><strong>Prêt à commencer ?</strong> Rendez-vous dans la première section : <a href="./nested/4_1.html">Matplotlib : Graphiques de Base</a> !</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="matplolib--graphiques-de-base"><a class="header" href="#matplolib--graphiques-de-base"><center>Matplolib : Graphiques de Base</a></h1>
+<h3 id="sommaire--7"><a class="header" href="#sommaire--7">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/4_1.html#1-pyplot">Chapitre 1 : Pyplot</a></li>
+<li><a href="nested/4_1.html#2-cycle-de-vie-dune-figure">Chapitire 2 : Cycle de vie d'une figure</a></li>
+<li><a href="nested/4_1.html#3-subplots">Chapitre 3 : Subplots</a></li>
+<li><a href="nested/4_1.html#4-m%C3%A9thode-orient%C3%A9e-objet">Chapitre 4: Méthode orientée objet</a></li>
+</ul>
+<h2 id="1-pyplot"><a class="header" href="#1-pyplot">1. Pyplot</a></h2>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<h3 id="graphiques-simples"><a class="header" href="#graphiques-simples">Graphiques simples</a></h3>
+<pre><code class="language-python">X = np.linspace(0, 2, 10)
+y = X**2
+
+plt.plot(X, y)
+plt.show()
+</code></pre>
+<p><img src="nested/./images/3g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.scatter(X, y)
+plt.show()
+</code></pre>
+<p><img src="nested/./images/3g2.png" alt="Description de l&#39;image" /></p>
+<h3 id="styles-graphiques"><a class="header" href="#styles-graphiques">Styles Graphiques</a></h3>
+<p>Il existe beaucoup de styles a ajouter aux graphiques. Voici les plus importants a retenir :</p>
+<ul>
+<li><strong>c</strong> : couleur de la ligne</li>
+<li><strong>lw</strong> : epaisseur de la ligne (pour les graphiques plot)</li>
+<li><strong>ls</strong> : style de la ligne (pour les graphiques plot)</li>
+<li><strong>size</strong> : taille du point (pour les graphiques scatter)</li>
+<li><strong>marker</strong> : style de points (pour les graphiques scatter)</li>
+<li><strong>alpha</strong> : transparence du graphique</li>
+</ul>
+<pre><code class="language-python">plt.plot(X, y, c='red', lw=4, ls='--', alpha=0.8)
+plt.show()
+</code></pre>
+<p><img src="nested/./images/3g3.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-cycle-de-vie-dune-figure"><a class="header" href="#2-cycle-de-vie-dune-figure">2. Cycle de vie d'une figure</a></h2>
+<p>Pour créer des figures proprements, on doit suivre le cycle de vie suivant :</p>
+<ol>
+<li><strong>plt.figure</strong>(figsize())</li>
+<li><strong>plt.plot()</strong></li>
+<li>Extras (titre, axes, legendes)</li>
+<li><strong>plt.show()</strong></li>
+</ol>
+<pre><code class="language-python">X = np.linspace(0, 2, 10)
+
+plt.figure() # Création d'une figure
+plt.plot(X, X**2, label='quadratique') # premiere courbe
+plt.plot(X, X**3, label='cubique') # deuxieme courbe
+# Extra information
+plt.title('figure 1') # titre
+plt.xlabel('axe x') # axes
+plt.ylabel('axe y') # axes
+plt.legend() # legend
+
+plt.savefig('figure.png') # sauvegarde la figure dans le repertoire de travail
+plt.show() # affiche la figure
+</code></pre>
+<p><img src="nested/./images/3g4.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-subplots"><a class="header" href="#3-subplots">3. Subplots</a></h2>
+<p>Les subplots sont un autre éléments a ajouter pour créer plusieurs graphiques sur une meme figure</p>
+<pre><code class="language-python">plt.subplot(2, 1, 1)
+plt.plot(X, y, c='red')
+plt.subplot(2, 1, 2)
+plt.plot(X, y, c='blue')
+</code></pre>
+<p><img src="nested/./images/3g5.png" alt="Description de l&#39;image" /></p>
+<h2 id="4-méthode-orientée-objet"><a class="header" href="#4-méthode-orientée-objet">4. Méthode orientée objet</a></h2>
+<pre><code class="language-python">fig, ax = plt.subplots(2, 1, sharex=True) # partage le meme axe pour les subplots
+ax[0].plot(x, y)
+ax[1].plot(x, np.sin(x))
+plt.show()
+</code></pre>
+<p><img src="nested/./images/3g6.png" alt="Description de l&#39;image" /></p>
+<h2 id="5-exercice-et-solution"><a class="header" href="#5-exercice-et-solution">5. Exercice et Solution</a></h2>
+<p>Créez une fonction "graphique" qui permet de tracer sur une seule et meme figure une série de graphiques issue d'un dictionnaire contenant plusieurs datasets :</p>
+<pre><code class="language-python">def graphique(dataset):
+  # Votre code ici...
+  return
+
+# Voici le dataset utilisé
+dataset = {f"experience{i}": np.random.randn(100) for i in range(4)}
+
+dataset
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>{'experience0': array([-0.73026009, -0.92427352, -0.08103769, -1.22379832, -1.18126686,
+         0.2957312 ,  0.39272515,  0.01122579, -0.11600724, -1.29350418,
+         2.6752107 , -1.29062695, -0.12075649,  0.09123813,  1.1436286 ,
+        -0.25004448, -1.43968537, -0.06824817,  1.13314051, -1.06826804,
+        -1.18135358, -0.54456852,  1.21778838, -2.32618343,  0.70904126,
+        -0.18413625,  0.05522584,  2.12229143, -0.29662499,  0.05422213,
+        -0.08935405, -1.62739285,  1.16757047,  0.65463555,  0.82203536,
+        -1.17622497,  0.48587818, -2.16429764,  0.91728199, -0.00522129,
+        -1.44509695, -0.44897878,  0.134164  , -0.22886226,  1.01169527,
+        -1.89824307,  1.8149836 , -0.63710983, -0.03998165, -1.32933688,
+         2.50262155, -0.84528715,  0.42998382,  0.05183741,  1.17336483,
+        -0.07624529,  1.73421861, -1.3702618 ,  0.67624283, -1.27928307,
+        -0.78186879, -0.94432672, -1.13788396,  2.3236612 , -0.70829675,
+        -0.95457139,  0.02154338, -1.23156511, -0.41756011,  0.11409781,
+         1.62306725,  1.11382955,  0.18651338, -0.92995449,  0.28592715,
+        -0.91641865, -0.06565812, -0.69316861, -0.18863539, -0.3201722 ,
+         0.36022583, -0.08469015, -0.0238215 , -1.13330544,  0.73652928,
+         2.12684884, -0.79042905,  0.76473214,  0.14853273,  1.35926758,
+        -1.31924071, -2.15249297,  1.23560458,  1.56799108,  0.22852547,
+         0.9405575 , -0.36849986,  0.55496224,  1.57797318,  0.21579975]),
+ 'experience1': array([-0.24155788,  0.30107105, -1.15468321, -0.28333408,  0.16999801,
+         0.90692494,  1.11703406,  0.3644038 ,  0.55883134,  1.40283118,
+        -0.23978451,  0.10135075,  1.28882754, -0.47486126,  0.19953529,
+        -3.40960179,  1.07099421,  1.29455924, -0.42990292, -1.48918634,
+         1.12212476, -0.43440688, -0.92336374,  0.23950397, -2.10815766,
+        -0.952912  , -0.42048761,  0.11807541,  0.48471941,  1.21904548,
+        -0.36734577, -0.52359341,  0.52922285, -1.38752467, -0.22836553,
+         1.00032629,  1.56252921, -0.87301181, -1.69982515,  0.18110546,
+        -1.55296498,  0.42493433, -3.20017158, -0.17138241,  0.11837763,
+         0.02653488,  1.87891042,  1.31182259, -0.15590623,  1.30269688,
+         0.68004521,  0.6432393 , -0.14321066, -0.162323  ,  0.2667317 ,
+         1.26217026, -0.59837269,  0.33758583,  0.75804003, -0.55230605,
+         1.1451438 , -0.65017033,  1.1316307 , -1.22337189, -0.83246816,
+         0.77424322,  0.13344735, -0.1234697 ,  0.13046451, -1.95465787,
+        -1.55350995, -0.31354787,  1.39846424, -0.03660721, -0.3360641 ,
+         0.02677512, -0.26752349, -0.47482143, -0.05680952, -0.75266157,
+         0.27488487,  0.88449973,  2.15381445, -0.41400153,  1.21381671,
+         0.92232479,  0.05508854, -0.15076683, -0.49421398, -0.80543942,
+         1.005282  , -0.80494514,  0.0976059 , -0.54615799,  0.90408833,
+         0.71348351, -2.63319961,  0.9287799 , -0.79177716,  0.3092041 ]),
+ 'experience2': array([-5.12597429e-01,  1.73003128e+00,  1.17202199e+00, -1.06576833e+00,
+        -1.74607531e-02,  2.59303340e-01,  2.30789670e-01, -2.95424007e-01,
+         4.40310588e-01, -7.37388873e-01, -5.96612611e-01, -1.08326391e+00,
+        -2.66861790e-01,  1.17219255e+00, -3.39538474e-01, -1.34596216e+00,
+         4.48311815e-01,  1.60280686e+00, -7.52366048e-01,  3.82349278e-01,
+        -4.27683380e-01,  1.26779568e+00, -8.60842685e-01, -2.24014654e+00,
+         7.10992082e-01,  4.86254905e-02,  7.54475048e-01,  1.06103843e+00,
+        -4.30201480e-01,  2.85523038e-01, -1.30984603e+00, -7.73672748e-01,
+         2.50052656e-01,  1.65610619e+00, -1.24072618e+00, -8.72252224e-02,
+        -1.37556986e+00,  1.74734402e+00,  8.86713546e-01,  1.27169995e+00,
+        -1.63568748e+00,  1.68359702e+00,  6.37827942e-01,  6.89892793e-01,
+        -2.11197059e+00,  4.32380396e-01, -5.22214645e-01,  7.40351903e-01,
+        -7.31645721e-01,  2.67625162e-02,  5.58620457e-01,  5.03180328e-01,
+         6.04514128e-01, -1.11078439e+00,  1.11601957e+00,  1.22319459e-02,
+        -1.19131202e+00, -1.83806861e+00,  4.78537303e-01, -2.60253515e-01,
+         1.49969811e+00, -3.71502271e-01, -1.14162770e+00, -9.01482979e-02,
+        -5.45700614e-02,  6.94711539e-03, -9.75336368e-01,  1.04285873e+00,
+        -4.38055566e-01, -1.46640876e+00, -1.38246613e+00, -2.05667363e-01,
+        -3.23673706e-01,  1.79675294e-01, -6.58844333e-01, -1.99557923e-01,
+         6.75617386e-01,  5.75747225e-01, -1.22675928e+00, -4.89839090e-01,
+        -1.97708739e+00, -2.69253982e-01, -1.32200095e+00,  6.38700435e-01,
+        -2.50892526e-01,  2.87863055e-01,  5.52487360e-01, -1.32015732e-02,
+         8.79429870e-02, -8.23799430e-01, -3.44677647e-04,  1.55475689e+00,
+        -1.40971537e+00, -1.30560730e+00, -4.94770804e-01, -1.52698567e+00,
+        -1.92416371e-01,  6.85906705e-01, -1.07308979e+00, -3.81491669e-01]),
+ 'experience3': array([ 7.71742208e-01,  7.43395102e-01, -8.57320299e-01,  1.27738500e+00,
+        -1.20058247e+00, -6.31858798e-01, -1.79586843e-01, -3.58917661e-01,
+        -5.06229886e-01,  1.11679840e+00,  4.47015274e-01, -3.57012093e-02,
+        -2.07746859e-01,  7.45201997e-01, -8.60144774e-02, -7.74830937e-01,
+         9.98308016e-02, -1.62718469e+00, -7.16245656e-01,  2.54944575e-01,
+        -1.08007733e+00,  1.06121570e-01,  9.59381902e-01, -1.61225335e+00,
+        -1.89157261e-01,  4.37576628e-01,  9.80100832e-01,  1.20117865e+00,
+        -1.17368596e-01, -7.13839696e-01, -3.22907513e-01, -7.82970395e-01,
+        -1.89630963e+00,  1.20057482e-01, -6.96400094e-01, -3.60828403e-01,
+         1.08879832e-01, -1.92737758e+00,  1.59559531e+00,  1.01248097e+00,
+        -1.18200879e+00,  1.70696607e+00, -6.74532292e-01, -6.90274103e-01,
+         1.61095193e-01, -2.26165717e+00,  3.17204383e-01, -1.13673558e+00,
+         3.39706210e-01, -3.75419888e-01,  2.33796495e-01, -1.92492569e+00,
+         1.13647371e+00,  2.85071439e-01, -1.05177693e-01,  2.14172309e-01,
+        -5.54767068e-02,  2.56561508e-01,  1.35623426e+00,  1.87823082e-01,
+        -5.79147798e-01,  9.37895632e-01,  1.33429951e-01,  1.37295686e+00,
+         3.02159457e-01,  1.73702727e-01,  1.54463863e+00, -1.61508839e+00,
+         6.15286343e-01, -2.32218491e+00,  1.13705692e+00, -1.18240558e-02,
+        -6.24844674e-01,  2.07654599e-02, -3.11602339e-01,  8.52033954e-01,
+         3.97827839e-01, -3.51421999e-02, -4.64526671e-01,  1.46241945e-01,
+         1.54586608e-01, -1.95105165e+00, -5.74770340e-02, -9.53007702e-01,
+         5.02547984e-01,  3.04018409e-01,  2.88151848e-01,  5.06125828e-01,
+        -8.39948882e-01,  2.93911678e-02,  8.24943592e-01,  8.21718927e-01,
+        -3.85923511e-01,  1.46600576e+00,  1.83431810e-01,  1.39626432e+00,
+         3.20347667e-01,  1.24387799e-01, -2.21409972e+00,  2.30476533e-03])}
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-6"><a class="header" href="#solution-6">SOLUTION</a></h3>
+<pre><code class="language-python">def graphique(data):
+    n = len(data)
+    plt.figure(figsize=(12, 20))
+    
+    for k, i in zip(data.keys(), range(1, n+1)):
+        plt.subplot(n, 1, i)
+        plt.plot(data[k])
+        plt.title(k)
+        
+    plt.show()
+</code></pre>
+<pre><code class="language-python">graphique(dataset)
+</code></pre>
+<p><img src="nested/./images/3g7.png" alt="Description de l&#39;image" /></p>
+</details> <div style="break-before: page; page-break-before: always;"></div><h1 id="matplotlib--top-graphiques"><a class="header" href="#matplotlib--top-graphiques"><center>Matplotlib : Top Graphiques</a></h1>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<h2 id="1-graphique-de-classification-avec-scatter"><a class="header" href="#1-graphique-de-classification-avec-scatter">1. Graphique de Classification avec Scatter()</a></h2>
+<pre><code class="language-python">from sklearn.datasets import load_iris
+</code></pre>
+<pre><code class="language-python">iris = load_iris()
+x = iris.data
+y = iris.target
+
+print(f'x contient {x.shape[0]} exmples et {x.shape[1]} variables')
+print(f'il y a {np.unique(y).size} classes')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>x contient 150 exmples et 4 variables
+il y a 3 classes
+</code></pre>
+<pre><code class="language-python">n = x.shape[1]
+plt.figure(figsize=(12, 8))
+for i in range(n):
+    plt.subplot(n//2, n//2, i+1)
+    plt.scatter(x[:, 0], x[:, i], c=y)
+    plt.xlabel('0')
+    plt.ylabel(i)
+    plt.colorbar(ticks=list(np.unique(y)))
+plt.show()
+</code></pre>
+<p><img src="nested/./images/32g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">from mpl_toolkits.mplot3d import Axes3D
+</code></pre>
+<pre><code class="language-python">ax = plt.axes(projection='3d')
+ax.scatter(x[:, 0], x[:, 1], x[:,2], c=y)
+</code></pre>
+<p><img src="nested/./images/32g2.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">f = lambda x, y: np.sin(x) + np.cos(x+y)
+
+X = np.linspace(0, 5, 50)
+Y = np.linspace(0, 5, 50)
+X, Y = np.meshgrid(X, Y)
+Z = f(X, Y)
+
+ax = plt.axes(projection='3d')
+ax.plot_surface(X, Y, Z, cmap='plasma')
+plt.show()
+</code></pre>
+<p><img src="nested/./images/32g3.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-histogrammes"><a class="header" href="#3-histogrammes">3. Histogrammes</a></h2>
+<pre><code class="language-python">x = np.random.randn(1000)
+
+plt.figure(figsize=(12, 3))
+plt.subplot(121)
+plt.hist(x, bins=10)
+plt.title('bins=10')
+plt.subplot(122)
+plt.hist(x, bins=50)
+plt.title('bins= 50')
+plt.show()
+</code></pre>
+<p><img src="nested/./images/32g4.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">x = iris.data
+
+plt.hist2d(x[:,0], x[:,1], cmap='Blues')
+plt.xlabel('longueur sépal')
+plt.ylabel('largeur sépal')
+plt.colorbar()
+</code></pre>
+<p><img src="nested/./images/32g5.png" alt="Description de l&#39;image" /></p>
+<h1 id="histogramme-dune-image"><a class="header" href="#histogramme-dune-image">histogramme d'une image</a></h1>
+<p>from scipy import misc
+face = misc.face(gray=True)</p>
+<p>plt.figure(figsize=(12, 4))
+plt.subplot(121)
+plt.imshow(face, cmap='gray')
+plt.subplot(122)
+plt.hist(face.ravel(), bins=255)
+plt.show()</p>
+<p><img src="nested/./images/32g6.png" alt="Description de l&#39;image" /></p>
+<h2 id="4-graphiques-contourplot"><a class="header" href="#4-graphiques-contourplot">4. Graphiques ContourPlot()</a></h2>
+<pre><code class="language-python">f = lambda x, y: np.sin(x) + np.cos(x+y)*np.cos(x)
+
+X = np.linspace(0, 5, 50)
+Y = np.linspace(0, 5, 50)
+X, Y = np.meshgrid(X, Y)
+Z = f(X, Y)
+
+plt.contour(X, Y, Z, 20, colors='black')
+</code></pre>
+<p><img src="nested/./images/32g7.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.contourf(X, Y, Z, 20, cmap='RdGy')
+plt.colorbar()
+</code></pre>
+<p><img src="nested/./images/32g8.png" alt="Description de l&#39;image" /></p>
+<h2 id="5-imshow"><a class="header" href="#5-imshow">5. Imshow()</a></h2>
+<pre><code class="language-python">plt.figure(figsize=(12, 3))
+
+# Simple graphique imshow()
+X = np.random.randn(50, 50)
+
+plt.subplot(131)
+plt.imshow(X)
+plt.title('random normal')
+
+# Matrice de corrélation des iris
+from sklearn.datasets import load_iris
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+
+plt.subplot(132)
+plt.imshow(np.corrcoef(X.T, y))
+plt.title('Iris Corrélation')
+
+# Matrice f(X, Y) = sin(X) + cos(Y)
+X = np.linspace(0, 5, 100)
+Y = np.linspace(0, 5, 100)
+X, Y = np.meshgrid(X, Y)
+
+plt.subplot(133)
+plt.imshow(f(X, Y))
+plt.colorbar()
+plt.title('f(x, y) = sin(x) + cos(y)')
+</code></pre>
+<p><img src="nested/./images/32g9.png" alt="Description de l&#39;image" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-4--scipy"><a class="header" href="#chapitre-4--scipy">Chapitre 4 : Scipy</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-5--pandas"><a class="header" href="#chapitre-5--pandas">Chapitre 5 : Pandas</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-6--seaborn"><a class="header" href="#chapitre-6--seaborn">Chapitre 6 : Seaborn</a></h1>
