@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Structure de données : Listes et Tuples - La Formation Castiel</title>
+        <title>Programmation Orientée Objet avec Python - La Formation Castiel</title>
 
 
         <!-- Custom HTML head -->
@@ -152,181 +152,96 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="les-bases-de-python---structure-de-données--listes-et-tuples"><a class="header" href="#les-bases-de-python---structure-de-données--listes-et-tuples"><center> Les Bases de Python - Structure de données : Listes et Tuples</a></h1>
-<h3 id="sommaire-"><a class="header" href="#sommaire-">Sommaire :</a></h3>
-<ul>
-<li><a href="#1-cr%C3%A9ation-de-listes-et-de-tuples">Chapitre 1 : Création de Listes et de Tuples</a></li>
-<li><a href="#2-indexing-et-slicing">Chapitire 2 : Indexing et Slicing</a></li>
-<li><a href="#3-actions-utiles-sur-les-listes">Chapitre 3 : Actions utiles sur les listes</a></li>
-<li><a href="#4-exercice-et-solution">Chapitre 4: Exercice et Solution</a></li>
-</ul>
-<p>Une structure de données est une variable capable de contenir plusieurs valeurs a la fois. Une structure de données peut former une <strong>séquence</strong> si les valeurs qui la composent sont rangées dans un certains ordre. C'est le cas des <strong>listes</strong> et des <strong>tuples</strong>. A l'inverse un <strong>Dictionnaire</strong> ne forme pas une séquence.</p>
-<h1 id="1-création-de-listes-et-de-tuples"><a class="header" href="#1-création-de-listes-et-de-tuples">1. Création de Listes et de Tuples</a></h1>
-<p>une liste ou un tuple peuvent contenir tout types de valeurs (int, float, bool, string). On dit que ce sont des structures hétérogenes.</p>
-<p>La différence entre les 2 est qu'une liste est <strong>mutable</strong> alors qu'un Tuple ne l'est pas (on ne peut pas le changer apres qu'il soit crée)</p>
-<h3 id="listes"><a class="header" href="#listes">Listes</a></h3>
-<pre><code class="language-python">liste_1 = [1, 4, 2, 7, 35, 84]
-villes = ['Paris', 'Berlin', 'Londres', 'Bruxelles']
-nested_list = [liste_1, villes] # une liste peut meme contenir des listes ! On appelle cela une nested list
+                        <h1 id="programmation-orientée-objet-avec-python"><a class="header" href="#programmation-orientée-objet-avec-python"><center>Programmation Orientée Objet avec Python</a></h1>
+<p>La programmation orientée objet est un <strong>paradigme</strong>, c'est a dire une facon de procéder pour écrire des programmes clairs et simples. Le principe est de modéliser les éléments de notre programmes (comme les tableaux et les listes) comme étant des des <strong>objets</strong> caractérisés par des <strong>attributs</strong> et capables d'effectuer des <strong>actions</strong>. Ces objets sont construits a partir de <strong>classes</strong> qui contiennent leur plan de fabrication.</p>
+<p>Dans le langage Python, presque tout est construit pour etre un objet : les listes, les dictionnaires, les tableaux numpy, etc.
+Par exemple quand on écrit : <em><strong>list.append()</strong></em>, on utilise en fait la méthode append() sur un objet liste.</p>
+<p>La documentation Python, Numpy, Pandas, Matplotlib, Sklearn, est donc en vaste majorité constituée de classes qu'il est important de savoir déchiffrer pour pouvoir apprendre soi-meme de nouvelles choses grace aux documentations.</p>
+<p>Voici donc comment créer simplement et efficacement des classes :</p>
+<pre><code class="language-python">class vehicule:
+  """
+  Voici un exemple de classe "vehicule" qui contient le plan de conception
+  d'objets "véhicules"
+  """
 
-#Tuples
-tuple_1 = (1, 2, 6, 2)
+  # Une classe commence par une fonction initialisation qui contient les différents attributs
+  def __init__(self, couleur='noire', vitesse=0, roues=4):
+    self.couleur = couleur
+    self.vitesse = vitesse
+    self.roues = roues
+    
+  # voici une méthode "accelerer" qui modifie un attribut de l'objet
+  def accelerer(self, vitesse):
+    self.vitesse += vitesse
+
+  # voici une autre méthode
+  def stop(self):
+    self.vitesse = 0
+
+  # voici une derniere méthode, tres souvent utilisée
+  def afficher(self):
+    print(f'couleur: {self.couleur}\nroues: {self.roues}\nvitesse: {self.vitesse}')
+
 </code></pre>
-<pre><code class="language-python">print(villes)
-print(nested_list)
-print(tuple_1)
+<pre><code class="language-python"># création d'un objet de la classe voiture
+voiture_1 = vehicule(couleur='rouge')
+</code></pre>
+<pre><code class="language-python">voiture_1.accelerer(100)
+</code></pre>
+<pre><code class="language-python">voiture_1.afficher()
 </code></pre>
 <p><strong>-</strong></p>
-<pre><code>['Paris', 'Berlin', 'Londres', 'Bruxelles']
-[[1, 4, 2, 7, 35, 84], ['Paris', 'Berlin', 'Londres', 'Bruxelles']]
-(1, 2, 6, 2)
+<pre><code>couleur: rouge
+roues: 4
+vitesse: 100
+</code></pre>
+<h2 id="créer-des-sous-classes"><a class="header" href="#créer-des-sous-classes">Créer des sous-classes</a></h2>
+<pre><code class="language-python">class voiture_electrique(vehicule):
+  """
+  La classe moto hérite des méthodes et des attributs de la classe véhicule
+  """
 
+  def __init__(self, couleur='black', vitesse=0, roues=4, autonomie=100):
+    super().__init__(couleur, vitesse, roues) # super() permet d'utiliser la fonction de la classe "parent"
+    self.autonomie = autonomie
+
+  # Ré-écriture de certaines méthodes
+  def accelerer(self, vitesse):
+    super().accelerer(vitesse)
+    self.autonomie -= 0.1 *self.vitesse
+
+  def afficher(self):
+    super().afficher()
+    print(f'autonomie: {self.autonomie}')
 </code></pre>
-<h1 id="2-indexing-et-slicing"><a class="header" href="#2-indexing-et-slicing">2. Indexing et Slicing</a></h1>
-<p>Dans une séquence, chaque élément est rangé selon un <strong>index</strong> (le premier index étant l'index 0)</p>
-<p>Pour acceder a un élément d'une liste ou d'un tuple, on utilise une technique appelée <strong>Indexing</strong></p>
-<p>Pour acceder a plusieurs éléments d'une liste ou d'un tuple, on utilie une technique appelée <strong>Slicing</strong></p>
-<h3 id="indexing"><a class="header" href="#indexing">INDEXING</a></h3>
-<pre><code class="language-python">print('séquence complete:', villes)
-print('index 0:', villes[0])
-print('index 1:', villes[1])
-print('dernier index (-1):', villes[-1])
+<pre><code class="language-python">voiture_2 = voiture_electrique()
 </code></pre>
-<pre><code>séquence complete: ['Paris', 'Berlin', 'Londres', 'Bruxelles']
-index 0: Paris
-index 1: Berlin
-dernier index (-1): Bruxelles
-</code></pre>
-<h3 id="slicing-début-inclus--fin-exclus--pas"><a class="header" href="#slicing-début-inclus--fin-exclus--pas">SLICING [début (inclus) : fin (exclus) : pas]</a></h3>
-<pre><code class="language-python">print('séquence complete:', villes)
-print('index 0-2:', villes[0:3])
-print('index 1-2:', villes[1:3])
-print('ordre inverse:', villes[::-1])
+<pre><code class="language-python">voiture_2.afficher()
+
+voiture_2.accelerer(10)
+
+voiture_2.afficher()
 </code></pre>
 <p><strong>-</strong></p>
-<pre><code>séquence complete: ['Paris', 'Berlin', 'Londres', 'Bruxelles']
-index 0-2: ['Paris', 'Berlin', 'Londres']
-index 1-2: ['Berlin', 'Londres']
-ordre inverse: ['Bruxelles', 'Londres', 'Berlin', 'Paris']
+<pre><code>couleur: black
+roues: 4
+vitesse: 0
+autonomie: 100
+couleur: black
+roues: 4
+vitesse: 10
+autonomie: 99.0
+</code></pre>
 
-</code></pre>
-<h1 id="3-actions-utiles-sur-les-listes"><a class="header" href="#3-actions-utiles-sur-les-listes">3. Actions utiles sur les listes</a></h1>
-<pre><code class="language-python">
-villes = ['Paris', 'Berlin', 'Londres', 'Bruxelles'] # liste initiale
-print(villes)
-
-villes.append('Dublin') # Rajoute un élément a la fin de la liste
-print(villes)
-
-villes.insert(2, 'Madrid') # Rajoute un élément a l'index indiqué
-print(villes)
-
-villes.extend(['Amsterdam', 'Rome']) # Rajoute une liste a la fin de notre liste
-print(villes)
-
-print('longeur de la liste:', len(villes)) #affiche la longueur de la liste
-
-villes.sort(reverse=False) # trie la liste par ordre alphabétique / numérique
-print(villes)
-
-print(villes.count('Paris')) # compte le nombre de fois qu'un élément apparait dans la liste
-
-</code></pre>
-<p><strong>-</strong></p>
-<pre><code>['Paris', 'Berlin', 'Londres', 'Bruxelles']
-['Paris', 'Berlin', 'Londres', 'Bruxelles', 'Dublin']
-['Paris', 'Berlin', 'Madrid', 'Londres', 'Bruxelles', 'Dublin']
-['Paris', 'Berlin', 'Madrid', 'Londres', 'Bruxelles', 'Dublin', 'Amsterdam', 'Rome']
-longeur de la liste: 8
-['Amsterdam', 'Berlin', 'Bruxelles', 'Dublin', 'Londres', 'Madrid', 'Paris', 'Rome']
-1
-</code></pre>
-<p>Les listes et les tuples fonctionnent en harmonies avec les structures de controle <strong>if/else</strong> et <strong>For</strong></p>
-<pre><code class="language-python">if 'Paris' in villes:
-  print('oui')
-else:
-  print('non')
-</code></pre>
-<p><strong>-</strong></p>
-<pre><code>oui
-</code></pre>
-<pre><code class="language-python">for element in villes:
-  print(element)
-</code></pre>
-<p><strong>-</strong></p>
-<pre><code>Amsterdam
-Berlin
-Bruxelles
-Dublin
-Londres
-Madrid
-Paris
-Rome
-</code></pre>
-<p>La fonction <strong>enumerate</strong> est tres utile pour sortir a la fois les éléments d'une liste et leurs <strong>index</strong>. C'est une fonction tres utilisée en datascience</p>
-<pre><code class="language-python">for index, element in enumerate(villes):
-  print(index, element)
-</code></pre>
-<p><strong>-</strong></p>
-<pre><code>0 Amsterdam
-1 Berlin
-2 Bruxelles
-3 Dublin
-4 Londres
-5 Madrid
-6 Paris
-7 Rome
-</code></pre>
-<p>La fonction <strong>zip</strong> est aussi tres utile pour itérée a travers 2 listes en paralleles. Si une liste est plus courte que l'autre, la boucle for s'arrete a la liste la plus courte</p>
-<pre><code class="language-python">liste_2 = [312, 52, 654, 23, 65, 12, 678]
-for element_1, element_2 in zip(villes, liste_2):
-  print(element_1, element_2)
-</code></pre>
-<p><strong>-</strong></p>
-<pre><code>Amsterdam 312
-Berlin 52
-Bruxelles 654
-Dublin 23
-Londres 65
-Madrid 12
-Paris 678   
-</code></pre>
-<h1 id="4-exercice-et-solution"><a class="header" href="#4-exercice-et-solution">4. Exercice et Solution</a></h1>
-<p>Transformer le code suivant qui donne la <strong>suite de Fibonacci</strong> pour enregistrer les résultats dans une liste et retourner cette liste a la fin de la fonction</p>
-<pre><code class="language-python">def fibonacci(n):
-    a = 0
-    b = 1
-    while b &lt; n:
-      a, b = b, a+b
-      print(a)
-</code></pre>
-<details>
-    <summary>💡 Cliquez ici pour voir la solution</summary>
-<h3 id="solution"><a class="header" href="#solution">Solution</a></h3>
-<pre><code class="language-python">def fibonacci(n):
-    a = 0
-    b = 1
-    fib = [a] # Création d'une liste fib 
-    while b &lt; n:
-        a, b = b, a+b
-        fib.append(a) # ajoute la nouvelle valeur de a a la fin de fib
-    return fib
-
-print(fibonacci(1000))
-</code></pre>
-<p><strong>-</strong></p>
-<pre><code>[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987]
-</code></pre>
-</details> 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../nested/2_2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../nested/2.7.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../nested/2_4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../chapitre2.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -336,11 +251,11 @@ print(fibonacci(1000))
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../nested/2_2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../nested/2.7.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../nested/2_4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../chapitre2.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
