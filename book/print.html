@@ -2051,9 +2051,697 @@ plt.colorbar()
 plt.title('f(x, y) = sin(x) + cos(y)')
 </code></pre>
 <p><img src="nested/./images/32g9.png" alt="Description de l&#39;image" /></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-4--scipy"><a class="header" href="#chapitre-4--scipy">Chapitre 4 : Scipy</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-5--pandas"><a class="header" href="#chapitre-5--pandas">Chapitre 5 : Pandas</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-6--seaborn"><a class="header" href="#chapitre-6--seaborn">Chapitre 6 : Seaborn</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-4--scipy"><a class="header" href="#chapitre-4--scipy"><center>Chapitre 4 : Scipy</a></h1>
+<p><strong>Scipy</strong> est une bibliothèque puissante et polyvalente conçue pour compléter NumPy. Elle offre des outils avancés pour le calcul scientifique, indispensables dans des domaines comme le machine learning, l'analyse de données, le traitement de signal, le traitement d'images, et bien plus encore.</p>
+<p>Dans ce chapitre, vous découvrirez certaines des fonctionnalités les plus utiles de Scipy, telles que l'interpolation, l'optimisation, le traitement de signal, et le traitement d'images. Ces outils permettent de résoudre des problèmes complexes avec des solutions élégantes et performantes, tout en restant simples à utiliser.</p>
+<hr />
+<h2 id="pourquoi-utiliser-scipy-"><a class="header" href="#pourquoi-utiliser-scipy-">Pourquoi utiliser Scipy ?</a></h2>
+<ul>
+<li><strong>Large éventail de modules spécialisés</strong> : Scipy propose des modules dédiés à des tâches spécifiques (optimisation, intégration, traitement d'images, statistiques, etc.).</li>
+<li><strong>Performance et simplicité</strong> : Basée sur NumPy, Scipy permet d'exécuter des calculs rapides et précis sans compromettre la simplicité.</li>
+<li><strong>Applications pratiques</strong> : De la visualisation à la manipulation avancée des données, elle est essentielle dans de nombreux projets en machine learning et en analyse de données.</li>
+</ul>
+<hr />
+<h2 id="ce-que-vous-allez-apprendre-dans-ce-chapitre"><a class="header" href="#ce-que-vous-allez-apprendre-dans-ce-chapitre">Ce que vous allez apprendre dans ce chapitre</a></h2>
+<h3 id="1-interpolation"><a class="header" href="#1-interpolation"><strong>1. Interpolation</strong></a></h3>
+<p>Découvrez comment combler les lacunes dans des ensembles de données ou reconstruire des signaux manquants à l’aide des fonctions d'interpolation.</p>
+<h3 id="2-optimisation"><a class="header" href="#2-optimisation"><strong>2. Optimisation</strong></a></h3>
+<p>Explorez des outils pour trouver des minimums locaux et globaux, ajuster des modèles statistiques, ou résoudre des problèmes de programmation linéaire.</p>
+<h3 id="3-traitement-du-signal"><a class="header" href="#3-traitement-du-signal"><strong>3. Traitement du Signal</strong></a></h3>
+<p>Plongez dans les techniques de filtrage, de transformation de Fourier, et d'analyse de tendances pour manipuler des signaux avec précision.</p>
+<h3 id="4-traitement-dimages"><a class="header" href="#4-traitement-dimages"><strong>4. Traitement d'Images</strong></a></h3>
+<p>Découvrez les outils de Scipy pour nettoyer, segmenter, et analyser des images de manière efficace.</p>
+<hr />
+<p>L’objectif de ce chapitre est de vous fournir une boîte à outils polyvalente pour résoudre des problèmes réels, en s'appuyant sur des exemples concrets et visuels. Que ce soit pour analyser des signaux ou traiter des images, Scipy est une bibliothèque incontournable pour tout data scientist ou ingénieur.</p>
+<p><strong>Prêt à commencer ?</strong> Rendez-vous dans la première section : <a href="./nested/5_1.html">Scipy : Interpolation</a> !</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--interpolation"><a class="header" href="#scipy--interpolation"><center>Scipy : Interpolation</a></h1>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<p>Interpoler un signal est parfois tres utile s'il vous manque des données dans un Dataset. Mais c'est une technique dangereuse, qui peut parfois transformer la réalité des choses !</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<pre><code class="language-python"># Création d'un Dataset
+x = np.linspace(0, 10, 10)
+y = np.sin(x)
+plt.scatter(x, y)
+</code></pre>
+<p><img src="nested/./images/4g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">from scipy.interpolate import interp1d
+</code></pre>
+<pre><code class="language-python"># création de la fonction interpolation f
+f = interp1d(x, y, kind='cubic')
+
+# résultats de la fonction interpolation f sur de nouvelles données
+new_x = np.linspace(0, 10, 50)
+result = f(new_x)
+
+# visualisation avec matplotlib
+plt.scatter(x, y)
+plt.plot(new_x, result, c='r')
+</code></pre>
+<p><img src="nested/./images/4g2.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--optimisation"><a class="header" href="#scipy--optimisation"><center> Scipy : Optimisation</a></h1>
+<p>On trouve beaucoup de fonctions dans le module <strong>optimize</strong>. Certaines permettent de faire des minimisations locales, ou globales, d'autres permette de développer des modeles statistiques avec la méthode des moindres carrés. On trouve également des fonctions pour faire de la programmation linéaire.</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<h3 id="curve_fit"><a class="header" href="#curve_fit">curve_fit</a></h3>
+<pre><code class="language-python"># Création d'un Dataset avec du bruit "normal"
+x = np.linspace(0, 2, 100)
+y = 1/3*x**3 - 3/5 * x**2 + 2 + np.random.randn(x.shape[0])/20
+plt.scatter(x, y)
+</code></pre>
+<p><img src="nested/./images/4g3.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Définition d'un modele statistique sensé "coller" au dataset ci-dessus
+def f (x, a, b, c, d):
+    return a * x**3 + b * x**2 + c * x + d
+</code></pre>
+<pre><code class="language-python">from scipy import optimize
+</code></pre>
+<pre><code class="language-python"># curve_fit permet de trouver les parametres du modele f grace a la méthode des moindres carrés
+params, param_cov = optimize.curve_fit(f, x, y)
+</code></pre>
+<pre><code class="language-python"># Visualisation des résultats.
+plt.scatter(x, y)
+plt.plot(x, f(x, params[0], params[1], params[2], params[3]), c='g', lw=3)
+</code></pre>
+<p><img src="nested/./images/4g4.png" alt="Description de l&#39;image" /></p>
+<h2 id="minimisation-1d"><a class="header" href="#minimisation-1d">Minimisation 1D</a></h2>
+<p>la fonction <strong>optimize.minimize</strong> est utile pour trouver un minimum local dans une fonction a N dimensions</p>
+<pre><code class="language-python"># Définition d'une fonction a 1 Dimension
+def f (x):
+    return x**2 + 15*np.sin(x)
+</code></pre>
+<pre><code class="language-python"># Visualisation de la fonction
+x = np.linspace(-10, 10, 100)
+plt.plot(x, f(x))
+</code></pre>
+<p><img src="nested/./images/4g5.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Définition d'un point x0 pour l'algorithme de minimisation
+x0=-5
+result = optimize.minimize(f, x0=x0).x # résultat de la minimisation
+</code></pre>
+<pre><code class="language-python"># Visualisation du résultat
+
+plt.plot(x, f(x), lw=3, zorder=-1) # Courbe de la fonction
+plt.scatter(x0, f(x0), s=200, marker='+', c='g', zorder=1, label='initial') # point initial
+plt.scatter(result, f(result), s=100, c='r', zorder=1, label='final') # point final
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g6.png" alt="Description de l&#39;image" /></p>
+<h2 id="minimisation-2d"><a class="header" href="#minimisation-2d">Minimisation 2D</a></h2>
+<pre><code class="language-python"># Définition d'une fonction 2D. X est un tableau numpy a 2-Dimension
+def f (x):
+    return np.sin(x[0]) + np.cos(x[0]+x[1])*np.cos(x[0])
+</code></pre>
+<pre><code class="language-python"># Génération de la fonction sur un espace 2D.
+x = np.linspace(-3, 3, 100)
+y = np.linspace(-3, 3, 100)
+x, y = np.meshgrid(x, y)
+
+# Visualisation de la fonction
+plt.contour(x, y, f(np.array([x, y])), 20)
+</code></pre>
+<p><img src="nested/./images/4g7.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Exemple de fonction à minimiser (parabole en 2D)
+def f(v):
+    x, y = v[0], v[1]
+    return x**2 + y**2
+
+# Placement d'un point x0 initial aux coordonnées (0, 0)
+x0 = np.array([0, 0])  # Tableau 1D
+
+# Minimisation de la fonction
+result = optimize.minimize(f, x0=x0).x
+print('Le minimum est aux coordonnées', result)
+
+# Création de la grille pour la visualisation
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+Z = f(np.array([X, Y]))
+
+# Visualisation du résultat
+plt.contour(X, Y, Z, 20, cmap='viridis')  # Tracer les contours de la fonction
+plt.scatter(x0[0], x0[1], marker='+', c='r', s=100, label='Initial')  # Point initial
+plt.scatter(result[0], result[1], c='g', s=100, label='Final')  # Point final
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g8.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--traitement-du-signal"><a class="header" href="#scipy--traitement-du-signal"><center>Scipy : Traitement du signal</a></h1>
+<p>Le module <strong>scipy.signal</strong> contient beaucoup de fonctions de convolution et de filtres pour faire du traitement du signal. La fonction <strong>signal.detrend</strong> est parfaite pour éliminer une tendance linéaire dans un signal. Utile pour beaucoup d'applications !</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<p>Le module <strong>scipy.fftpack</strong> contient des fonctions tres puissantes et simples d'utilisation pour effectuer des transformations de Fourier</p>
+<pre><code class="language-python"># Création d'un Dataset avec une tendance linéaire
+x = np.linspace(0, 20, 100)
+y = x + 4*np.sin(x) +np.random.randn(x.shape[0])
+plt.plot(x, y)
+</code></pre>
+<p><img src="nested/./images/4g9.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">from scipy import signal
+</code></pre>
+<pre><code class="language-python"># Élimination de la tendance linéaire
+new_y = signal.detrend(y)
+
+# Visualisation des résultats
+plt.plot(x, y, label='originel')
+plt.plot(x, new_y, label='detrend')
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g10.png" alt="Description de l&#39;image" /></p>
+<h2 id="transformation-de-fourier-fft"><a class="header" href="#transformation-de-fourier-fft">Transformation de Fourier (FFT)</a></h2>
+<p>La transformation de Fourier est une technique mathématique puissante et normalement complexe a mettre en oeuvre. Heureusement <strong>scipy.fftpack</strong> rend cette technique tres simple a implémenter</p>
+<p>La transformation de Fourier permet d'analyser les <strong>fréquences</strong> qui composent un signal <strong>périodique</strong> (qui se répete avec le temps). Cette opération produit un graphique que l'on appelle <strong>Spectre</strong>.</p>
+<p>Une fois le <strong>Spectre</strong> généré, il est possible de filtrer les bruits indésirables, ou bien de sélectionner seulement certaines fréquences, ou d'en atténuer d'autres... les possibilités sont infinies.</p>
+<p>Dans l'exemple ci-dessous, nous voyons comment filtrer un signal noyé dans du bruit.</p>
+<pre><code class="language-python"># Création d'un signal périodique noyé dans du bruit.
+x = np.linspace(0, 30, 1000)
+y = 3*np.sin(x) + 2*np.sin(5*x) + np.sin(10*x) + np.random.random(x.shape[0])*10
+plt.plot(x, y)
+</code></pre>
+<p><img src="nested/./images/4g11.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">from scipy import fftpack
+</code></pre>
+<pre><code class="language-python"># création des variables Fourier et Fréquences, qui permettent de construire le spectre du signal.
+fourier = fftpack.fft(y)
+power = np.abs(fourier) # la variable power est créée pour éiminer les amplitudes négatives
+frequences = fftpack.fftfreq(y.size)
+plt.plot(np.abs(frequences), power)
+</code></pre>
+<p><img src="nested/./images/4g12.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># filtre du spectre avec du boolean indexing de Numpy
+fourier[power&lt;400] = 0
+
+# Visualisation du spetre propre
+plt.plot(np.abs(frequences), np.abs(fourier))
+</code></pre>
+<p><img src="nested/./images/4g13.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Transformation de Fourier Inverse: genere un nouveau signal temporel depuis le spectre filtré
+filtered_signal = fftpack.ifft(fourier)
+</code></pre>
+<pre><code class="language-python"># Visualisation des résultats
+
+plt.figure(figsize=(12, 8))
+plt.plot(x, y, lw=0.5, label='signal originel')
+plt.plot(x, filtered_signal, lw=3, label='signal filtré')
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g14.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--image-processing"><a class="header" href="#scipy--image-processing"><center> Scipy : Image processing</a></h1>
+<p><strong>scipy.ndimage</strong> propose de nombreuses actions pour le traitement d'images: convolutions, filtres de Gauss, méthode de mesures, et morphologie.</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<p>La morphologie est une technique qui permet de transformer une matrice (et donc une image) par le déplacement d'une structure sur chaque pixel de l'image. Lorsqu'un pixel "blanc" est visité, la structure peut effectuer une opération:</p>
+<ul>
+<li>de dilation: imprime des pixels</li>
+<li>d'érosion : efface des pixels</li>
+</ul>
+<p>Cette technique peut-etre utile pour nettoyer une image des artefacts qui peuvent la composer.</p>
+<pre><code class="language-python">from scipy import ndimage
+</code></pre>
+<pre><code class="language-python"># Création d'une image avec quelques artefacts
+np.random.seed(0)
+X = np.zeros((32, 32))
+X[10:-10, 10:-10] = 1
+X[np.random.randint(0,32,30),np.random.randint(0,32,30)] = 1 #ajout d'artefacts aléatoires
+plt.imshow(X)
+</code></pre>
+<p><img src="nested/./images/4g15.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># opération de binary_opening = érosion puis dilation
+open_X = ndimage.binary_opening(X)
+plt.imshow(open_X)
+</code></pre>
+<p><img src="nested/./images/4g16.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--application--image-processing-cas-réel"><a class="header" href="#scipy--application--image-processing-cas-réel"><center> Scipy : Application : Image processing (cas réel)</a></h1>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<p>Vous pouvez télécharger sur le book</p>
+<pre><code class="language-python"># importer l'image avec pyplot
+image = plt.imread('bacteria.png')
+image = image[:,:,0] # réduire l'image en 2D
+plt.imshow(image, cmap='gray') # afficher l'image
+image.shape
+</code></pre>
+<pre><code>(507, 537)
+</code></pre>
+<p><img src="nested/./images/4g17.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># copy de l'image, puis création d'un histogramme
+image_2 = np.copy(image)
+plt.hist(image_2.ravel(), bins=255)
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g18.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># boolean indexing: création d'une image binaire
+image= image&lt;0.6
+plt.imshow(image)
+</code></pre>
+<p><img src="nested/./images/4g19.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># morphologie utilisée pour enlever les artefacts
+open_image = ndimage.binary_opening(image)
+plt.imshow(open_image)
+</code></pre>
+<p><img src="nested/./images/4g20.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Segmentation de l'image: label_image contient les différents labels et n_labels est le nombre de labels
+label_image, n_labels = ndimage.label(open_image)
+print(f'il y a {n_labels} groupes')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>il y a 53 groupes
+</code></pre>
+<pre><code class="language-python"># Visualisation de l'image étiquetée
+plt.imshow(label_image)
+</code></pre>
+<p><img src="nested/./images/4g21.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Mesure de la taille de chaque groupes de label_images (fait la somme des pixels)
+sizes = ndimage.sum(open_image, label_image, range(n_labels))
+</code></pre>
+<pre><code class="language-python"># Visualisation des résultats
+plt.scatter(range(n_labels), sizes)
+plt.xlabel('bactérie ID')
+plt.ylabel('taille relative')
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g22.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-5--pandas"><a class="header" href="#chapitre-5--pandas"><center>Chapitre 5 : Pandas</a></h1>
+<p><strong>Pandas</strong> est une bibliothèque incontournable pour la manipulation et l’analyse de données en Python. Elle offre des structures de données puissantes et flexibles, comme les DataFrames, qui permettent de travailler efficacement avec des données tabulaires. Ce chapitre vous apprendra les bases de Pandas ainsi que des techniques avancées pour explorer, nettoyer, et analyser vos données.</p>
+<hr />
+<h2 id="plan-du-chapitre-3"><a class="header" href="#plan-du-chapitre-3">Plan du chapitre</a></h2>
+<ol>
+<li>
+<p><strong><a href="">Pandas : Les bases et Analyse du Titanic</a></strong></p>
+<ul>
+<li>Introduction aux structures de données fondamentales : Series et DataFrames.</li>
+<li>Analyse de données avec un cas pratique : l’étude des passagers du Titanic.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="">Pandas : Séries temporelles</a></strong></p>
+<ul>
+<li>Manipulation de données temporelles.</li>
+<li>Analyse et visualisation de tendances dans des séries chronologiques.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="pourquoi-utiliser-pandas-"><a class="header" href="#pourquoi-utiliser-pandas-">Pourquoi utiliser Pandas ?</a></h2>
+<ul>
+<li><strong>Facilité de manipulation</strong> : Pandas simplifie des opérations complexes comme le nettoyage, le filtrage, ou le regroupement de données.</li>
+<li><strong>Interopérabilité</strong> : Compatible avec d'autres bibliothèques comme NumPy, Matplotlib et Scipy.</li>
+<li><strong>Applications pratiques</strong> : Pandas est utilisé dans des domaines variés, comme l’analyse financière, le machine learning, ou la gestion de données.</li>
+</ul>
+<hr />
+<h2 id="ce-que-vous-allez-apprendre-1"><a class="header" href="#ce-que-vous-allez-apprendre-1">Ce que vous allez apprendre</a></h2>
+<ul>
+<li>Manipuler des datasets avec les DataFrames de Pandas.</li>
+<li>Charger, explorer et nettoyer des données.</li>
+<li>Utiliser les fonctionnalités avancées de Pandas pour analyser des séries temporelles.</li>
+</ul>
+<hr />
+<h2 id="cas-pratiques"><a class="header" href="#cas-pratiques">Cas Pratiques</a></h2>
+<h3 id="1-les-bases-de-pandas-et-lanalyse-du-titanic"><a class="header" href="#1-les-bases-de-pandas-et-lanalyse-du-titanic"><strong>1. Les bases de Pandas et l'analyse du Titanic</strong></a></h3>
+<p>Nous explorerons un jeu de données bien connu, celui des passagers du Titanic, pour comprendre les bases de Pandas. Vous apprendrez à :</p>
+<ul>
+<li>Charger des données depuis différents formats (CSV, Excel, etc.).</li>
+<li>Explorer et filtrer les données.</li>
+<li>Calculer des statistiques descriptives et visualiser les résultats.</li>
+</ul>
+<h3 id="2-analyse-de-séries-temporelles"><a class="header" href="#2-analyse-de-séries-temporelles"><strong>2. Analyse de séries temporelles</strong></a></h3>
+<p>Les séries temporelles sont essentielles dans des domaines comme la finance et la prévision. Vous apprendrez à :</p>
+<ul>
+<li>Manipuler des indices temporels.</li>
+<li>Rééchantillonner et lisser des données.</li>
+<li>Identifier des tendances et des patterns cycliques.</li>
+</ul>
+<hr />
+<p>Ce chapitre vous donnera une maîtrise solide de Pandas et vous permettra de manipuler et analyser vos propres datasets avec facilité. Plongeons dès maintenant dans le monde fascinant de la manipulation de données avec Pandas !</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pandas--les-bases-et-analyse-du-titanic"><a class="header" href="#pandas--les-bases-et-analyse-du-titanic"><center>Pandas : Les bases et Analyse du Titanic</a></h1>
+<h3 id="sommaire--9"><a class="header" href="#sommaire--9">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/6_1.html#1-charger-vos-donn%C3%A9es-dans-un-dataframe-pandas">Chapitre 1 : Charger vos données dans un DataFrame Pandas</a></li>
+<li><a href="nested/6_1.html#2-nettoyer-votre-dataset-avec-drop-dropna-et-fillna">Chapitire 2 : Nettoyer votre Dataset avec drop(), dropna() et fillna()</a></li>
+<li><a href="nested/6_1.html#3-groupby-et-value_counts">Chapitre 3 : Groupby() et value_counts()</a></li>
+<li><a href="nested/6_1.html#4-exercice-et-solution">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<br>
+<p><a href="nested/./titanic.xls">📂 Télécharger la base de donnée</a></p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+</code></pre>
+<h2 id="1-charger-vos-données-dans-un-dataframe-pandas"><a class="header" href="#1-charger-vos-données-dans-un-dataframe-pandas">1. Charger vos données dans un DataFrame Pandas</a></h2>
+<p>Les options les plus courantes :</p>
+<ul>
+<li>read_csv</li>
+<li>read_excel</li>
+</ul>
+<pre><code class="language-python">data = pd.read_excel('titanic.xls')
+</code></pre>
+<pre><code class="language-python">data.shape
+data.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	pclass	survived	name	sex	age	sibsp	parch	ticket	fare	cabin	embarked	boat	body	home.dest
+0	1	1	Allen, Miss. Elisabeth Walton	female	29.0000	0	0	24160	211.3375	B5	S	2	NaN	St Louis, MO
+1	1	1	Allison, Master. Hudson Trevor	male	0.9167	1	2	113781	151.5500	C22 C26	S	11	NaN	Montreal, PQ / Chesterville, ON
+2	1	0	Allison, Miss. Helen Loraine	female	2.0000	1	2	113781	151.5500	C22 C26	S	NaN	NaN	Montreal, PQ / Chesterville, ON
+3	1	0	Allison, Mr. Hudson Joshua Creighton	male	30.0000	1	2	113781	151.5500	C22 C26	S	NaN	135.0	Montreal, PQ / Chesterville, ON
+4	1	0	Allison, Mrs. Hudson J C (Bessie Waldo Daniels)	female	25.0000	1	2	113781	151.5500	C22 C26	S	NaN	NaN	Montreal, PQ / Chesterville, ON
+</code></pre>
+<pre><code class="language-python">data.describe()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>pclass	survived	age	sibsp	parch	fare	body
+count	1309.000000	1309.000000	1046.000000	1309.000000	1309.000000	1308.000000	121.000000
+mean	2.294882	0.381971	29.881135	0.498854	0.385027	33.295479	160.809917
+std	0.837836	0.486055	14.413500	1.041658	0.865560	51.758668	97.696922
+min	1.000000	0.000000	0.166700	0.000000	0.000000	0.000000	1.000000
+25%	2.000000	0.000000	21.000000	0.000000	0.000000	7.895800	72.000000
+50%	3.000000	0.000000	28.000000	0.000000	0.000000	14.454200	155.000000
+75%	3.000000	1.000000	39.000000	1.000000	0.000000	31.275000	256.000000
+max	3.000000	1.000000	80.000000	8.000000	9.000000	512.329200	328.000000
+</code></pre>
+<h2 id="2-nettoyer-votre-dataset-avec-drop-dropna-et-fillna"><a class="header" href="#2-nettoyer-votre-dataset-avec-drop-dropna-et-fillna">2. Nettoyer votre Dataset avec drop(), dropna() et fillna()</a></h2>
+<pre><code class="language-python">data = data.drop(['name', 'sibsp', 'parch', 'ticket', 'fare', 'cabin', 'embarked', 'boat', 'body', 'home.dest'], axis=1)
+</code></pre>
+<pre><code class="language-python">data = data.dropna(axis=0)
+data.shape
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>(1046, 4)
+</code></pre>
+<pre><code class="language-python">data['age'].hist()
+</code></pre>
+<p><img src="nested/./images/6g1.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-groupby-et-value_counts"><a class="header" href="#3-groupby-et-value_counts">3. Groupby() et value_counts()</a></h2>
+<pre><code class="language-python">data.groupby(['sex']).mean()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	pclass	survived	age
+sex			
+female	2.048969	0.752577	28.687071
+male	2.300912	0.205167	30.585233
+</code></pre>
+<pre><code class="language-python">data.groupby(['sex', 'pclass']).mean()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>
+survived	age
+sex	pclass		
+female	1	0.962406	37.037594
+2	0.893204	27.499191
+3	0.473684	22.185307
+male	1	0.350993	41.029250
+2	0.145570	30.815401
+3	0.169054	25.962273
+</code></pre>
+<pre><code class="language-python">data['pclass'].value_counts()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>pclass
+3    501
+1    284
+2    261
+Name: count, dtype: int64
+</code></pre>
+<pre><code class="language-python">data[data['age'] &lt; 18]['pclass'].value_counts()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>pclass
+3    106
+2     33
+1     15
+Name: count, dtype: int64
+</code></pre>
+<h2 id="4-exercice-et-solution-4"><a class="header" href="#4-exercice-et-solution-4">4. Exercice et Solution</a></h2>
+<ul>
+<li>Créer des catégories d'ages avec la fonction map() de pandas</li>
+<li>Créer des catégories de genres avec cat.codes</li>
+</ul>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-7"><a class="header" href="#solution-7">Solution</a></h3>
+<pre><code class="language-python">def category_ages(age):
+    if age &lt;= 20:
+        return '&lt;20 ans'
+    elif (age &gt; 20) &amp; (age &lt;= 30):
+        return '20-30 ans'
+    elif (age &gt; 30) &amp; (age &lt;= 40):
+        return '30-40 ans'
+    else:
+        return '+40 ans'
+</code></pre>
+<pre><code class="language-python">data['age'] = data['age'].map(category_ages)
+data['age']
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>#data['age'] = data['age'].map(category_ages)
+data['age']
+</code></pre>
+<pre><code class="language-python">data['sex'].astype('category').cat.codes
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0       0
+1       1
+2       0
+3       1
+4       0
+       ..
+1301    1
+1304    0
+1306    1
+1307    1
+1308    1
+Length: 1046, dtype: int8
+</code></pre>
+</details>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pandas--séries-temporelles"><a class="header" href="#pandas--séries-temporelles"><center>Pandas : séries temporelles</a></h1>
+<h3 id="sommaire--10"><a class="header" href="#sommaire--10">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/6_2.html#1-charger-vos-donn%C3%A9es-dans-un-dataframe-pandas">Chapitre 1 : Travailler avec des séries Temporelles</a></li>
+<li><a href="nested/6_2.html#2-nettoyer-votre-dataset-avec-drop-dropna-et-fillna">Chapitire 2 : Resample</a></li>
+<li><a href="nested/6_2.html#3-groupby-et-value_counts">Chapitre 3 : Aggregate</a></li>
+<li><a href="nested/6_2.html#4-exercice-et-solution">Chapitre 4 : Moving Average et EWM</a></li>
+<li><a href="nested/6_2.html#4-exercice-et-solution">Chapitre 5 : Comparaison de 2 série temporelles</a></li>
+<li><a href="nested/6_2.html#4-exercice-et-solution">Chapitre 6 : Exercice et Solution</a></li>
+</ul>
+<br>
+<p><a href="nested/./BTC-EUR.csv">📂 Télécharger la base de donnée bitcoin</a></p>
+<p><a href="nested/./ETH-EUR.csv">📂 Télécharger la base de etherum</a></p>
+<h2 id="1-travailler-avec-des-séries-temporelles"><a class="header" href="#1-travailler-avec-des-séries-temporelles">1. Travailler avec des séries Temporelles</a></h2>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+</code></pre>
+<pre><code class="language-python">bitcoin = pd.read_csv('BTC-EUR.csv', index_col='Date', parse_dates=True)
+bitcoin.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	Open	High	Low	Close	Adj Close	Volume
+Date						
+2011-10-04	3.700	3.821	3.746	3.750	3.750	1357
+2011-10-05	3.750	3.820	3.650	3.676	3.676	3349
+2011-10-06	3.676	3.743	3.450	3.550	3.550	6642
+2011-10-07	3.550	3.590	2.900	3.293	3.293	7135
+2011-10-08	3.293	3.283	2.872	2.890	2.890	2007
+</code></pre>
+<pre><code class="language-python">bitcoin['Close'].plot(figsize=(9, 6))
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.index
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>DatetimeIndex(['2011-10-04', '2011-10-05', '2011-10-06', '2011-10-07',
+               '2011-10-08', '2011-10-09', '2011-10-10', '2011-10-11',
+               '2011-10-12', '2011-10-13',
+               ...
+               '2019-09-25', '2019-09-26', '2019-09-27', '2019-09-28',
+               '2019-09-29', '2019-09-30', '2019-10-01', '2019-10-02',
+               '2019-10-03', '2019-10-04'],
+              dtype='datetime64[ns]', name='Date', length=2923, freq=None)
+</code></pre>
+<pre><code class="language-python">bitcoin.loc['2017':'2019','Close'].plot()
+</code></pre>
+<p><img src="nested/./images/62g2.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-resample"><a class="header" href="#2-resample">2. Resample</a></h2>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('M').mean().plot()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g3.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('2W').mean().plot()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g4.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('2W').std().plot()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g5.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+bitcoin.loc['2019', 'Close'].plot()
+bitcoin.loc['2019', 'Close'].resample('M').mean().plot(label='moyenne par mois', lw=3, ls=':', alpha=0.8)
+bitcoin.loc['2019', 'Close'].resample('W').mean().plot(label='moyenne par semaine', lw=2, ls='--', alpha=0.8)
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g6.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-aggregate"><a class="header" href="#3-aggregate">3. Aggregate</a></h2>
+<pre><code class="language-python">m = bitcoin['Close'].resample('W').agg(['mean', 'std', 'min', 'max'])
+
+plt.figure(figsize=(12, 8))
+m['mean']['2019'].plot(label='moyenne par semaine')
+plt.fill_between(m.index, m['max'], m['min'], alpha=0.2, label='min-max par semaine')
+
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g7.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('W').agg(['mean', 'std', 'min', 'max']).plot()
+</code></pre>
+<p><img src="nested/./images/62g8.png" alt="Description de l&#39;image" /></p>
+<h2 id="4-moving-average-et-ewm"><a class="header" href="#4-moving-average-et-ewm">4. Moving Average et EWM</a></h2>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+bitcoin.loc['2019-09', 'Close'].plot()
+bitcoin.loc['2019-09', 'Close'].rolling(window=7).mean().plot(label='non centre', lw=3, ls=':', alpha=0.8)
+bitcoin.loc['2019-09', 'Close'].rolling(window=7, center=True).mean().plot(label='centre', lw=3, ls=':', alpha=0.8)
+bitcoin.loc['2019-09', 'Close'].ewm(alpha=0.6).mean().plot(label='ewm', lw=3, ls=':', alpha=0.8)
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g9.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+bitcoin.loc['2019-09', 'Close'].plot()
+for i in np.arange(0.2, 1, 0.2):
+    bitcoin.loc['2019-09', 'Close'].ewm(alpha=i).mean().plot(label=f'ewm {i}', ls='--', alpha=0.8)
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g10.png" alt="Description de l&#39;image" /></p>
+<h2 id="5-comparaison-de-2-série-temporelles"><a class="header" href="#5-comparaison-de-2-série-temporelles">5. Comparaison de 2 série temporelles</a></h2>
+<pre><code class="language-python">ethereum = pd.read_csv('ETH-EUR.csv', index_col='Date', parse_dates=True)
+</code></pre>
+<pre><code class="language-python">btc_eth = pd.merge(bitcoin, ethereum, on='Date', how='inner', suffixes=('_btc', '_eth'))
+</code></pre>
+<pre><code class="language-python">btc_eth.iloc[:, [btc_eth.columns.get_loc('Close_btc'), btc_eth.columns.get_loc('Close_eth')]].loc['2019-09'].plot(subplots=True, figsize=(12, 8))
+</code></pre>
+<p><img src="nested/./images/62g11.png" alt="Description de l&#39;image" /></p>
+<h2 id="6-exercice-et-solution-1"><a class="header" href="#6-exercice-et-solution-1">6. Exercice et Solution</a></h2>
+<h2 id="exercice"><a class="header" href="#exercice">Exercice</a></h2>
+<h3 id="implémentation-de-la-stratégie-de-la-tortue"><a class="header" href="#implémentation-de-la-stratégie-de-la-tortue">Implémentation de la Stratégie de la Tortue</a></h3>
+<p>La <strong>stratégie de la Tortue</strong> est une méthode de trading basée sur des seuils de breakout, en utilisant des moyennes glissantes pour identifier des opportunités d'achat et de vente.</p>
+<p>Dans cet exercice, vous allez :</p>
+<ol>
+<li>Créer deux seuils :
+<ul>
+<li>Le <strong>maximum glissant</strong> sur une fenêtre de 28 jours (RollingMax).</li>
+<li>Le <strong>minimum glissant</strong> sur une fenêtre de 28 jours (RollingMin).</li>
+</ul>
+</li>
+<li>Identifier les signaux d'achat et de vente :
+<ul>
+<li>Un signal d'achat est généré lorsque le prix de clôture dépasse le RollingMax.</li>
+<li>Un signal de vente est généré lorsque le prix de clôture est inférieur au RollingMin.</li>
+</ul>
+</li>
+<li>Afficher les graphiques pour visualiser les signaux d'achat et de vente.</li>
+</ol>
+<hr />
+<h4 id="données"><a class="header" href="#données">Données</a></h4>
+<p>Vous utiliserez les données Bitcoin contenues dans le DataFrame <code>bitcoin</code>, qui contient une colonne <code>'Close'</code> correspondant au prix de clôture.</p>
+<hr />
+<h4 id="Étapes-à-suivre"><a class="header" href="#Étapes-à-suivre">Étapes à suivre</a></h4>
+<ol>
+<li>
+<p><strong>Ajouter des colonnes RollingMax et RollingMin</strong> :</p>
+<ul>
+<li>Utilisez la méthode <code>.rolling(window=28).max()</code> pour calculer le maximum glissant.</li>
+<li>Utilisez la méthode <code>.rolling(window=28).min()</code> pour calculer le minimum glissant.</li>
+</ul>
+</li>
+<li>
+<p><strong>Générer les colonnes Buy et Sell</strong> :</p>
+<ul>
+<li>Ajoutez une colonne <code>'Buy'</code> contenant <code>1</code> si le prix de clôture dépasse RollingMax, et <code>0</code> sinon.</li>
+<li>Ajoutez une colonne <code>'Sell'</code> contenant <code>-1</code> si le prix de clôture est inférieur à RollingMin, et <code>0</code> sinon.</li>
+</ul>
+</li>
+<li>
+<p><strong>Tracer les graphiques</strong> :</p>
+<ul>
+<li>Dans un graphique, affichez :
+<ul>
+<li>Le prix de clôture (<code>Close</code>).</li>
+<li>Le maximum glissant (<code>RollingMax</code>).</li>
+<li>Le minimum glissant (<code>RollingMin</code>).</li>
+</ul>
+</li>
+<li>Dans un second graphique, affichez :
+<ul>
+<li>Les signaux d'achat (<code>Buy</code>).</li>
+<li>Les signaux de vente (<code>Sell</code>).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h4 id="résultat-attendu"><a class="header" href="#résultat-attendu">Résultat attendu</a></h4>
+<p>Votre graphique final devra inclure :</p>
+<ol>
+<li><strong>Premier graphique</strong> :
+<ul>
+<li>La courbe du prix de clôture.</li>
+<li>Les lignes RollingMax et RollingMin.</li>
+</ul>
+</li>
+<li><strong>Deuxième graphique</strong> :
+<ul>
+<li>Les points de signal d'achat (en vert).</li>
+<li>Les points de signal de vente (en rouge).</li>
+</ul>
+</li>
+</ol>
+<hr />
+<p><strong>Exemple attendu :</strong></p>
+<p><img src="nested/./images/62g12.png" alt="Graphique Stratégie de la Tortue" /></p>
+<hr />
+<p><strong>Bonne chance !</strong></p>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-8"><a class="header" href="#solution-8">Solution</a></h3>
+<pre><code class="language-python">data = bitcoin.copy()
+data['Buy'] = np.zeros(len(data))
+data['Sell'] = np.zeros(len(data))
+</code></pre>
+<pre><code class="language-python">data['RollingMax'] = data['Close'].shift(1).rolling(window=28).max()
+data['RollingMin'] = data['Close'].shift(1).rolling(window=28).min()
+data.loc[data['RollingMax'] &lt; data['Close'], 'Buy'] = 1
+data.loc[data['RollingMin'] &gt; data['Close'], 'Sell'] = -1
+</code></pre>
+<pre><code class="language-python">start ='2019'
+end='2019'
+fig, ax = plt.subplots(2, figsize=(12, 8), sharex=True)
+#plt.figure(figsize=(12, 8))
+#plt.subplot(211)
+ax[0].plot(data['Close'][start:end])
+ax[0].plot(data['RollingMin'][start:end])
+ax[0].plot(data['RollingMax'][start:end])
+ax[0].legend(['close', 'min', 'max'])
+ax[1].plot(data['Buy'][start:end], c='g')
+ax[1].plot(data['Sell'][start:end], c='r')
+ax[1].legend(['buy', 'sell'])
+</code></pre>
+<p><img src="nested/./images/62g12.png" alt="Description de l&#39;image" /></p>
+</details><div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-6--seaborn"><a class="header" href="#chapitre-6--seaborn">Chapitre 6 : Seaborn</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-7--sklearn"><a class="header" href="#chapitre-7--sklearn">Chapitre 7 : Sklearn</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-8--exploratory-data-analysis"><a class="header" href="#chapitre-8--exploratory-data-analysis">Chapitre 8 : Exploratory Data Analysis</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-9-prétraitement-de-données"><a class="header" href="#chapitre-9-prétraitement-de-données">Chapitre 9: Prétraitement de données</a></h1>
