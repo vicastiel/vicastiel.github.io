@@ -152,7 +152,101 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="chapitre-6--seaborn"><a class="header" href="#chapitre-6--seaborn">Chapitre 6 : Seaborn</a></h1>
+                        <h1 id="chapitre-6--visualisation-de-données-avec-seaborn"><a class="header" href="#chapitre-6--visualisation-de-données-avec-seaborn"><center>Chapitre 6 : Visualisation de Données avec Seaborn</a></h1>
+<p>Seaborn est une bibliothèque de visualisation de données puissante et facile à utiliser, qui s'appuie sur Matplotlib. Elle permet de créer des graphiques élégants et informatifs, adaptés à l'exploration et à l'analyse de données.</p>
+<h2 id="objectifs-du-chapitre"><a class="header" href="#objectifs-du-chapitre">Objectifs du chapitre</a></h2>
+<p>À la fin de ce chapitre, vous serez capable de :</p>
+<ul>
+<li>Utiliser Seaborn pour créer des graphiques informatifs et esthétiques.</li>
+<li>Explorer les relations entre différentes caractéristiques grâce à des visualisations avancées.</li>
+<li>Analyser les distributions et corrélations dans vos jeux de données.</li>
+</ul>
+<hr />
+<h3 id="sommaire-"><a class="header" href="#sommaire-">Sommaire :</a></h3>
+<ul>
+<li><a href="#1-pairplot--la-vue-densemble">Chapitre 1 : Pairplot() - La vue d'ensemble</a></li>
+<li><a href="#2-visualiser-de-cat%C3%A9gories">Chapitire 2 : Visualiser de catégories</a></li>
+<li><a href="#3-visualisation-de-distributions">Chapitre 3 : Visualisation de Distributions</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+</code></pre>
+<pre><code class="language-python">iris = sns.load_dataset('iris')
+iris.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	sepal_length	sepal_width	petal_length	petal_width	species
+0	5.1	3.5	1.4	0.2	setosa
+1	4.9	3.0	1.4	0.2	setosa
+2	4.7	3.2	1.3	0.2	setosa
+3	4.6	3.1	1.5	0.2	setosa
+4	5.0	3.6	1.4	0.2	setosa
+</code></pre>
+<h2 id="1-pairplot--la-vue-densemble"><a class="header" href="#1-pairplot--la-vue-densemble">1. Pairplot() : La vue d'ensemble</a></h2>
+<pre><code class="language-python">sns.pairplot(iris, hue='species')
+</code></pre>
+<p><img src="./images/7g1.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-visualiser-de-catégories"><a class="header" href="#2-visualiser-de-catégories">2. Visualiser de catégories</a></h2>
+<pre><code class="language-python">titanic = sns.load_dataset('titanic')
+titanic.drop(['alone', 'alive', 'who', 'adult_male', 'embark_town', 'class'], axis=1, inplace=True)
+titanic.dropna(axis=0, inplace=True)
+titanic.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>survived	pclass	sex	age	sibsp	parch	fare	embarked	deck
+1	1	1	female	38.0	1	0	71.2833	C	C
+3	1	1	female	35.0	1	0	53.1000	S	C
+6	0	1	male	54.0	0	0	51.8625	S	E
+10	1	3	female	4.0	1	1	16.7000	S	G
+11	1	1	female	58.0	0	0	26.5500	S	C
+</code></pre>
+<pre><code class="language-python">sns.catplot(x='survived', y='age', data=titanic, hue='sex')
+</code></pre>
+<p><img src="./nested/images/7g2.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.figure(figsize=(32, 8))
+sns.boxplot(x='age', y='fare', data=titanic, hue='sex')
+</code></pre>
+<p><img src="./nested/images/7g3.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-visualisation-de-distributions"><a class="header" href="#3-visualisation-de-distributions">3. Visualisation de Distributions</a></h2>
+<pre><code class="language-python">sns.distplot(titanic['fare'])
+</code></pre>
+<p><img src="./nested/images/7g4.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">sns.jointplot(x='age', y='fare', data=titanic, kind='hex')
+</code></pre>
+<p><img src="./nested/images/7g5.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Conversion des colonnes non numériques (object ou category)
+for col in titanic.columns:
+    if titanic[col].dtype == 'object' or titanic[col].dtype.name == 'category':
+        if titanic[col].nunique() == 2:
+            # Colonnes binaires
+            titanic[col] = titanic[col].map({titanic[col].unique()[0]: 0, titanic[col].unique()[1]: 1})
+        else:
+            # Colonnes avec plusieurs catégories
+            titanic[col] = titanic[col].cat.codes if titanic[col].dtype.name == 'category' else pd.factorize(titanic[col])[0]
+
+# Vérification : Toutes les colonnes doivent maintenant être numériques
+print(titanic.dtypes)
+
+# Calcul des corrélations et affichage de la heatmap
+corr = titanic.corr()
+sns.heatmap(corr, annot=True, cmap='coolwarm')
+plt.show()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>survived      int64
+pclass        int64
+sex           int64
+age         float64
+sibsp         int64
+parch         int64
+fare        float64
+embarked      int64
+deck           int8
+dtype: object
+</code></pre>
+<p><img src="./nested/images/7g6.png" alt="Description de l&#39;image" /></p>
 
                     </main>
 
