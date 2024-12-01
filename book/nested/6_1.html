@@ -272,8 +272,18 @@ Name: count, dtype: int64
 data['age']
 </code></pre>
 <p><strong>-</strong></p>
-<pre><code>#data['age'] = data['age'].map(category_ages)
-data['age']
+<pre><code>0       20-30 ans
+1         &lt;20 ans
+2         &lt;20 ans
+3       20-30 ans
+4       20-30 ans
+          ...    
+1301      +40 ans
+1304      &lt;20 ans
+1306    20-30 ans
+1307    20-30 ans
+1308    20-30 ans
+Name: age, Length: 1046, dtype: object
 </code></pre>
 <pre><code class="language-python">data['sex'].astype('category').cat.codes
 </code></pre>
