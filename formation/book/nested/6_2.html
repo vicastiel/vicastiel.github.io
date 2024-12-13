@@ -1,0 +1,423 @@
+<!DOCTYPE HTML>
+<html lang="fr" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Pandas : séries temporelles - La Formation Castiel</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">La Formation Castiel</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="pandas--séries-temporelles"><a class="header" href="#pandas--séries-temporelles"><center>Pandas : séries temporelles</a></h1>
+<h3 id="sommaire-"><a class="header" href="#sommaire-">Sommaire :</a></h3>
+<ul>
+<li><a href="#1-charger-vos-donn%C3%A9es-dans-un-dataframe-pandas">Chapitre 1 : Travailler avec des séries Temporelles</a></li>
+<li><a href="#2-nettoyer-votre-dataset-avec-drop-dropna-et-fillna">Chapitire 2 : Resample</a></li>
+<li><a href="#3-groupby-et-value_counts">Chapitre 3 : Aggregate</a></li>
+<li><a href="#4-exercice-et-solution">Chapitre 4 : Moving Average et EWM</a></li>
+<li><a href="#4-exercice-et-solution">Chapitre 5 : Comparaison de 2 série temporelles</a></li>
+<li><a href="#4-exercice-et-solution">Chapitre 6 : Exercice et Solution</a></li>
+</ul>
+<br>
+<p><a href="./BTC-EUR.csv">📂 Télécharger la base de donnée bitcoin</a></p>
+<p><a href="./ETH-EUR.csv">📂 Télécharger la base de etherum</a></p>
+<h2 id="1-travailler-avec-des-séries-temporelles"><a class="header" href="#1-travailler-avec-des-séries-temporelles">1. Travailler avec des séries Temporelles</a></h2>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+</code></pre>
+<pre><code class="language-python">bitcoin = pd.read_csv('BTC-EUR.csv', index_col='Date', parse_dates=True)
+bitcoin.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	Open	High	Low	Close	Adj Close	Volume
+Date						
+2011-10-04	3.700	3.821	3.746	3.750	3.750	1357
+2011-10-05	3.750	3.820	3.650	3.676	3.676	3349
+2011-10-06	3.676	3.743	3.450	3.550	3.550	6642
+2011-10-07	3.550	3.590	2.900	3.293	3.293	7135
+2011-10-08	3.293	3.283	2.872	2.890	2.890	2007
+</code></pre>
+<pre><code class="language-python">bitcoin['Close'].plot(figsize=(9, 6))
+plt.show()
+</code></pre>
+<p><img src="./images/62g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.index
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>DatetimeIndex(['2011-10-04', '2011-10-05', '2011-10-06', '2011-10-07',
+               '2011-10-08', '2011-10-09', '2011-10-10', '2011-10-11',
+               '2011-10-12', '2011-10-13',
+               ...
+               '2019-09-25', '2019-09-26', '2019-09-27', '2019-09-28',
+               '2019-09-29', '2019-09-30', '2019-10-01', '2019-10-02',
+               '2019-10-03', '2019-10-04'],
+              dtype='datetime64[ns]', name='Date', length=2923, freq=None)
+</code></pre>
+<pre><code class="language-python">bitcoin.loc['2017':'2019','Close'].plot()
+</code></pre>
+<p><img src="./images/62g2.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-resample"><a class="header" href="#2-resample">2. Resample</a></h2>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('M').mean().plot()
+plt.show()
+</code></pre>
+<p><img src="./images/62g3.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('2W').mean().plot()
+plt.show()
+</code></pre>
+<p><img src="./images/62g4.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('2W').std().plot()
+plt.show()
+</code></pre>
+<p><img src="./images/62g5.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+bitcoin.loc['2019', 'Close'].plot()
+bitcoin.loc['2019', 'Close'].resample('M').mean().plot(label='moyenne par mois', lw=3, ls=':', alpha=0.8)
+bitcoin.loc['2019', 'Close'].resample('W').mean().plot(label='moyenne par semaine', lw=2, ls='--', alpha=0.8)
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="./images/62g6.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-aggregate"><a class="header" href="#3-aggregate">3. Aggregate</a></h2>
+<pre><code class="language-python">m = bitcoin['Close'].resample('W').agg(['mean', 'std', 'min', 'max'])
+
+plt.figure(figsize=(12, 8))
+m['mean']['2019'].plot(label='moyenne par semaine')
+plt.fill_between(m.index, m['max'], m['min'], alpha=0.2, label='min-max par semaine')
+
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="./images/62g7.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('W').agg(['mean', 'std', 'min', 'max']).plot()
+</code></pre>
+<p><img src="./images/62g8.png" alt="Description de l&#39;image" /></p>
+<h2 id="4-moving-average-et-ewm"><a class="header" href="#4-moving-average-et-ewm">4. Moving Average et EWM</a></h2>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+bitcoin.loc['2019-09', 'Close'].plot()
+bitcoin.loc['2019-09', 'Close'].rolling(window=7).mean().plot(label='non centre', lw=3, ls=':', alpha=0.8)
+bitcoin.loc['2019-09', 'Close'].rolling(window=7, center=True).mean().plot(label='centre', lw=3, ls=':', alpha=0.8)
+bitcoin.loc['2019-09', 'Close'].ewm(alpha=0.6).mean().plot(label='ewm', lw=3, ls=':', alpha=0.8)
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="./images/62g9.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+bitcoin.loc['2019-09', 'Close'].plot()
+for i in np.arange(0.2, 1, 0.2):
+    bitcoin.loc['2019-09', 'Close'].ewm(alpha=i).mean().plot(label=f'ewm {i}', ls='--', alpha=0.8)
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="./images/62g10.png" alt="Description de l&#39;image" /></p>
+<h2 id="5-comparaison-de-2-série-temporelles"><a class="header" href="#5-comparaison-de-2-série-temporelles">5. Comparaison de 2 série temporelles</a></h2>
+<pre><code class="language-python">ethereum = pd.read_csv('ETH-EUR.csv', index_col='Date', parse_dates=True)
+</code></pre>
+<pre><code class="language-python">btc_eth = pd.merge(bitcoin, ethereum, on='Date', how='inner', suffixes=('_btc', '_eth'))
+</code></pre>
+<pre><code class="language-python">btc_eth.iloc[:, [btc_eth.columns.get_loc('Close_btc'), btc_eth.columns.get_loc('Close_eth')]].loc['2019-09'].plot(subplots=True, figsize=(12, 8))
+</code></pre>
+<p><img src="./images/62g11.png" alt="Description de l&#39;image" /></p>
+<h2 id="6-exercice-et-solution"><a class="header" href="#6-exercice-et-solution">6. Exercice et Solution</a></h2>
+<h2 id="exercice"><a class="header" href="#exercice">Exercice</a></h2>
+<h3 id="implémentation-de-la-stratégie-de-la-tortue"><a class="header" href="#implémentation-de-la-stratégie-de-la-tortue">Implémentation de la Stratégie de la Tortue</a></h3>
+<p>La <strong>stratégie de la Tortue</strong> est une méthode de trading basée sur des seuils de breakout, en utilisant des moyennes glissantes pour identifier des opportunités d'achat et de vente.</p>
+<p>Dans cet exercice, vous allez :</p>
+<ol>
+<li>Créer deux seuils :
+<ul>
+<li>Le <strong>maximum glissant</strong> sur une fenêtre de 28 jours (RollingMax).</li>
+<li>Le <strong>minimum glissant</strong> sur une fenêtre de 28 jours (RollingMin).</li>
+</ul>
+</li>
+<li>Identifier les signaux d'achat et de vente :
+<ul>
+<li>Un signal d'achat est généré lorsque le prix de clôture dépasse le RollingMax.</li>
+<li>Un signal de vente est généré lorsque le prix de clôture est inférieur au RollingMin.</li>
+</ul>
+</li>
+<li>Afficher les graphiques pour visualiser les signaux d'achat et de vente.</li>
+</ol>
+<hr />
+<h4 id="données"><a class="header" href="#données">Données</a></h4>
+<p>Vous utiliserez les données Bitcoin contenues dans le DataFrame <code>bitcoin</code>, qui contient une colonne <code>'Close'</code> correspondant au prix de clôture.</p>
+<hr />
+<h4 id="Étapes-à-suivre"><a class="header" href="#Étapes-à-suivre">Étapes à suivre</a></h4>
+<ol>
+<li>
+<p><strong>Ajouter des colonnes RollingMax et RollingMin</strong> :</p>
+<ul>
+<li>Utilisez la méthode <code>.rolling(window=28).max()</code> pour calculer le maximum glissant.</li>
+<li>Utilisez la méthode <code>.rolling(window=28).min()</code> pour calculer le minimum glissant.</li>
+</ul>
+</li>
+<li>
+<p><strong>Générer les colonnes Buy et Sell</strong> :</p>
+<ul>
+<li>Ajoutez une colonne <code>'Buy'</code> contenant <code>1</code> si le prix de clôture dépasse RollingMax, et <code>0</code> sinon.</li>
+<li>Ajoutez une colonne <code>'Sell'</code> contenant <code>-1</code> si le prix de clôture est inférieur à RollingMin, et <code>0</code> sinon.</li>
+</ul>
+</li>
+<li>
+<p><strong>Tracer les graphiques</strong> :</p>
+<ul>
+<li>Dans un graphique, affichez :
+<ul>
+<li>Le prix de clôture (<code>Close</code>).</li>
+<li>Le maximum glissant (<code>RollingMax</code>).</li>
+<li>Le minimum glissant (<code>RollingMin</code>).</li>
+</ul>
+</li>
+<li>Dans un second graphique, affichez :
+<ul>
+<li>Les signaux d'achat (<code>Buy</code>).</li>
+<li>Les signaux de vente (<code>Sell</code>).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h4 id="résultat-attendu"><a class="header" href="#résultat-attendu">Résultat attendu</a></h4>
+<p>Votre graphique final devra inclure :</p>
+<ol>
+<li><strong>Premier graphique</strong> :
+<ul>
+<li>La courbe du prix de clôture.</li>
+<li>Les lignes RollingMax et RollingMin.</li>
+</ul>
+</li>
+<li><strong>Deuxième graphique</strong> :
+<ul>
+<li>Les points de signal d'achat (en vert).</li>
+<li>Les points de signal de vente (en rouge).</li>
+</ul>
+</li>
+</ol>
+<hr />
+<p><strong>Exemple attendu :</strong></p>
+<p><img src="./images/62g12.png" alt="Graphique Stratégie de la Tortue" /></p>
+<hr />
+<p><strong>Bonne chance !</strong></p>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution"><a class="header" href="#solution">Solution</a></h3>
+<pre><code class="language-python">data = bitcoin.copy()
+data['Buy'] = np.zeros(len(data))
+data['Sell'] = np.zeros(len(data))
+</code></pre>
+<pre><code class="language-python">data['RollingMax'] = data['Close'].shift(1).rolling(window=28).max()
+data['RollingMin'] = data['Close'].shift(1).rolling(window=28).min()
+data.loc[data['RollingMax'] &lt; data['Close'], 'Buy'] = 1
+data.loc[data['RollingMin'] &gt; data['Close'], 'Sell'] = -1
+</code></pre>
+<pre><code class="language-python">start ='2019'
+end='2019'
+fig, ax = plt.subplots(2, figsize=(12, 8), sharex=True)
+#plt.figure(figsize=(12, 8))
+#plt.subplot(211)
+ax[0].plot(data['Close'][start:end])
+ax[0].plot(data['RollingMin'][start:end])
+ax[0].plot(data['RollingMax'][start:end])
+ax[0].legend(['close', 'min', 'max'])
+ax[1].plot(data['Buy'][start:end], c='g')
+ax[1].plot(data['Sell'][start:end], c='r')
+ax[1].legend(['buy', 'sell'])
+</code></pre>
+<p><img src="./images/62g12.png" alt="Description de l&#39;image" /></p>
+</details>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../nested/6_1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../chapitre6.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../nested/6_1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../chapitre6.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
