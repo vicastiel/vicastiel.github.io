@@ -1,0 +1,3710 @@
+<!DOCTYPE HTML>
+<html lang="fr" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>La Formation Castiel</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">La Formation Castiel</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="bienvenue-dans-votre-guide-complet-de-formation-en-intelligence-artificielle-avec-python-"><a class="header" href="#bienvenue-dans-votre-guide-complet-de-formation-en-intelligence-artificielle-avec-python-"><center>Bienvenue dans <strong>votre guide complet de formation en Intelligence Artificielle avec Python</strong> !</a></h1>
+<p>Ce livre a pour objectif de vous accompagner pas à pas dans l’apprentissage des fondamentaux de la programmation en Python, ainsi que des outils essentiels pour développer des modèles d’intelligence artificielle. Que vous soyez débutant ou que vous souhaitiez approfondir vos connaissances, ce livre est conçu pour répondre à vos besoins.</p>
+<p>Inspiré de la formation que j'ai suivie avec <strong>Machine Learnia</strong>, ce livre est le fruit de sa formation personnelle et d'une organisation structurée pour vous permettre d'apprendre de manière progressive et pratique.</p>
+<hr />
+<h2 id="pourquoi-ce-livre-"><a class="header" href="#pourquoi-ce-livre-">Pourquoi ce livre ?</a></h2>
+<p>L’intelligence artificielle est un domaine en pleine expansion, et Python est aujourd’hui le langage de programmation incontournable pour explorer ce monde fascinant. Ce livre vise à :</p>
+<ul>
+<li>Vous donner les <strong>bases solides de Python</strong> nécessaires à tout développement en IA.</li>
+<li>Vous former aux <strong>outils et bibliothèques phares</strong> comme NumPy, Pandas, Matplotlib, et Scikit-Learn.</li>
+<li>Vous guider à travers <strong>des exemples concrets et des exercices pratiques</strong> pour maîtriser chaque concept.</li>
+</ul>
+<hr />
+<h2 id="comment-utiliser-ce-livre-"><a class="header" href="#comment-utiliser-ce-livre-">Comment utiliser ce livre ?</a></h2>
+<p>Ce livre est divisé en plusieurs chapitres, organisés de manière logique pour une progression fluide :</p>
+<h3 id="chapitre-1--les-bases-de-python"><a class="header" href="#chapitre-1--les-bases-de-python"><strong>Chapitre 1 : Les Bases de Python</strong></a></h3>
+<p>Nous débutons par les fondations de la programmation : variables, structures de données, fonctions, et programmation orientée objet.</p>
+<h3 id="chapitre-2--numpy"><a class="header" href="#chapitre-2--numpy"><strong>Chapitre 2 : NumPy</strong></a></h3>
+<p>Découvrez cette bibliothèque puissante pour les calculs numériques et le traitement de données.</p>
+<h3 id="chapitre-3--matplotlib"><a class="header" href="#chapitre-3--matplotlib"><strong>Chapitre 3 : Matplotlib</strong></a></h3>
+<p>Apprenez à visualiser vos données avec des graphiques clairs et esthétiques.</p>
+<h3 id="chapitre-4-à-7--les-bibliothèques-avancées"><a class="header" href="#chapitre-4-à-7--les-bibliothèques-avancées"><strong>Chapitre 4 à 7 : Les Bibliothèques Avancées</strong></a></h3>
+<p>Explorez Pandas pour la manipulation de données, Scikit-Learn pour l’apprentissage machine, et Seaborn pour enrichir vos visualisations.</p>
+<h3 id="chapitres-8-à-10--analyse-prétraitement-et-modélisation"><a class="header" href="#chapitres-8-à-10--analyse-prétraitement-et-modélisation"><strong>Chapitres 8 à 10 : Analyse, Prétraitement et Modélisation</strong></a></h3>
+<p>Une fois les bases acquises, plongez dans l’exploration des données, le prétraitement et la création de modèles performants.</p>
+<hr />
+<h2 id="ce-que-vous-allez-apprendre"><a class="header" href="#ce-que-vous-allez-apprendre">Ce que vous allez apprendre</a></h2>
+<ul>
+<li><strong>Python</strong> : maîtrisez le langage pour écrire du code efficace et maintenable.</li>
+<li><strong>Visualisation des données</strong> : créez des graphiques percutants pour interpréter vos données.</li>
+<li><strong>Manipulation des données</strong> : utilisez Pandas et NumPy pour transformer vos datasets.</li>
+<li><strong>Modélisation en IA</strong> : appliquez des techniques avancées pour construire des modèles prédictifs.</li>
+</ul>
+<hr />
+<h2 id="À-qui-sadresse-ce-livre-"><a class="header" href="#À-qui-sadresse-ce-livre-">À qui s’adresse ce livre ?</a></h2>
+<ul>
+<li><strong>Débutants complets</strong> en programmation ou en IA.</li>
+<li><strong>Étudiants</strong> cherchant un complément à leurs cours.</li>
+<li><strong>Professionnels</strong> souhaitant se reconvertir ou enrichir leurs compétences.</li>
+</ul>
+<hr />
+<p>Je vous invite à explorer ce livre avec curiosité et enthousiasme. Chaque chapitre est accompagné d’exemples concrets, de graphiques et d'exercices pour solidifier vos connaissances. Prenez le temps de pratiquer, de réfléchir et de poser des questions.</p>
+<p>Bonne lecture et surtout, <strong>amusez-vous en apprenant l’IA avec Python</strong> !</p>
+<p>Victor Castiel</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-1--les-bases-de-python-1"><a class="header" href="#chapitre-1--les-bases-de-python-1"><center>Chapitre 1 : Les Bases de Python</a></h1>
+<p>Dans ce premier chapitre, nous allons poser les bases de la programmation en Python, un langage simple et puissant, idéal pour débuter en intelligence artificielle. Ce chapitre vous guidera à travers les concepts fondamentaux, depuis les variables jusqu’à la programmation orientée objet.</p>
+<hr />
+<h2 id="plan-du-chapitre"><a class="header" href="#plan-du-chapitre">Plan du chapitre</a></h2>
+<ol>
+<li>
+<p><a href="nested/2_1.html">Variables et Fonctions</a><br />
+Découvrez les différents types de variables et apprenez à créer vos propres fonctions en Python.</p>
+</li>
+<li>
+<p><a href="nested/2_2.html">Structures de Contrôle</a><br />
+Maîtrisez les boucles et les conditions pour rendre vos programmes dynamiques.</p>
+</li>
+<li>
+<p><a href="nested/2_3.html">Structure de données : Listes et Tuples</a><br />
+Apprenez à manipuler des listes et des tuples, deux structures de données essentielles en Python.</p>
+</li>
+<li>
+<p><a href="nested/2_4.html">Structure de données : Dictionnaires</a><br />
+Explorez les dictionnaires, une structure clé pour associer des clés à des valeurs.</p>
+</li>
+<li>
+<p><a href="nested/2_5.html">Structure de données : Compréhension de Liste</a><br />
+Découvrez comment créer des listes de manière concise et élégante avec les compréhensions.</p>
+</li>
+<li>
+<p><a href="nested/2_6.html">Structure de données : Fonctions Intégrées</a><br />
+Familiarisez-vous avec les fonctions intégrées de Python pour simplifier vos opérations courantes.</p>
+</li>
+<li>
+<p><a href="nested/2.7.html">Modules de bases de Python</a><br />
+Initiez-vous à l’utilisation des modules standard de Python pour étendre les fonctionnalités de vos programmes.</p>
+</li>
+<li>
+<p><a href="nested/2_8.html">Programmation Orientée Objet avec Python</a><br />
+Comprenez les bases de la programmation orientée objet et apprenez à créer des classes et des objets.</p>
+</li>
+</ol>
+<hr />
+<h2 id="objectifs-du-chapitre"><a class="header" href="#objectifs-du-chapitre">Objectifs du chapitre</a></h2>
+<p>À la fin de ce chapitre, vous serez capable de :</p>
+<ul>
+<li>Manipuler les variables, fonctions et structures de contrôle.</li>
+<li>Gérer des données efficacement avec les structures Python.</li>
+<li>Utiliser les modules de base pour enrichir vos programmes.</li>
+<li>Écrire un code modulaire et orienté objet.</li>
+</ul>
+<hr />
+<p><strong>Prêt à commencer ?</strong> Rendez-vous dans la première section : <a href="nested/2_1.html">Variables et Fonctions</a> !</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="les-bases-de-python---variables-et-fonctions"><a class="header" href="#les-bases-de-python---variables-et-fonctions"><center> Les Bases de Python - Variables et Fonctions</a></h1>
+<h3 id="sommaire-"><a class="header" href="#sommaire-">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/2_1.html#1-Variables-et-Operations">Chapitre 1 :  Variables et Operations</a></li>
+<li><a href="nested/2_1.html#2-fonctions">Chapitire 2 : Fonctions</a></li>
+<li><a href="nested/2_1.html#3-exercice-et-solution">Chapitre 3 : Exercice et Solution</a></li>
+</ul>
+<hr />
+<h1 id="1-variables-et-operations"><a class="header" href="#1-variables-et-operations">1. Variables et Operations</a></h1>
+<p>Il existe 4 grands types de variables :</p>
+<ul>
+<li><strong>int</strong> (nombre entier)</li>
+<li><strong>float</strong> (nombre décimal)</li>
+<li><strong>string</strong> (chaine de characteres)</li>
+<li><strong>bool</strong> (booléen)</li>
+</ul>
+<pre><code class="language-python">x = 3 # type int 
+y = 2.5 # type float
+prenom = 'Pierre' # type string
+z = True # type Bool
+
+</code></pre>
+<h3 id="opérations-arithmétiques"><a class="header" href="#opérations-arithmétiques">Opérations arithmétiques</a></h3>
+<pre><code class="language-python">print('x + y =', x + y)
+print('x - y =', x - y)
+print('x / y =', x / y)
+print('x // y =', x // y) # division entiere (tres utile pour les tableaux Numpy)
+print('x * y =', x * y)
+print('x ^ y =', x ** y) # x puissance y
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>x + y = 5.5
+x - y = 0.5
+x / y = 1.2
+x // y = 1.0
+x * y = 7.5
+x ^ y = 15.588457268119896
+</code></pre>
+<h3 id="opérations-de-comparaison"><a class="header" href="#opérations-de-comparaison">Opérations de comparaison</a></h3>
+<pre><code class="language-python">print('égalité :', x == y)
+print('inégalité :', x != y)
+print('inférieur ou égal :', x &lt;= y)
+print('supérieur ou égal :', x &gt;= y)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>égalité : False
+inégalité : True
+inférieur ou égal : False
+supérieur ou égal : True
+</code></pre>
+<h3 id="opérations-logiques"><a class="header" href="#opérations-logiques">Opérations Logiques</a></h3>
+<pre><code class="language-python">print('ET :', False and True)
+print('OU :', False or True)
+print('OU exclusif :', False ^ True)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>ET : False
+OU : True
+OU exclusif : True
+</code></pre>
+<p>Note : Les opérations de comparaison et de logique utilisées ensemble permettent de construire des structures algorithmiques de bases (if/esle, while, ...)</p>
+<h1 id="2-fonctions"><a class="header" href="#2-fonctions">2. Fonctions</a></h1>
+<p>Une fonction anonyme est une fonction créée avec <strong>lambda</strong>. Ce type de fonction est basique et est utile pour etre intégrée au milieu de structures de controles ou bien d'autres fonctions. On l'utilise rarement.</p>
+<h3 id="exemple-dune-fonction-fx--x2"><a class="header" href="#exemple-dune-fonction-fx--x2">Exemple d'une fonction f(x) = x^2</a></h3>
+<pre><code class="language-python">f = lambda x : x**2
+
+print(f(3))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>9
+</code></pre>
+<h3 id="exemple-dune-fonction-gx-y--x2---y2"><a class="header" href="#exemple-dune-fonction-gx-y--x2---y2">Exemple d'une fonction g(x, y) = x^2 - y^2</a></h3>
+<pre><code class="language-python">g = lambda x, y : x**2 - y**2
+
+print(g(4, 2))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>12
+</code></pre>
+<p>La meilleure facon de créer une fonction est d'utiliser la structure suivante : <strong>def</strong></p>
+<h3 id="une-fonction-a-un-nom-prend-des-entrées-arguments-et-les-transforme-pour-retourner-un-résultat"><a class="header" href="#une-fonction-a-un-nom-prend-des-entrées-arguments-et-les-transforme-pour-retourner-un-résultat">une fonction a un nom, prend des entrées (arguments) et les transforme pour retourner un résultat</a></h3>
+<pre><code class="language-python">def nom_de_la_fonction(argument_1, argument_2):
+   restultat = argument_1 + argument_2
+   return restultat
+
+nom_de_la_fonction(3, 2)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>5
+</code></pre>
+<h3 id="exemple-concret--fonction-qui-calcul-lenergie-potentielle-dun-corps"><a class="header" href="#exemple-concret--fonction-qui-calcul-lenergie-potentielle-dun-corps">Exemple concret : fonction qui calcul l'energie potentielle d'un corps</a></h3>
+<pre><code class="language-python">def e_potentielle(masse, hauteur, g=9.81):
+  energie = masse * hauteur * g 
+  return energie
+
+# ici g a une valeur par défaut donc nous ne sommes pas obligé de lui donner une valeur
+e_potentielle(masse=10, hauteur=10)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>981.0
+</code></pre>
+<h1 id="3-exercice-et-solution"><a class="header" href="#3-exercice-et-solution">3. Exercice et Solution</a></h1>
+<p>Modifiez la fonction e_potentielle définie plus haut pour retourner une valeur indiquant si l'energie calculée est supérieure ou inférieur a une <strong>energie_limite</strong> passée en tant que 4eme argument</p>
+<details>
+  <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-"><a class="header" href="#solution-">Solution :</a></h3>
+<pre><code class="language-python">def e_potentielle(masse, hauteur, e_limite, g=9.81):
+    energie = masse * hauteur * g 
+    return energie &gt; e_limite
+
+e_potentielle(masse=10, hauteur=10, e_limite=800)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>True
+</code></pre>
+</details><div style="break-before: page; page-break-before: always;"></div><h1 id="les-bases-de-python---structure-de-données--strucures-de-contrôle"><a class="header" href="#les-bases-de-python---structure-de-données--strucures-de-contrôle"><center> Les Bases de Python - Structure de données : Strucures de Contrôle</a></h1>
+<h3 id="sommaire--1"><a class="header" href="#sommaire--1">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/2_2.html#1.-alternatives-if-/-else-:">Chapitre 1 :  Alternatives If / Else</a></li>
+<li><a href="nested/2_2.html#2-boucle-for">Chapitire 2 : Boucle For</a></li>
+<li><a href="nested/2_2.html#3-boucle-while">Chapitre 3 : Boucle While</a></li>
+<li><a href="nested/2_2.html#4-exercice-et-solution">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<p>Dans le monde de la programmation, il existe 3 principales <strong>structures de controle</strong> pour créer des algorithmes.</p>
+<ul>
+<li>Les alternatives <strong>If / Else</strong></li>
+<li>Les boucles <strong>For</strong></li>
+<li>Les boucles <strong>While</strong></li>
+</ul>
+<h2 id="1-alternatives-if--else-"><a class="header" href="#1-alternatives-if--else-">1. Alternatives If / Else :</a></h2>
+<p>Cette structure permet de tester une séquence d'alternatives. Si une condition est respéctée, alors les instructions qui la suivent sont executée et la structure de controle est stopée, sinon la condition suivante est testée.</p>
+<pre><code class="language-python">def test_du_signe(valeur):
+  if valeur &lt; 0:
+    print('négatif')
+  elif valeur == 0:
+    print('nul')
+  else:
+    print('positif')
+</code></pre>
+<pre><code class="language-python">test_du_signe(-2)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>négatif
+</code></pre>
+<p>Note importante : Une condition est respectée si et seulement si elle correspond au résultat <strong>booléen True</strong>.</p>
+<pre><code class="language-python">valeur = -2
+print(valeur &lt; 0) # le résultat de cette comparaison est True
+
+if valeur &lt; 0:
+  print('négatif')
+
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>True
+négatif
+</code></pre>
+<p>Cela permet de développer des algorithmes avec des mélanges d'opéations Logiques et d'opérations de comparaisons. Par exemple : <em>si il fait beau et qu'il faut chaud, alors j'irai me baigner</em></p>
+<pre><code class="language-python">x = 3
+y = -1
+if (x&gt;0) and (y&gt;0):
+  print('x et y sont positifs')
+else:
+  print('x et y ne sont pas tous les 2 positifs')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>x et y ne sont pas tous les 2 positifs
+
+</code></pre>
+<h2 id="2-boucle-for"><a class="header" href="#2-boucle-for">2. Boucle For</a></h2>
+<p>Une boucle for permet de créer des algorithmes itératifs (qui effectuent une certaine tache plusieurs fois de suite). Pour ca, la boucle parcourt tous les éléments d'un objet dit <strong>itérable</strong>. Il peut s'agir d'une liste, d'un dictionnaire, d'un range, d'un tableau numpy, ou de bien d'autres objets...</p>
+<h3 id="rangedébut-fin-pas-est-une-built-in-fonction-tres-utile-de-python-qui-retourne-un-itérable"><a class="header" href="#rangedébut-fin-pas-est-une-built-in-fonction-tres-utile-de-python-qui-retourne-un-itérable">range(début, fin, pas) est une built-in fonction tres utile de python qui retourne un itérable.</a></h3>
+<pre><code class="language-python">for i in range(0, 10):
+  print(i)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</code></pre>
+<h3 id="on-peut-samuser-a-combiner-cette-boucle-avec-notre-fonction-de-tout-a-lheure"><a class="header" href="#on-peut-samuser-a-combiner-cette-boucle-avec-notre-fonction-de-tout-a-lheure">on peut s'amuser a combiner cette boucle avec notre fonction de tout a l'heure.</a></h3>
+<pre><code class="language-python">for i in range(-10, 10, 2):
+  print(i)
+  test_du_signe(i)
+</code></pre>
+<pre><code>-10
+négatif
+-8
+négatif
+-6
+négatif
+-4
+négatif
+-2
+négatif
+0
+nul
+2
+positif
+4
+positif
+6
+positif
+8
+positif
+</code></pre>
+<h2 id="3-boucle-while"><a class="header" href="#3-boucle-while">3. Boucle While</a></h2>
+<p>Une boucle While permet d'effectuer en boucle une action, tant que la condition d'execution est validée (tant que la condition est <strong>True</strong>)</p>
+<pre><code class="language-python">x = 0
+while x &lt; 10:
+  print(x)
+  x += 1 # incrémente x de 1 (équivalent de x = x+1)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+</code></pre>
+<h2 id="4-exercice-et-solution"><a class="header" href="#4-exercice-et-solution">4. Exercice et Solution</a></h2>
+<p>Implémentez la <strong>suite de Fibonacci</strong> [0, 1, 1, 2, 3, 5, 8, 13, 21, ...] qui part de 2 nombres a=0 et b=1, et qui calcule le nombre suivant en additionnant les 2 nombres précédents.</p>
+<p>Indices :</p>
+<ul>
+<li>Pour cet exercice vous aurez besoin d'une bouce <strong>While</strong></li>
+<li>Vous pouvez imprimer cette suite jusqu'a atteindre un nombre <strong>n</strong> que vous aurez choisit</li>
+<li>dans python il est possible de mettre a jour 2 variables simultannément sur la meme lignes : <strong>a, b = b, a+b</strong></li>
+</ul>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution"><a class="header" href="#solution">Solution</a></h3>
+<pre><code class="language-python">def fibonacci(n):
+    # retourne une liste contenant la suite de fibonacci jusqu'a n
+    a = 0
+    b = 1
+    while b &lt; n:
+      a, b = b, a+b
+      print(a)
+
+fibonacci(1000)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+144
+233
+377
+610
+987
+
+</code></pre>
+</details><div style="break-before: page; page-break-before: always;"></div><h1 id="les-bases-de-python---structure-de-données--listes-et-tuples"><a class="header" href="#les-bases-de-python---structure-de-données--listes-et-tuples"><center> Les Bases de Python - Structure de données : Listes et Tuples</a></h1>
+<h3 id="sommaire--2"><a class="header" href="#sommaire--2">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/2_3.html#1-cr%C3%A9ation-de-listes-et-de-tuples">Chapitre 1 : Création de Listes et de Tuples</a></li>
+<li><a href="nested/2_3.html#2-indexing-et-slicing">Chapitire 2 : Indexing et Slicing</a></li>
+<li><a href="nested/2_3.html#3-actions-utiles-sur-les-listes">Chapitre 3 : Actions utiles sur les listes</a></li>
+<li><a href="nested/2_3.html#4-exercice-et-solution">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<p>Une structure de données est une variable capable de contenir plusieurs valeurs a la fois. Une structure de données peut former une <strong>séquence</strong> si les valeurs qui la composent sont rangées dans un certains ordre. C'est le cas des <strong>listes</strong> et des <strong>tuples</strong>. A l'inverse un <strong>Dictionnaire</strong> ne forme pas une séquence.</p>
+<h1 id="1-création-de-listes-et-de-tuples"><a class="header" href="#1-création-de-listes-et-de-tuples">1. Création de Listes et de Tuples</a></h1>
+<p>une liste ou un tuple peuvent contenir tout types de valeurs (int, float, bool, string). On dit que ce sont des structures hétérogenes.</p>
+<p>La différence entre les 2 est qu'une liste est <strong>mutable</strong> alors qu'un Tuple ne l'est pas (on ne peut pas le changer apres qu'il soit crée)</p>
+<h3 id="listes"><a class="header" href="#listes">Listes</a></h3>
+<pre><code class="language-python">liste_1 = [1, 4, 2, 7, 35, 84]
+villes = ['Paris', 'Berlin', 'Londres', 'Bruxelles']
+nested_list = [liste_1, villes] # une liste peut meme contenir des listes ! On appelle cela une nested list
+
+#Tuples
+tuple_1 = (1, 2, 6, 2)
+</code></pre>
+<pre><code class="language-python">print(villes)
+print(nested_list)
+print(tuple_1)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>['Paris', 'Berlin', 'Londres', 'Bruxelles']
+[[1, 4, 2, 7, 35, 84], ['Paris', 'Berlin', 'Londres', 'Bruxelles']]
+(1, 2, 6, 2)
+
+</code></pre>
+<h1 id="2-indexing-et-slicing"><a class="header" href="#2-indexing-et-slicing">2. Indexing et Slicing</a></h1>
+<p>Dans une séquence, chaque élément est rangé selon un <strong>index</strong> (le premier index étant l'index 0)</p>
+<p>Pour acceder a un élément d'une liste ou d'un tuple, on utilise une technique appelée <strong>Indexing</strong></p>
+<p>Pour acceder a plusieurs éléments d'une liste ou d'un tuple, on utilie une technique appelée <strong>Slicing</strong></p>
+<h3 id="indexing"><a class="header" href="#indexing">INDEXING</a></h3>
+<pre><code class="language-python">print('séquence complete:', villes)
+print('index 0:', villes[0])
+print('index 1:', villes[1])
+print('dernier index (-1):', villes[-1])
+</code></pre>
+<pre><code>séquence complete: ['Paris', 'Berlin', 'Londres', 'Bruxelles']
+index 0: Paris
+index 1: Berlin
+dernier index (-1): Bruxelles
+</code></pre>
+<h3 id="slicing-début-inclus--fin-exclus--pas"><a class="header" href="#slicing-début-inclus--fin-exclus--pas">SLICING [début (inclus) : fin (exclus) : pas]</a></h3>
+<pre><code class="language-python">print('séquence complete:', villes)
+print('index 0-2:', villes[0:3])
+print('index 1-2:', villes[1:3])
+print('ordre inverse:', villes[::-1])
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>séquence complete: ['Paris', 'Berlin', 'Londres', 'Bruxelles']
+index 0-2: ['Paris', 'Berlin', 'Londres']
+index 1-2: ['Berlin', 'Londres']
+ordre inverse: ['Bruxelles', 'Londres', 'Berlin', 'Paris']
+
+</code></pre>
+<h1 id="3-actions-utiles-sur-les-listes"><a class="header" href="#3-actions-utiles-sur-les-listes">3. Actions utiles sur les listes</a></h1>
+<pre><code class="language-python">
+villes = ['Paris', 'Berlin', 'Londres', 'Bruxelles'] # liste initiale
+print(villes)
+
+villes.append('Dublin') # Rajoute un élément a la fin de la liste
+print(villes)
+
+villes.insert(2, 'Madrid') # Rajoute un élément a l'index indiqué
+print(villes)
+
+villes.extend(['Amsterdam', 'Rome']) # Rajoute une liste a la fin de notre liste
+print(villes)
+
+print('longeur de la liste:', len(villes)) #affiche la longueur de la liste
+
+villes.sort(reverse=False) # trie la liste par ordre alphabétique / numérique
+print(villes)
+
+print(villes.count('Paris')) # compte le nombre de fois qu'un élément apparait dans la liste
+
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>['Paris', 'Berlin', 'Londres', 'Bruxelles']
+['Paris', 'Berlin', 'Londres', 'Bruxelles', 'Dublin']
+['Paris', 'Berlin', 'Madrid', 'Londres', 'Bruxelles', 'Dublin']
+['Paris', 'Berlin', 'Madrid', 'Londres', 'Bruxelles', 'Dublin', 'Amsterdam', 'Rome']
+longeur de la liste: 8
+['Amsterdam', 'Berlin', 'Bruxelles', 'Dublin', 'Londres', 'Madrid', 'Paris', 'Rome']
+1
+</code></pre>
+<p>Les listes et les tuples fonctionnent en harmonies avec les structures de controle <strong>if/else</strong> et <strong>For</strong></p>
+<pre><code class="language-python">if 'Paris' in villes:
+  print('oui')
+else:
+  print('non')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>oui
+</code></pre>
+<pre><code class="language-python">for element in villes:
+  print(element)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>Amsterdam
+Berlin
+Bruxelles
+Dublin
+Londres
+Madrid
+Paris
+Rome
+</code></pre>
+<p>La fonction <strong>enumerate</strong> est tres utile pour sortir a la fois les éléments d'une liste et leurs <strong>index</strong>. C'est une fonction tres utilisée en datascience</p>
+<pre><code class="language-python">for index, element in enumerate(villes):
+  print(index, element)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0 Amsterdam
+1 Berlin
+2 Bruxelles
+3 Dublin
+4 Londres
+5 Madrid
+6 Paris
+7 Rome
+</code></pre>
+<p>La fonction <strong>zip</strong> est aussi tres utile pour itérée a travers 2 listes en paralleles. Si une liste est plus courte que l'autre, la boucle for s'arrete a la liste la plus courte</p>
+<pre><code class="language-python">liste_2 = [312, 52, 654, 23, 65, 12, 678]
+for element_1, element_2 in zip(villes, liste_2):
+  print(element_1, element_2)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>Amsterdam 312
+Berlin 52
+Bruxelles 654
+Dublin 23
+Londres 65
+Madrid 12
+Paris 678   
+</code></pre>
+<h1 id="4-exercice-et-solution-1"><a class="header" href="#4-exercice-et-solution-1">4. Exercice et Solution</a></h1>
+<p>Transformer le code suivant qui donne la <strong>suite de Fibonacci</strong> pour enregistrer les résultats dans une liste et retourner cette liste a la fin de la fonction</p>
+<pre><code class="language-python">def fibonacci(n):
+    a = 0
+    b = 1
+    while b &lt; n:
+      a, b = b, a+b
+      print(a)
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-1"><a class="header" href="#solution-1">Solution</a></h3>
+<pre><code class="language-python">def fibonacci(n):
+    a = 0
+    b = 1
+    fib = [a] # Création d'une liste fib 
+    while b &lt; n:
+        a, b = b, a+b
+        fib.append(a) # ajoute la nouvelle valeur de a a la fin de fib
+    return fib
+
+print(fibonacci(1000))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987]
+</code></pre>
+</details> <div style="break-before: page; page-break-before: always;"></div><h1 id="les-bases-de-python---structure-de-données--dictionnaires"><a class="header" href="#les-bases-de-python---structure-de-données--dictionnaires"><center> Les Bases de Python - Structure de données : Dictionnaires</a></h1>
+<p>Les dictionnaires sont des structures de controle <strong>non-ordonnées</strong>, c'est-a-dire que les valeurs qu'ils contiennent ne sont pas rangée selon un index, mais suivant une <strong>clef unique</strong>.</p>
+<p>Une utilisation parfaite des dictionnaires est pour regrouper ensemble des "variables" dans un meme conténaire. (ces variables ne sont pas de vraies variables, mais des <strong>keys</strong>).</p>
+<p><em>On peut par exemple crée un dictionnaire inventaire qui regroupe plusieurs produits (les clefs) et leur quantités (les valeurs)</em></p>
+<pre><code class="language-python">inventaire = {'pommes': 100,
+              'bananes': 80,
+              'poires': 120}
+</code></pre>
+<pre><code class="language-python">inventaire.values()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>dict_values([100, 80, 120])
+</code></pre>
+<pre><code class="language-python">inventaire.keys()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>dict_keys(['pommes', 'bananes', 'poires'])
+</code></pre>
+<pre><code class="language-python">len(inventaire)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>3
+</code></pre>
+<p>Voici comment ajouter une association key/value dans notre dictionnaire (attention si la clef existe déja elle est remplacée)</p>
+<pre><code class="language-python">inventaire['abricots'] = 30
+print(inventaire)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>{'pommes': 100, 'bananes': 80, 'poires': 120, 'abricots': 30}
+</code></pre>
+<p>Attention : si vous cherchez une clef qui n'existe pas dans un dictionnaire, python vous retourne une erreur. Pour éviter cela, vous pouvez utiliser la méthode <strong>get()</strong></p>
+<pre><code class="language-python">inventaire.get('peches') # n'existe pas
+</code></pre>
+<pre><code class="language-python">inventaire.get('pommes') # pomme existe
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>100
+</code></pre>
+<p>la méthode <strong>pop()</strong> permet de retirer une clef d'un dictionnaire tout en retournant la valeur associée a la clef.</p>
+<pre><code class="language-python">abricots = inventaire.pop("abricots")
+print(inventaire) # ne contient plus de clef abricots
+print(abricots) # abricots contient la valeur du dictionnaire
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>{'pommes': 100, 'bananes': 80, 'poires': 120}
+30
+</code></pre>
+<p>Pour utiliser une boucle for avec un dictionnaire, il est utile d'utiliser la méthode <strong>items()</strong> qui retourne a la fois les clefs et les valeurs</p>
+<pre><code class="language-python">for key, value in inventaire.items():
+  print(key, value)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>pommes 100
+bananes 80
+poires 120
+</code></pre>
+<h1 id="4-exercice-et-solution-2"><a class="header" href="#4-exercice-et-solution-2">4. Exercice et Solution</a></h1>
+<p>Implémentez une fonction <em>trier(classeur, valeur)</em> qui place une valeur dans un dictionnaire en fonction de son signe</p>
+<pre><code class="language-python">classeur = {'négatifs':[],
+            'positifs':[]
+            }
+
+def trier(classeur, valeur):
+  return classeur
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-2"><a class="header" href="#solution-2">Solution</a></h3>
+<pre><code class="language-python">def trier(classeur, valeur):
+  if valeur &gt;=0:
+    classeur['positifs'].append(valeur)
+  else:
+    classeur['négatifs'].append(valeur)
+  return classeur
+</code></pre>
+<pre><code class="language-python">trier(classeur, 9)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>{'négatifs': [-2, -2, -4], 'positifs': [5, 9]}
+</code></pre>
+</details>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="les-bases-de-python---structure-de-données--compréhension-de-liste"><a class="header" href="#les-bases-de-python---structure-de-données--compréhension-de-liste"><center> Les Bases de Python - Structure de données : Compréhension de Liste</a></h1>
+<p>Les listes comprehension sont une facon habile de créer des listes sur une seule ligne de code, ce qui rend le code beaucoup plus rapide (car python est un langage assez lent)</p>
+<p>Les deux code ci-dessous effectuent chacun la meme opération. On peut voir (grace a la commande %%time) que le temps d'execution avec liste comprehenion est bien inférieur au temps d'execution avec la méthode append()</p>
+<pre><code class="language-python">%%time
+liste = []
+for i in range(100000):
+  liste.append(i**2)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>CPU times: user 38.2 ms, sys: 3.79 ms, total: 42 ms
+Wall time: 42 ms
+</code></pre>
+<pre><code class="language-python">%%time
+liste = [i**2 for i in range(100000)]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>CPU times: user 28.7 ms, sys: 2.92 ms, total: 31.6 ms
+Wall time: 31.4 ms
+</code></pre>
+<p>On peut rajouter des conditions <strong>if</strong> dans les listes comprehension, par exemple :</p>
+<pre><code class="language-python">liste = [i**2 for i in range(100000) if (i % 2) == 0] # calcule i**2 seulement pour les nombres pairs.
+
+print(liste[:10]) #affiche les 10 premiers éléments de la liste
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[0, 4, 16, 36, 64, 100, 144, 196, 256, 324]
+</code></pre>
+<h2 id="exercice-et-solution"><a class="header" href="#exercice-et-solution">Exercice et solution</a></h2>
+<p>Le meme principe s'applique aux dictionnaires ! Essayez-donc de créer un dictionnaire qui contienne des clefs de 1 a 20, avec comme valeur le carré de chaque clef</p>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-3"><a class="header" href="#solution-3">SOLUTION</a></h3>
+<pre><code class="language-python">dictionnaire = {k : k**2 for k in range(1, 21)}
+
+print(dictionnaire)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>{1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81, 10: 100, 11: 121, 12: 144, 13: 169, 14: 196, 15: 225, 16: 256, 17: 289, 18: 324, 19: 361, 20: 400}
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="les-bases-de-python---structure-de-données--fonctions-intégrées"><a class="header" href="#les-bases-de-python---structure-de-données--fonctions-intégrées"><center> Les Bases de Python - Structure de données : Fonctions Intégrées</a></h1>
+<h3 id="sommaire--3"><a class="header" href="#sommaire--3">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/2_6.html#1-fonction-de-bases">Chapitre 1 :  Fonction de bases</a></li>
+<li><a href="nested/2_6.html#2-fonction-de-conversion">Chapitire 2 : Fonction de conversion</a></li>
+<li><a href="nested/2_6.html#3-la-fonction-input">Chapitre 3 : La fonction input()</a></li>
+<li><a href="nested/2_6.html#4-la-fonction-format">Chapitre 4 : La fonction format()</a></li>
+<li><a href="nested/2_6.html#5-la-fonction-open">Chapitre 5 : La fonction open()</a></li>
+<li><a href="nested/2_6.html#6-exercice-et-solution">Chapitre 6: Exercice et Solution</a></li>
+</ul>
+<p>Python contient un grand nombre de fonctions intégrées tres utiles a connaitre. Cela vous permet de construire des codes plus rapidement, sans avoir a développer vos propres fonctions pour les taches les plus basique. Dans ce notebook, je vous montre les plus importantes :</p>
+<ul>
+<li><strong>Fonctions de bases</strong> : abs(), round(), max(), min(), len(), sum(), any(), all()</li>
+<li><strong>Conversions de types de variables</strong> : int() str(), float(), type()</li>
+<li><strong>Conversions de structures de données</strong> : list(), tuple()</li>
+<li><strong>Conversions binaires</strong> (moins utile en machine learning) : bin(), oct(), hex()</li>
+<li><strong>Fonction</strong> <strong>input()</strong></li>
+<li><strong>Fonction</strong> <strong>format()</strong> (f-string)</li>
+<li><strong>Fonction</strong> <strong>open()</strong></li>
+</ul>
+<h2 id="1-fonction-de-bases"><a class="header" href="#1-fonction-de-bases">1. Fonction de bases</a></h2>
+<p>Utiles en toute circonstance !</p>
+<pre><code class="language-python">x = -3.14
+print(abs(x)) # valeur absolue
+print(round(x)) # arrondi
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>3.14
+-3
+</code></pre>
+<pre><code class="language-python">liste = [-2, 3, 1, 0, -4]
+
+print(min(liste)) # minimum
+print(max(liste)) # maximum
+print(len(liste)) # longueur
+print(sum(liste)) # somme des éléments
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>-4
+3
+5
+-2
+</code></pre>
+<pre><code class="language-pyton">liste = [False, False, True]
+
+print(any(liste)) # y-a-t'il au moins un élément True ?
+print(all(liste)) # est-ce-que tous les éléments sont True ?
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>True
+False
+</code></pre>
+<h2 id="2-fonction-de-conversion"><a class="header" href="#2-fonction-de-conversion">2. Fonction de conversion</a></h2>
+<p>Il peut etre tres utile de convertir une variable d'un type a un autre (par exemple pour faire des calculs). Pour cela, on dispose des fonctions int(), str() et float().</p>
+<p>La fonction <strong>type()</strong> est tres utile pour inspecter les types de nos variables</p>
+<pre><code class="language-python">age = '32'
+type(age)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>str
+</code></pre>
+<pre><code class="language-python">age = int(age)
+type(age)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>int
+</code></pre>
+<pre><code class="language-python">age + 10
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>42
+</code></pre>
+<p>On peut également convertir des listes en tuples, ou des tableaux Numpy (que l'on verra par la suite) en liste...</p>
+<pre><code class="language-python">tuple_1 = (1, 2, 3, 4)
+
+liste_1 = list(tuple_1) # convertir un tuple en liste
+
+type(liste_1)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>list
+</code></pre>
+<h2 id="3-la-fonction-input"><a class="header" href="#3-la-fonction-input">3. La fonction <strong>input()</strong></a></h2>
+<p>Cette fonction est tres utile pour demander a l'utilisateur du programme d'entrer une valeur dans votre programme</p>
+<pre><code class="language-python">age = input('quel age avez-vous ? ')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>quel age avez-vous ? 30 ans
+</code></pre>
+<pre><code class="language-python">type(age) # age est de type string. il faut penser a le convertir si on désire faire un calcul avec
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>str
+</code></pre>
+<h2 id="4-la-fonction-format"><a class="header" href="#4-la-fonction-format">4. La fonction <strong>format()</strong></a></h2>
+<p>cette fonction permet d'insérer la valeur d'une variable au sein d'une chaine de cacacteres (string).</p>
+<p>Une méthode plus rapide pour utiliser cette fonction est de faire appel au <strong>f-string</strong></p>
+<pre><code class="language-python">x = 25
+ville = 'Paris'
+
+message = 'il fait {} degrés a {}'.format(x, ville)
+print(message)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>il faut 25 degrés a Paris
+</code></pre>
+<pre><code class="language-python">message = f'il fait {x} degrées a {ville}'
+print(message)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>il fait 25 degrées a Paris
+</code></pre>
+<h2 id="5-la-fonction-open"><a class="header" href="#5-la-fonction-open">5. La fonction <strong>open()</strong></a></h2>
+<p>Cette fonction est l'une des plus utile de Python. Elle permet d'ouvrir n'importe quel fichier de votre ordinateur et de l'utiliser dans Python. Différents modes existent :</p>
+<ul>
+<li>le mode 'r' : lire un fichier de votre ordinateur</li>
+<li>le mode 'w' : écrire un fichier sur votre ordinateur</li>
+<li>le mode 'a' : (append) ajouter du contenu dans un fichier existant</li>
+</ul>
+<pre><code class="language-python">f = open('text.txt', 'w') # ouverture d'un objet fichier f
+f.write('hello')
+f.close() # il faut fermer notre fichier une fois le travail terminé
+</code></pre>
+<pre><code class="language-python">f = open('text.txt', 'r')
+print(f.read())
+f.close() 
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>hello
+</code></pre>
+<p>Dans la pratique, on écrit plus souvent <strong>with open() as f</strong> pour ne pas avoir a fermer le fichier une fois le travail effectué :</p>
+<pre><code class="language-python">with open('text.txt', 'r') as f:
+    print(f.read())
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>hello
+</code></pre>
+<h2 id="6-exercice-et-solution"><a class="header" href="#6-exercice-et-solution">6. Exercice et Solution</a></h2>
+<p>Le code ci-dessous permet de créer un fichier qui contient les nombres carrée de 0 jusqu'a 19.
+L'exercice est d'implémenter un code qui permet de lire ce fichier et d'écrire chaque ligne dans une liste.</p>
+<p>Note_1 : la fonction <strong>read().splitlines()</strong> sera tres utile</p>
+<p>Note_2 : Pour un meilleur résultat, essayer d'utiliser une liste comprehension !</p>
+<pre><code class="language-python"># Ce bout de code permet d'écrire le fichier 
+with open('fichier.txt', 'w') as f:
+    for i in range(0, 20):
+        f.write(f'{i}: {i**2} \n')
+    f.close()
+
+# Écrivez ici le code pour lire le fichier et enregistrer chaque lignes dans une liste.
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-non-optimale"><a class="header" href="#solution-non-optimale">SOLUTION (non optimale)</a></h3>
+<pre><code class="language-python">with open('fichier.txt','r') as f:
+    liste = f.read().splitlines()
+
+liste
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>['0: 0 ',
+ '1: 1 ',
+ '2: 4 ',
+ '3: 9 ',
+ '4: 16 ',
+ '5: 25 ',
+ '6: 36 ',
+ '7: 49 ',
+ '8: 64 ',
+ '9: 81 ',
+ '10: 100 ',
+ '11: 121 ',
+ '12: 144 ',
+ '13: 169 ',
+ '14: 196 ',
+ '15: 225 ',
+ '16: 256 ',
+ '17: 289 ',
+ '18: 324 ',
+ '19: 361 ']
+</code></pre>
+<h3 id="solution-améliorée"><a class="header" href="#solution-améliorée">SOLUTION (Améliorée)</a></h3>
+<h3 id="une-meilleure-facon-de-procéder-est-dutiliser-une-liste-comprehension-"><a class="header" href="#une-meilleure-facon-de-procéder-est-dutiliser-une-liste-comprehension-">Une meilleure facon de procéder est d'utiliser une liste comprehension !</a></h3>
+<pre><code class="language-python">liste = [row.strip() for row in open('fichier.txt','r')]
+liste
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>['0: 0',
+ '1: 1',
+ '2: 4',
+ '3: 9',
+ '4: 16',
+ '5: 25',
+ '6: 36',
+ '7: 49',
+ '8: 64',
+ '9: 81',
+ '10: 100',
+ '11: 121',
+ '12: 144',
+ '13: 169',
+ '14: 196',
+ '15: 225',
+ '16: 256',
+ '17: 289',
+ '18: 324',
+ '19: 361']
+</code></pre>
+ </details><div style="break-before: page; page-break-before: always;"></div><h1 id="modules-de-bases-de-python"><a class="header" href="#modules-de-bases-de-python"><center> Modules de bases de Python</a></h1>
+<h3 id="sommaire--4"><a class="header" href="#sommaire--4">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/2.7.html#1-modules-math-et-statistics">Chapitre 1 :  Modules math et statistics</a></li>
+<li><a href="nested/2.7.html#2-module-random">Chapitire 2 : Modules Random</a></li>
+<li><a href="nested/2.7.html#3-modules-os-et-glob">Chapitre 3 : Modules OS et Glob</a></li>
+</ul>
+<p>Python contient un certain nombre de modules intégrés, qui offrent de nombreuses fonctions mathématiques, statistiques, aléatoires et os tres utiles. Pour importer un module, il faut procéder comme-ci dessous :</p>
+<ul>
+<li><strong>import module</strong> (importe tout le module)</li>
+<li><strong>import module as md</strong> (donne un surnom au module)</li>
+<li><strong>from module import fonction</strong> (importe une fonction du module)</li>
+</ul>
+<pre><code class="language-python">import math
+import statistics
+import random
+import os
+import glob
+</code></pre>
+<p>Vous pouvez également créer vos propres modules et les importer dans d'autres projets. Un module n'est en fait qu'un simple fichier.py qui contient des fonctions et des classes</p>
+<h2 id="1-modules-math-et-statistics"><a class="header" href="#1-modules-math-et-statistics">1. Modules math et statistics</a></h2>
+<p>les modules math et statistics sont en apparence tres utiles, mais en data science, nous utiliserons leurs équivalents dans le package <strong>NUMPY</strong>. Il peut néanmoins etre intéressant de voir les fonctions de bases.</p>
+<pre><code class="language-python">print(math.pi)
+print(math.cos(2*math.pi))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>3.141592653589793
+1.0
+</code></pre>
+<pre><code class="language-python">liste = [1, 4, 6, 2, 5]
+
+print(statistics.mean(liste)) # moyenne de la liste
+print(statistics.variance(liste)) # variance de la liste
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>3.6
+4.3
+</code></pre>
+<h2 id="2-module-random"><a class="header" href="#2-module-random">2. Module Random</a></h2>
+<p>Le module random est l'un des plus utile de Python. En datascience, nous utiliserons surtout sont équivalent <strong>NUMPY</strong></p>
+<pre><code class="language-python">random.seed(0) # fixe le générateur aléatoire pour produire toujours le meme résultat
+
+print(random.choice(liste)) # choisit un élément au hasard dans la liste
+
+print(random.random()) # génére un nombre aléatoire entre 0 et 1
+
+print(random.randint(5, 10)) # génére un nombre entier aléatoire entre 5 et 10
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>2
+0.7579544029403025
+8
+</code></pre>
+<pre><code class="language-python">random.sample(range(100), 10) # retourne une liste de 10 nombres aléatoires entre 0 et 100
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[64, 17, 36, 96, 12, 79, 32, 68, 90, 77]
+</code></pre>
+<pre><code class="language-python">print('liste de départ', liste)
+
+random.shuffle(liste) #mélange les éléments d'une liste
+
+print('liste mélangée', liste)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>liste de départ [1, 2, 5, 6, 4]
+liste mélangée [1, 5, 2, 6, 4]
+</code></pre>
+<h2 id="3-modules-os-et-glob"><a class="header" href="#3-modules-os-et-glob">3. Modules OS et Glob</a></h2>
+<p>Les modules OS et GLob sont <strong>essentiels</strong> pour effectuer des opérations sur votre disque dur, comme ouvrir un fichier situé dans un certain répertoire de travail.</p>
+<pre><code class="language-python">os.getcwd() # affiche le répertoire de travail actuel
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>'/content'
+</code></pre>
+<pre><code class="language-python">print(glob.glob('*')) # contenu du repertoire de travail actuel
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>['sample_data']
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="programmation-orientée-objet-avec-python"><a class="header" href="#programmation-orientée-objet-avec-python"><center>Programmation Orientée Objet avec Python</a></h1>
+<p>La programmation orientée objet est un <strong>paradigme</strong>, c'est a dire une facon de procéder pour écrire des programmes clairs et simples. Le principe est de modéliser les éléments de notre programmes (comme les tableaux et les listes) comme étant des des <strong>objets</strong> caractérisés par des <strong>attributs</strong> et capables d'effectuer des <strong>actions</strong>. Ces objets sont construits a partir de <strong>classes</strong> qui contiennent leur plan de fabrication.</p>
+<p>Dans le langage Python, presque tout est construit pour etre un objet : les listes, les dictionnaires, les tableaux numpy, etc.
+Par exemple quand on écrit : <em><strong>list.append()</strong></em>, on utilise en fait la méthode append() sur un objet liste.</p>
+<p>La documentation Python, Numpy, Pandas, Matplotlib, Sklearn, est donc en vaste majorité constituée de classes qu'il est important de savoir déchiffrer pour pouvoir apprendre soi-meme de nouvelles choses grace aux documentations.</p>
+<p>Voici donc comment créer simplement et efficacement des classes :</p>
+<pre><code class="language-python">class vehicule:
+  """
+  Voici un exemple de classe "vehicule" qui contient le plan de conception
+  d'objets "véhicules"
+  """
+
+  # Une classe commence par une fonction initialisation qui contient les différents attributs
+  def __init__(self, couleur='noire', vitesse=0, roues=4):
+    self.couleur = couleur
+    self.vitesse = vitesse
+    self.roues = roues
+    
+  # voici une méthode "accelerer" qui modifie un attribut de l'objet
+  def accelerer(self, vitesse):
+    self.vitesse += vitesse
+
+  # voici une autre méthode
+  def stop(self):
+    self.vitesse = 0
+
+  # voici une derniere méthode, tres souvent utilisée
+  def afficher(self):
+    print(f'couleur: {self.couleur}\nroues: {self.roues}\nvitesse: {self.vitesse}')
+
+</code></pre>
+<pre><code class="language-python"># création d'un objet de la classe voiture
+voiture_1 = vehicule(couleur='rouge')
+</code></pre>
+<pre><code class="language-python">voiture_1.accelerer(100)
+</code></pre>
+<pre><code class="language-python">voiture_1.afficher()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>couleur: rouge
+roues: 4
+vitesse: 100
+</code></pre>
+<h2 id="créer-des-sous-classes"><a class="header" href="#créer-des-sous-classes">Créer des sous-classes</a></h2>
+<pre><code class="language-python">class voiture_electrique(vehicule):
+  """
+  La classe moto hérite des méthodes et des attributs de la classe véhicule
+  """
+
+  def __init__(self, couleur='black', vitesse=0, roues=4, autonomie=100):
+    super().__init__(couleur, vitesse, roues) # super() permet d'utiliser la fonction de la classe "parent"
+    self.autonomie = autonomie
+
+  # Ré-écriture de certaines méthodes
+  def accelerer(self, vitesse):
+    super().accelerer(vitesse)
+    self.autonomie -= 0.1 *self.vitesse
+
+  def afficher(self):
+    super().afficher()
+    print(f'autonomie: {self.autonomie}')
+</code></pre>
+<pre><code class="language-python">voiture_2 = voiture_electrique()
+</code></pre>
+<pre><code class="language-python">voiture_2.afficher()
+
+voiture_2.accelerer(10)
+
+voiture_2.afficher()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>couleur: black
+roues: 4
+vitesse: 0
+autonomie: 100
+couleur: black
+roues: 4
+vitesse: 10
+autonomie: 99.0
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-2--numpy-1"><a class="header" href="#chapitre-2--numpy-1"><center>Chapitre 2 : NumPy</a></h1>
+<p>NumPy est une bibliothèque essentielle pour tout travail en data science ou en intelligence artificielle. Elle permet de manipuler facilement des tableaux multidimensionnels et de réaliser des calculs mathématiques complexes de manière performante.</p>
+<hr />
+<h2 id="plan-du-chapitre-1"><a class="header" href="#plan-du-chapitre-1">Plan du chapitre</a></h2>
+<p><strong>1. <a href="./nested/3_1.html">Numpy : Tableau ndarray</a></strong><br />
+Découvrez la structure fondamentale de NumPy, les tableaux <code>ndarray</code>, et apprenez à les créer et manipuler.</p>
+<p><strong>2. <a href="./nested/3_2.html">Numpy : Slicing et Indexing</a></strong><br />
+Maîtrisez les techniques de slicing et d'indexing pour accéder efficacement à vos données.</p>
+<p><strong>3. <a href="nested/3_3.html">Numpy : Mathématiques</a></strong><br />
+Explorez les nombreuses fonctions mathématiques proposées par NumPy pour effectuer des calculs avancés.</p>
+<p><strong>4. <a href="nested/3_4.html">Numpy : Broadcasting</a></strong><br />
+Apprenez à utiliser le broadcasting, une fonctionnalité puissante pour manipuler des tableaux de différentes dimensions.</p>
+<hr />
+<h2 id="objectifs-du-chapitre-1"><a class="header" href="#objectifs-du-chapitre-1">Objectifs du chapitre</a></h2>
+<p>À la fin de ce chapitre, vous serez capable de :</p>
+<ul>
+<li>Créer et manipuler des tableaux multidimensionnels avec NumPy.</li>
+<li>Effectuer des opérations mathématiques complexes sur vos données.</li>
+<li>Manipuler des sous-ensembles de données grâce au slicing et à l'indexing.</li>
+<li>Exploiter le broadcasting pour des calculs efficaces sur des tableaux de dimensions différentes.</li>
+</ul>
+<hr />
+<p><strong>Prêt à commencer ?</strong> Rendez-vous dans la première section : <a href="">Numpy : Tableau ndarray</a> !</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="numpy--tableau-ndarray"><a class="header" href="#numpy--tableau-ndarray"><center>Numpy : Tableau ndarray</a></h1>
+<h3 id="sommaire--5"><a class="header" href="#sommaire--5">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/3_1.html#1-g%C3%A9n%C3%A9rateurs-de-tableaux-ndarray">Chapitre 1 : Générateurs de tableaux ndarray</a></li>
+<li><a href="nested/3_1.html#2-attributs-importants">Chapitire 2 : Attributs importants</a></li>
+<li><a href="nested/3_1.html#3-m%C3%A9thodes-importantes">Chapitre 3 : Méthode importantes</a></li>
+<li><a href="nested/3_1.html#4-exercice-et-solutions">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<h2 id="1-générateurs-de-tableaux-ndarray"><a class="header" href="#1-générateurs-de-tableaux-ndarray">1. Générateurs de tableaux <strong>ndarray</strong></a></h2>
+<ul>
+<li>générateur par défaut : <strong>ndarray()</strong></li>
+<li>générateur 1D : <strong>np.linspace</strong> et <strong>np.arange()</strong></li>
+<li>générateur ND : <strong>np.zeros()</strong>, <strong>np.ones()</strong>, <strong>np.random.randn()</strong> (ce sont les plus utiles)</li>
+</ul>
+<pre><code class="language-python">A = np.array([1, 2, 3]) # générateur par défaut, qui permet de convertir des listes (ou autres objets) en tableau ndarray
+A = np.zeros((2, 3)) # tableau de 0 aux dimensions 2x3
+B = np.ones((2, 3)) # tableau de 1 aux dimensions 2x3
+C = np.random.randn(2, 3) # tableau aléatoire (distribution normale) aux dimensions 2x3
+D = np.random.rand(2, 3) # tableau aléatoire (distribution uniforme)
+ 
+E = np.random.randint(0, 10, [2, 3]) # tableau d'entiers aléatoires de 0 a 10 et de dimension 2x3
+</code></pre>
+<pre><code class="language-python">A = np.ones((2, 3), dtype=np.float16) # définit le type et la place a occuper sur la mémoire
+B = np.eye(4, dtype=np.bool) # créer une matrice identité et convertit les éléments en type bool.
+</code></pre>
+<pre><code class="language-python">A = np.linspace(1,10, 10)
+B = np.arange(0, 10, 10)
+</code></pre>
+<pre><code class="language-python">print(A)
+print(B)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[ 1.  2.  3.  4.  5.  6.  7.  8.  9. 10.]
+[0]
+</code></pre>
+<h2 id="2-attributs-importants"><a class="header" href="#2-attributs-importants">2. Attributs importants</a></h2>
+<ul>
+<li>size</li>
+<li>shape</li>
+</ul>
+<pre><code class="language-python">A = np.zeros((2, 3)) # création d'un tableau de shape (2, 3)
+ 
+print(A.size) # le nombre d'éléments dans le tableau A
+print(A.shape) # les dimensions du tableau A (sous forme de Tuple)
+ 
+print(type(A.shape)) # voici la preuve que la shape est un tuple
+ 
+print(A.shape[0]) # le nombre d'éléments dans la premiere dimension de A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>6
+(2, 3)
+&lt;class 'tuple'&gt;
+2
+</code></pre>
+<h2 id="3-méthodes-importantes"><a class="header" href="#3-méthodes-importantes">3. Méthodes importantes</a></h2>
+<ul>
+<li><strong>reshape()</strong> : pour redimensionner un tableau</li>
+<li><strong>ravel()</strong> : pour applatir un tableau (qu'il ne fasse plus qu'une dimension)</li>
+<li><strong>squeeze()</strong> : quand une dimension est égale a 1, cette dimension disparait</li>
+<li><strong>concatenate()</strong> : assemble 2 tableaux ensemble selon un axes (existe aussi en hstack et vstack)</li>
+</ul>
+<pre><code class="language-python">A = np.zeros((2, 3)) # création d'un tableau de shape (2, 3)
+ 
+A = A.reshape((3, 2)) # redimensionne le tableau A (3 lignes, 2 colonnes)
+A.ravel() # Aplatit le tableau A (une seule dimension)
+A.squeeze() # élimine les dimensions "1" de A.
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0.],
+       [0., 0.],
+       [0., 0.]])
+</code></pre>
+<pre><code class="language-python">A = np.zeros((2, 3)) # création d'un tableau de shape (2, 3)
+B = np.ones((2, 3)) # création d'un tableau de shape (2, 3)
+
+np.concatenate((A, B), axis=0) # axe 0 : équivalent de np.vstack((A, B))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0.],
+       [0., 0., 0.],
+       [1., 1., 1.],
+       [1., 1., 1.]])
+</code></pre>
+<pre><code class="language-python">np.concatenate((A, B), axis=1) # axe 1 : équivalent de np.hstack((A, B))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0., 1., 1., 1.],
+       [0., 0., 0., 1., 1., 1.]])
+</code></pre>
+<h2 id="4-exercice-et-solutions"><a class="header" href="#4-exercice-et-solutions">4. Exercice et Solutions</a></h2>
+<pre><code class="language-python">def initialisation(m, n):
+    # m : nombre de lignes
+    # n : nombre de colonnes
+    # retourne une matrice aléatoire (m, n+1)
+    # avec une colonne biais (remplie de "1") tout a droite
+
+    return X
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-4"><a class="header" href="#solution-4">SOLUTION</a></h3>
+<pre><code class="language-python">def initialisation(m, n):
+    # m : nombre de lignes
+    # n : nombre de colonnes
+    # retourne une matrice aléatoire (m, n+1)
+    # avec une colonne biais (remplie de "1") tout a droite
+    X = np.random.randn(m, n)
+    X = np.concatenate((X, np.ones((X.shape[0], 1))), axis = 1)
+
+    return X
+
+initialisation(3, 4)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[-0.10764065,  0.69827025, -1.12110256,  0.78840126,  1.        ],
+       [-0.68425126,  0.02373615,  1.47735478, -0.81758181,  1.        ],
+       [-2.8762856 , -0.40033763,  0.44811493,  1.13210525,  1.        ]])
+</code></pre>
+</details> <div style="break-before: page; page-break-before: always;"></div><h1 id="numpy--slicing-et-indexing"><a class="header" href="#numpy--slicing-et-indexing"><center>Numpy : Slicing et Indexing</a></h1>
+<h3 id="sommaire--6"><a class="header" href="#sommaire--6">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/3_2.html#1-indexing-et-slicing">Chapitre 1 : Indexing et Slicing</a></li>
+<li><a href="nested/3_2.html#2-boolean-indexing">Chapitire 2 : Boolean Indexing</a></li>
+<li><a href="nested/3_2.html#3-exercices-et-solutions">Chapitre 3 : Exercices et Solutions</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<h2 id="1-indexing-et-slicing"><a class="header" href="#1-indexing-et-slicing">1. Indexing et Slicing</a></h2>
+<p>Le fonctionnement est le meme que pour les listes</p>
+<pre><code class="language-python">A = np.array([[1, 2, 3], [4, 5, 6]])
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[1 2 3]
+ [4 5 6]]
+</code></pre>
+<pre><code class="language-python"># Pour acceder a la ligne 0, colonne 1
+A[0, 1] 
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>2
+</code></pre>
+<pre><code class="language-python">victor = [1,2,3,4,5,6,7,8,9,10]
+victor[8:2:-1]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[9, 8, 7, 6, 5, 4]
+</code></pre>
+<pre><code class="language-python"># Pour selectionner les blocs de la ligne (0-1) colonne (0-1)
+A[0:2, 0:2]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[1, 2],
+       [4, 5]])
+</code></pre>
+<pre><code class="language-python">A[0:2, 0:2] = 10
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[10 10  3]
+ [10 10  6]]
+</code></pre>
+<h2 id="2-boolean-indexing"><a class="header" href="#2-boolean-indexing">2. Boolean Indexing</a></h2>
+<pre><code class="language-python">A = np.array([[1, 2, 3], [4, 5, 6]])
+ 
+print(A&lt;5) # masque booléen
+ 
+print(A[A &lt; 5]) # sous-ensemble filtré par le masque booléen
+ 
+A[A&lt;5] = 4 # convertit les valeurs sélectionnées.
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[ True  True  True]
+ [ True False False]]
+[1 2 3 4]
+[[4 4 4]
+ [4 5 6]]
+</code></pre>
+<h2 id="3-exercices-et-solutions"><a class="header" href="#3-exercices-et-solutions">3. Exercices et Solutions</a></h2>
+<h3 id="exercice-1"><a class="header" href="#exercice-1">Exercice 1</a></h3>
+<p>Remplir les 4 blocs du milieux par des "1"</p>
+<pre><code class="language-python">B = np.zeros((4, 4))
+B
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0., 0.],
+       [0., 0., 0., 0.],
+       [0., 0., 0., 0.],
+       [0., 0., 0., 0.]])
+</code></pre>
+<h3 id="exercice-2"><a class="header" href="#exercice-2">Exercice 2</a></h3>
+<p>Remplir le tableau de "1" (une ligne sur deux, une colonne sur deux)</p>
+<pre><code class="language-python">C = np.zeros((5, 5))
+C
+</code></pre>
+<h3 id="exercice-3"><a class="header" href="#exercice-3">Exercice 3</a></h3>
+<p>Sur l'image ci dessous, effectuer un slicing pour ne garder que la moitié de l'image (en son centre) et remplacer tous les pixels &gt; 150 par des pixels = 255</p>
+<pre><code class="language-python">from scipy import misc
+import matplotlib.pyplot as plt
+face = misc.face(gray=True)
+plt.imshow(face, cmap=plt.cm.gray)
+plt.show()
+face.shape
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>(768, 1024)
+</code></pre>
+<p><img src="nested/./images/raccoon_output.png" alt="Description de l&#39;image" /></p>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-1"><a class="header" href="#solution-1">SOLUTION 1</a></h3>
+<pre><code class="language-python">B[1:3 , 1:3] = 1
+B
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 0., 0., 0.],
+       [0., 1., 1., 0.],
+       [0., 1., 1., 0.],
+       [0., 0., 0., 0.]])
+</code></pre>
+<h3 id="solution-2"><a class="header" href="#solution-2">SOLUTION 2</a></h3>
+<pre><code class="language-python">C[::2, ::2] = 1
+C
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[1., 0., 1., 0., 1.],
+       [0., 0., 0., 0., 0.],
+       [1., 0., 1., 0., 1.],
+       [0., 0., 0., 0., 0.],
+       [1., 0., 1., 0., 1.]])
+</code></pre>
+<h3 id="solution-3"><a class="header" href="#solution-3">SOLUTION 3</a></h3>
+<pre><code class="language-python">x, y = face.shape
+zoom_face = face[x//4 : -x//4, y //4: -y//4] # redimensionner en divisant chaque dimension par 4 (division entiere)
+zoom_face[zoom_face&gt;150] = 255 # boolean indexing
+plt.imshow(zoom_face, cmap=plt.cm.gray)
+plt.show()
+</code></pre>
+<p><strong>-</strong></p>
+<p><img src="nested/./images/raccoon2_output.png" alt="Description de l&#39;image" /></p>
+</details> <div style="break-before: page; page-break-before: always;"></div><h1 id="numpy--mathématiques"><a class="header" href="#numpy--mathématiques"><center>Numpy : Mathématiques</a></h1>
+<ul>
+<li><a href="nested/3_3.html#1-m%C3%A9thodes-de-bases-les-plus-utiles-de-la-classe-ndarray">Chapitre 1 : Méthodes de bases (les plus utiles) de la classe ndarray</a></li>
+<li><a href="nested/3_3.html#2-numpy-statistics">Chapitire 2 : Numpy Statistics</a></li>
+<li><a href="nested/3_3.html#3-algebre-lin%C3%A9aire">Chapitre 3 : Algebre Linéaire</a></li>
+<li><a href="nested/3_3.html#4-exercice-et-solution">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<h2 id="1-méthodes-de-bases-les-plus-utiles-de-la-classe-ndarray"><a class="header" href="#1-méthodes-de-bases-les-plus-utiles-de-la-classe-ndarray">1. Méthodes de bases (les plus utiles) de la classe ndarray</a></h2>
+<pre><code class="language-python">A = np.array([[1, 2, 3], [4, 5, 6]])
+
+print(A.sum()) # effectue la somme de tous les éléments du tableau
+print(A.sum(axis=0)) # effectue la somme des colonnes (somme sur éléments des les lignes)
+print(A.sum(axis=1)) # effectue la somme des lignes (somme sur les éléments des colonnes)
+print(A.cumsum(axis=0)) # effectue la somme cumulée
+ 
+print(A.prod()) # effectue le produit
+print(A.cumprod()) # effectue le produit cumulé
+ 
+print(A.min()) # trouve le minimum du tableau
+print(A.max()) # trouve le maximum du tableau
+ 
+print(A.mean()) # calcule la moyenne
+print(A.std()) # calcule l'ecart type,
+print(A.var()) # calcule la variance
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>21
+[5 7 9]
+[ 6 15]
+[[1 2 3]
+ [5 7 9]]
+720
+[  1   2   6  24 120 720]
+1
+6
+3.5
+1.707825127659933
+2.9166666666666665
+</code></pre>
+<p>Une méthode tres importante : la méthode <strong>argsort()</strong></p>
+<pre><code class="language-python">A = np.random.randint(0, 10, [5, 5]) # tableau aléatoire
+print(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[2 8 9 6 0]
+ [8 9 2 5 5]
+ [2 1 5 0 1]
+ [6 3 8 2 6]
+ [1 6 5 5 4]]
+</code></pre>
+<pre><code class="language-python">print(A.argsort()) # retourne les index pour trier chaque ligne du tableau 
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[4 0 3 1 2]
+ [2 3 4 0 1]
+ [3 1 4 0 2]
+ [3 1 0 4 2]
+ [0 4 2 3 1]]
+</code></pre>
+<pre><code class="language-python">print(A[:,0].argsort()) # retourne les index pour trier la colonne 0 de A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[4 0 2 3 1]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code class="language-python">A = A[A[:,0].argsort(), :] # trie les colonnes du tableau selon la colonne 0.
+A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0, 2, 8, 7, 1],
+       [3, 6, 1, 9, 1],
+       [5, 8, 2, 3, 2],
+       [5, 9, 3, 8, 1],
+       [7, 6, 5, 1, 7]])
+</code></pre>
+<h2 id="2-numpy-statistics"><a class="header" href="#2-numpy-statistics">2. Numpy Statistics</a></h2>
+<p>Correlation de Pearson :</p>
+<pre><code class="language-python">B = np.random.randn(3, 3) # nombres aléatoires 3x3
+ 
+# retourne la matrice de corrélation de B
+print(np.corrcoef(B))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[ 1.         -0.63427277  0.99937797]
+ [-0.63427277  1.         -0.66114251]
+ [ 0.99937797 -0.66114251  1.        ]]
+</code></pre>
+<pre><code class="language-python"># retourne la matrice de corrélation entre les lignes 0 et 1 de B
+print(np.corrcoef(B[:,0], B[:, 1]))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[1.         0.81847981]
+ [0.81847981 1.        ]]
+</code></pre>
+<p><strong>np.unique() :</strong></p>
+<pre><code class="language-python">np.random.seed(0)
+A = np.random.randint(0, 10, [5,5])
+A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[5, 0, 3, 3, 7],
+       [9, 3, 5, 2, 4],
+       [7, 6, 8, 8, 1],
+       [6, 7, 7, 8, 1],
+       [5, 9, 8, 9, 4]])
+</code></pre>
+<pre><code class="language-python">np.unique(A)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+</code></pre>
+<pre><code class="language-python">values, counts = np.unique(A, return_counts=True)
+
+for i, j in zip(values[counts.argsort()], counts[counts.argsort()]):
+    print(f'valeur {i} apparait {j}')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>valeur 0 apparait 1
+valeur 2 apparait 1
+valeur 1 apparait 2
+valeur 4 apparait 2
+valeur 6 apparait 2
+valeur 3 apparait 3
+valeur 5 apparait 3
+valeur 9 apparait 3
+valeur 7 apparait 4
+valeur 8 apparait 4
+</code></pre>
+<p>Calculs statistiques en présence de données manquates (NaN)</p>
+<pre><code class="language-python">A = np.random.randn(5, 5)
+A[0, 2] = np.nan # insere un NaN dans la matrice A
+ 
+print('ratio NaN/zise:', (np.isnan(A).sum()/A.size)) # calcule la proportion de NaN dans A
+ 
+print('moyenne sans NaN:', np.nanmean(A)) # calcule la moyenne de A en ignorant les NaN
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>ratio NaN/zise: 0.04
+moyenne sans NaN: 0.1832816316588837
+</code></pre>
+<h2 id="3-algebre-linéaire"><a class="header" href="#3-algebre-linéaire">3. Algebre Linéaire</a></h2>
+<pre><code class="language-python">A = np.ones((2,3))
+B = np.ones((3,3))
+
+print(A.T) # transposé de la matrice A (c'est un attribut de ndarray)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[1. 1.]
+ [1. 1.]
+ [1. 1.]]
+</code></pre>
+<pre><code class="language-python">print(A.dot(B)) # produit matriciel A.B
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[3. 3. 3.]
+ [3. 3. 3.]]
+</code></pre>
+<pre><code class="language-python">A = np.random.randint(0, 10, [3, 3])
+ 
+print('det=', np.linalg.det(A)) # calcule le determinant de A
+print('inv A:\n', np.linalg.inv(A)) # calcul l'inverse de A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>det= 61.00000000000001
+inv A:
+ [[ 0.08196721  0.63934426 -0.60655738]
+ [-0.13114754 -0.62295082  0.7704918 ]
+ [ 0.21311475  0.26229508 -0.37704918]]
+</code></pre>
+<pre><code class="language-python">val, vec = np.linalg.eig(A)
+print('valeur propre:\n', val) # valeur propre
+print('vecteur propre:\n', vec) # vecteur propre
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>valeur propre:
+ [ 8.91371956 -0.86320273  1.94948316]
+vecteur propre:
+ [[-0.27183844 -0.6838339   0.39494311]
+ [-0.4097407  -0.15279739 -0.73291062]
+ [-0.87075623  0.71345929  0.55395123]]
+</code></pre>
+<h2 id="4-exercice-et-solution-3"><a class="header" href="#4-exercice-et-solution-3">4. Exercice et Solution</a></h2>
+<p>Standardisez la matrice suivante, c'est a dire effectuez le calcul suivant :
+$A = \frac{A - mean(A_{colonne})}{std(A_{colonne})}$</p>
+<pre><code class="language-python">np.random.seed(0)
+A = np.random.randint(0, 100, [10, 5])
+A
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[44, 47, 64, 67, 67],
+       [ 9, 83, 21, 36, 87],
+       [70, 88, 88, 12, 58],
+       [65, 39, 87, 46, 88],
+       [81, 37, 25, 77, 72],
+       [ 9, 20, 80, 69, 79],
+       [47, 64, 82, 99, 88],
+       [49, 29, 19, 19, 14],
+       [39, 32, 65,  9, 57],
+       [32, 31, 74, 23, 35]])
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-5"><a class="header" href="#solution-5">SOLUTION</a></h3>
+<pre><code class="language-python">D = (A - A.mean(axis=0)) / A.std(axis=0)
+D
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[-0.02206157,  0.        ,  0.13173823,  0.72539252,  0.10755798],
+       [-1.56637126,  1.61579632, -1.48676006, -0.33034307,  0.96802178],
+       [ 1.12513992,  1.84021247,  1.03508612, -1.14768676, -0.27965074],
+       [ 0.90452425, -0.35906585,  0.99744662,  0.0102168 ,  1.01104497],
+       [ 1.6104944 , -0.44883231, -1.33620208,  1.0659524 ,  0.32267393],
+       [-1.56637126, -1.21184724,  0.73397016,  0.7935045 ,  0.62383626],
+       [ 0.11030784,  0.76301493,  0.80924915,  1.81518411,  1.01104497],
+       [ 0.1985541 , -0.80789816, -1.56203905, -0.90929485, -2.17267111],
+       [-0.24267724, -0.67324847,  0.16937773, -1.24985473, -0.32267393],
+       [-0.55153918, -0.7181317 ,  0.50813319, -0.77307091, -1.26918412]])
+</code></pre>
+<pre><code class="language-python">print(D.mean(axis=0)) # les moyennes sont toutes = 0
+print(D.std(axis=0)) # les std sont tous = 1 
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[-2.22044605e-17 -4.44089210e-17  0.00000000e+00 -1.22124533e-16
+ -4.44089210e-17]
+[1. 1. 1. 1. 1.]
+</code></pre>
+</details><div style="break-before: page; page-break-before: always;"></div><h1 id="numpy--broadcasting"><a class="header" href="#numpy--broadcasting"><center>Numpy : Broadcasting</a></h1>
+<pre><code class="language-python">import numpy as np
+</code></pre>
+<pre><code class="language-python">A = np.ones((2, 3))
+B = 3
+print(A+B) # résultat 1
+ 
+A = np.ones((2, 3))
+B = np.ones((2, 1)) # B a une colonne, elle sera étendu sur les trois colonnes de A
+print(A+B) # résultat 2
+ 
+A = np.ones((2, 3))
+B = np.ones((2, 2))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[[4. 4. 4.]
+ [4. 4. 4.]]
+[[2. 2. 2.]
+ [2. 2. 2.]]
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-3--matplotlib-1"><a class="header" href="#chapitre-3--matplotlib-1"><center>Chapitre 3 : Matplotlib</a></h1>
+<p>Matplotlib est l'une des bibliothèques les plus populaires pour la visualisation de données en Python. Elle permet de créer une large variété de graphiques pour analyser, comprendre et présenter vos données de manière claire et esthétique.</p>
+<hr />
+<h2 id="plan-du-chapitre-2"><a class="header" href="#plan-du-chapitre-2">Plan du chapitre</a></h2>
+<p><strong>1. <a href="./nested/4_1.html">Matplotlib : Graphiques de Base</a></strong><br />
+Apprenez à créer des graphiques simples tels que des lignes, des barres, des histogrammes et des nuages de points.</p>
+<p><strong>2. <a href="./nested/4_2.html">Matplotlib : Top Graphiques</a></strong><br />
+Découvrez des graphiques avancés et des techniques pour améliorer vos visualisations.</p>
+<hr />
+<h2 id="objectifs-du-chapitre-2"><a class="header" href="#objectifs-du-chapitre-2">Objectifs du chapitre</a></h2>
+<p>À la fin de ce chapitre, vous serez capable de :</p>
+<ul>
+<li>Utiliser Matplotlib pour créer des graphiques de base et avancés.</li>
+<li>Personnaliser vos graphiques (titres, axes, couleurs, styles).</li>
+<li>Combiner plusieurs graphiques pour une visualisation efficace.</li>
+<li>Exporter vos graphiques pour les intégrer dans des rapports ou des présentations.</li>
+</ul>
+<hr />
+<h2 id="pourquoi-matplotlib-"><a class="header" href="#pourquoi-matplotlib-">Pourquoi Matplotlib ?</a></h2>
+<p>La visualisation des données est une étape essentielle dans tout projet d’analyse ou de machine learning. Matplotlib offre une grande flexibilité et s’intègre parfaitement avec d’autres bibliothèques comme NumPy et Pandas.</p>
+<hr />
+<p><strong>Prêt à commencer ?</strong> Rendez-vous dans la première section : <a href="./nested/4_1.html">Matplotlib : Graphiques de Base</a> !</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="matplolib--graphiques-de-base"><a class="header" href="#matplolib--graphiques-de-base"><center>Matplolib : Graphiques de Base</a></h1>
+<h3 id="sommaire--7"><a class="header" href="#sommaire--7">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/4_1.html#1-pyplot">Chapitre 1 : Pyplot</a></li>
+<li><a href="nested/4_1.html#2-cycle-de-vie-dune-figure">Chapitire 2 : Cycle de vie d'une figure</a></li>
+<li><a href="nested/4_1.html#3-subplots">Chapitre 3 : Subplots</a></li>
+<li><a href="nested/4_1.html#4-m%C3%A9thode-orient%C3%A9e-objet">Chapitre 4: Méthode orientée objet</a></li>
+</ul>
+<h2 id="1-pyplot"><a class="header" href="#1-pyplot">1. Pyplot</a></h2>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<h3 id="graphiques-simples"><a class="header" href="#graphiques-simples">Graphiques simples</a></h3>
+<pre><code class="language-python">X = np.linspace(0, 2, 10)
+y = X**2
+
+plt.plot(X, y)
+plt.show()
+</code></pre>
+<p><img src="nested/./images/3g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.scatter(X, y)
+plt.show()
+</code></pre>
+<p><img src="nested/./images/3g2.png" alt="Description de l&#39;image" /></p>
+<h3 id="styles-graphiques"><a class="header" href="#styles-graphiques">Styles Graphiques</a></h3>
+<p>Il existe beaucoup de styles a ajouter aux graphiques. Voici les plus importants a retenir :</p>
+<ul>
+<li><strong>c</strong> : couleur de la ligne</li>
+<li><strong>lw</strong> : epaisseur de la ligne (pour les graphiques plot)</li>
+<li><strong>ls</strong> : style de la ligne (pour les graphiques plot)</li>
+<li><strong>size</strong> : taille du point (pour les graphiques scatter)</li>
+<li><strong>marker</strong> : style de points (pour les graphiques scatter)</li>
+<li><strong>alpha</strong> : transparence du graphique</li>
+</ul>
+<pre><code class="language-python">plt.plot(X, y, c='red', lw=4, ls='--', alpha=0.8)
+plt.show()
+</code></pre>
+<p><img src="nested/./images/3g3.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-cycle-de-vie-dune-figure"><a class="header" href="#2-cycle-de-vie-dune-figure">2. Cycle de vie d'une figure</a></h2>
+<p>Pour créer des figures proprements, on doit suivre le cycle de vie suivant :</p>
+<ol>
+<li><strong>plt.figure</strong>(figsize())</li>
+<li><strong>plt.plot()</strong></li>
+<li>Extras (titre, axes, legendes)</li>
+<li><strong>plt.show()</strong></li>
+</ol>
+<pre><code class="language-python">X = np.linspace(0, 2, 10)
+
+plt.figure() # Création d'une figure
+plt.plot(X, X**2, label='quadratique') # premiere courbe
+plt.plot(X, X**3, label='cubique') # deuxieme courbe
+# Extra information
+plt.title('figure 1') # titre
+plt.xlabel('axe x') # axes
+plt.ylabel('axe y') # axes
+plt.legend() # legend
+
+plt.savefig('figure.png') # sauvegarde la figure dans le repertoire de travail
+plt.show() # affiche la figure
+</code></pre>
+<p><img src="nested/./images/3g4.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-subplots"><a class="header" href="#3-subplots">3. Subplots</a></h2>
+<p>Les subplots sont un autre éléments a ajouter pour créer plusieurs graphiques sur une meme figure</p>
+<pre><code class="language-python">plt.subplot(2, 1, 1)
+plt.plot(X, y, c='red')
+plt.subplot(2, 1, 2)
+plt.plot(X, y, c='blue')
+</code></pre>
+<p><img src="nested/./images/3g5.png" alt="Description de l&#39;image" /></p>
+<h2 id="4-méthode-orientée-objet"><a class="header" href="#4-méthode-orientée-objet">4. Méthode orientée objet</a></h2>
+<pre><code class="language-python">fig, ax = plt.subplots(2, 1, sharex=True) # partage le meme axe pour les subplots
+ax[0].plot(x, y)
+ax[1].plot(x, np.sin(x))
+plt.show()
+</code></pre>
+<p><img src="nested/./images/3g6.png" alt="Description de l&#39;image" /></p>
+<h2 id="5-exercice-et-solution"><a class="header" href="#5-exercice-et-solution">5. Exercice et Solution</a></h2>
+<p>Créez une fonction "graphique" qui permet de tracer sur une seule et meme figure une série de graphiques issue d'un dictionnaire contenant plusieurs datasets :</p>
+<pre><code class="language-python">def graphique(dataset):
+  # Votre code ici...
+  return
+
+# Voici le dataset utilisé
+dataset = {f"experience{i}": np.random.randn(100) for i in range(4)}
+
+dataset
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>{'experience0': array([-0.73026009, -0.92427352, -0.08103769, -1.22379832, -1.18126686,
+         0.2957312 ,  0.39272515,  0.01122579, -0.11600724, -1.29350418,
+         2.6752107 , -1.29062695, -0.12075649,  0.09123813,  1.1436286 ,
+        -0.25004448, -1.43968537, -0.06824817,  1.13314051, -1.06826804,
+        -1.18135358, -0.54456852,  1.21778838, -2.32618343,  0.70904126,
+        -0.18413625,  0.05522584,  2.12229143, -0.29662499,  0.05422213,
+        -0.08935405, -1.62739285,  1.16757047,  0.65463555,  0.82203536,
+        -1.17622497,  0.48587818, -2.16429764,  0.91728199, -0.00522129,
+        -1.44509695, -0.44897878,  0.134164  , -0.22886226,  1.01169527,
+        -1.89824307,  1.8149836 , -0.63710983, -0.03998165, -1.32933688,
+         2.50262155, -0.84528715,  0.42998382,  0.05183741,  1.17336483,
+        -0.07624529,  1.73421861, -1.3702618 ,  0.67624283, -1.27928307,
+        -0.78186879, -0.94432672, -1.13788396,  2.3236612 , -0.70829675,
+        -0.95457139,  0.02154338, -1.23156511, -0.41756011,  0.11409781,
+         1.62306725,  1.11382955,  0.18651338, -0.92995449,  0.28592715,
+        -0.91641865, -0.06565812, -0.69316861, -0.18863539, -0.3201722 ,
+         0.36022583, -0.08469015, -0.0238215 , -1.13330544,  0.73652928,
+         2.12684884, -0.79042905,  0.76473214,  0.14853273,  1.35926758,
+        -1.31924071, -2.15249297,  1.23560458,  1.56799108,  0.22852547,
+         0.9405575 , -0.36849986,  0.55496224,  1.57797318,  0.21579975]),
+ 'experience1': array([-0.24155788,  0.30107105, -1.15468321, -0.28333408,  0.16999801,
+         0.90692494,  1.11703406,  0.3644038 ,  0.55883134,  1.40283118,
+        -0.23978451,  0.10135075,  1.28882754, -0.47486126,  0.19953529,
+        -3.40960179,  1.07099421,  1.29455924, -0.42990292, -1.48918634,
+         1.12212476, -0.43440688, -0.92336374,  0.23950397, -2.10815766,
+        -0.952912  , -0.42048761,  0.11807541,  0.48471941,  1.21904548,
+        -0.36734577, -0.52359341,  0.52922285, -1.38752467, -0.22836553,
+         1.00032629,  1.56252921, -0.87301181, -1.69982515,  0.18110546,
+        -1.55296498,  0.42493433, -3.20017158, -0.17138241,  0.11837763,
+         0.02653488,  1.87891042,  1.31182259, -0.15590623,  1.30269688,
+         0.68004521,  0.6432393 , -0.14321066, -0.162323  ,  0.2667317 ,
+         1.26217026, -0.59837269,  0.33758583,  0.75804003, -0.55230605,
+         1.1451438 , -0.65017033,  1.1316307 , -1.22337189, -0.83246816,
+         0.77424322,  0.13344735, -0.1234697 ,  0.13046451, -1.95465787,
+        -1.55350995, -0.31354787,  1.39846424, -0.03660721, -0.3360641 ,
+         0.02677512, -0.26752349, -0.47482143, -0.05680952, -0.75266157,
+         0.27488487,  0.88449973,  2.15381445, -0.41400153,  1.21381671,
+         0.92232479,  0.05508854, -0.15076683, -0.49421398, -0.80543942,
+         1.005282  , -0.80494514,  0.0976059 , -0.54615799,  0.90408833,
+         0.71348351, -2.63319961,  0.9287799 , -0.79177716,  0.3092041 ]),
+ 'experience2': array([-5.12597429e-01,  1.73003128e+00,  1.17202199e+00, -1.06576833e+00,
+        -1.74607531e-02,  2.59303340e-01,  2.30789670e-01, -2.95424007e-01,
+         4.40310588e-01, -7.37388873e-01, -5.96612611e-01, -1.08326391e+00,
+        -2.66861790e-01,  1.17219255e+00, -3.39538474e-01, -1.34596216e+00,
+         4.48311815e-01,  1.60280686e+00, -7.52366048e-01,  3.82349278e-01,
+        -4.27683380e-01,  1.26779568e+00, -8.60842685e-01, -2.24014654e+00,
+         7.10992082e-01,  4.86254905e-02,  7.54475048e-01,  1.06103843e+00,
+        -4.30201480e-01,  2.85523038e-01, -1.30984603e+00, -7.73672748e-01,
+         2.50052656e-01,  1.65610619e+00, -1.24072618e+00, -8.72252224e-02,
+        -1.37556986e+00,  1.74734402e+00,  8.86713546e-01,  1.27169995e+00,
+        -1.63568748e+00,  1.68359702e+00,  6.37827942e-01,  6.89892793e-01,
+        -2.11197059e+00,  4.32380396e-01, -5.22214645e-01,  7.40351903e-01,
+        -7.31645721e-01,  2.67625162e-02,  5.58620457e-01,  5.03180328e-01,
+         6.04514128e-01, -1.11078439e+00,  1.11601957e+00,  1.22319459e-02,
+        -1.19131202e+00, -1.83806861e+00,  4.78537303e-01, -2.60253515e-01,
+         1.49969811e+00, -3.71502271e-01, -1.14162770e+00, -9.01482979e-02,
+        -5.45700614e-02,  6.94711539e-03, -9.75336368e-01,  1.04285873e+00,
+        -4.38055566e-01, -1.46640876e+00, -1.38246613e+00, -2.05667363e-01,
+        -3.23673706e-01,  1.79675294e-01, -6.58844333e-01, -1.99557923e-01,
+         6.75617386e-01,  5.75747225e-01, -1.22675928e+00, -4.89839090e-01,
+        -1.97708739e+00, -2.69253982e-01, -1.32200095e+00,  6.38700435e-01,
+        -2.50892526e-01,  2.87863055e-01,  5.52487360e-01, -1.32015732e-02,
+         8.79429870e-02, -8.23799430e-01, -3.44677647e-04,  1.55475689e+00,
+        -1.40971537e+00, -1.30560730e+00, -4.94770804e-01, -1.52698567e+00,
+        -1.92416371e-01,  6.85906705e-01, -1.07308979e+00, -3.81491669e-01]),
+ 'experience3': array([ 7.71742208e-01,  7.43395102e-01, -8.57320299e-01,  1.27738500e+00,
+        -1.20058247e+00, -6.31858798e-01, -1.79586843e-01, -3.58917661e-01,
+        -5.06229886e-01,  1.11679840e+00,  4.47015274e-01, -3.57012093e-02,
+        -2.07746859e-01,  7.45201997e-01, -8.60144774e-02, -7.74830937e-01,
+         9.98308016e-02, -1.62718469e+00, -7.16245656e-01,  2.54944575e-01,
+        -1.08007733e+00,  1.06121570e-01,  9.59381902e-01, -1.61225335e+00,
+        -1.89157261e-01,  4.37576628e-01,  9.80100832e-01,  1.20117865e+00,
+        -1.17368596e-01, -7.13839696e-01, -3.22907513e-01, -7.82970395e-01,
+        -1.89630963e+00,  1.20057482e-01, -6.96400094e-01, -3.60828403e-01,
+         1.08879832e-01, -1.92737758e+00,  1.59559531e+00,  1.01248097e+00,
+        -1.18200879e+00,  1.70696607e+00, -6.74532292e-01, -6.90274103e-01,
+         1.61095193e-01, -2.26165717e+00,  3.17204383e-01, -1.13673558e+00,
+         3.39706210e-01, -3.75419888e-01,  2.33796495e-01, -1.92492569e+00,
+         1.13647371e+00,  2.85071439e-01, -1.05177693e-01,  2.14172309e-01,
+        -5.54767068e-02,  2.56561508e-01,  1.35623426e+00,  1.87823082e-01,
+        -5.79147798e-01,  9.37895632e-01,  1.33429951e-01,  1.37295686e+00,
+         3.02159457e-01,  1.73702727e-01,  1.54463863e+00, -1.61508839e+00,
+         6.15286343e-01, -2.32218491e+00,  1.13705692e+00, -1.18240558e-02,
+        -6.24844674e-01,  2.07654599e-02, -3.11602339e-01,  8.52033954e-01,
+         3.97827839e-01, -3.51421999e-02, -4.64526671e-01,  1.46241945e-01,
+         1.54586608e-01, -1.95105165e+00, -5.74770340e-02, -9.53007702e-01,
+         5.02547984e-01,  3.04018409e-01,  2.88151848e-01,  5.06125828e-01,
+        -8.39948882e-01,  2.93911678e-02,  8.24943592e-01,  8.21718927e-01,
+        -3.85923511e-01,  1.46600576e+00,  1.83431810e-01,  1.39626432e+00,
+         3.20347667e-01,  1.24387799e-01, -2.21409972e+00,  2.30476533e-03])}
+</code></pre>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-6"><a class="header" href="#solution-6">SOLUTION</a></h3>
+<pre><code class="language-python">def graphique(data):
+    n = len(data)
+    plt.figure(figsize=(12, 20))
+    
+    for k, i in zip(data.keys(), range(1, n+1)):
+        plt.subplot(n, 1, i)
+        plt.plot(data[k])
+        plt.title(k)
+        
+    plt.show()
+</code></pre>
+<pre><code class="language-python">graphique(dataset)
+</code></pre>
+<p><img src="nested/./images/3g7.png" alt="Description de l&#39;image" /></p>
+</details> <div style="break-before: page; page-break-before: always;"></div><h1 id="matplotlib--top-graphiques"><a class="header" href="#matplotlib--top-graphiques"><center>Matplotlib : Top Graphiques</a></h1>
+<h3 id="sommaire--8"><a class="header" href="#sommaire--8">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/4_2.html#1-graphique-de-classification-avec-scatter">Chapitre 1 : Graphique de Classification avec Scatter()</a></li>
+<li><a href="nested/4_2.html#2-graphiques-3d">Chapitire 2 : Graphiques 3D</a></li>
+<li><a href="nested/4_2.html#3-histogrammes">Chapitre 3 : Histogrammes</a></li>
+<li><a href="nested/4_2.html#4-graphiques-contourplot">Chapitre 4 : Graphiques ContourPlot()</a></li>
+<li><a href="nested/4_2.html#5-imshow">Chapitre 5 :Imshow()</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<h2 id="1-graphique-de-classification-avec-scatter"><a class="header" href="#1-graphique-de-classification-avec-scatter">1. Graphique de Classification avec Scatter()</a></h2>
+<pre><code class="language-python">from sklearn.datasets import load_iris
+</code></pre>
+<pre><code class="language-python">iris = load_iris()
+x = iris.data
+y = iris.target
+
+print(f'x contient {x.shape[0]} exmples et {x.shape[1]} variables')
+print(f'il y a {np.unique(y).size} classes')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>x contient 150 exmples et 4 variables
+il y a 3 classes
+</code></pre>
+<pre><code class="language-python">n = x.shape[1]
+plt.figure(figsize=(12, 8))
+for i in range(n):
+    plt.subplot(n//2, n//2, i+1)
+    plt.scatter(x[:, 0], x[:, i], c=y)
+    plt.xlabel('0')
+    plt.ylabel(i)
+    plt.colorbar(ticks=list(np.unique(y)))
+plt.show()
+</code></pre>
+<p><img src="nested/./images/32g1.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-graphiques-3d"><a class="header" href="#2-graphiques-3d">2. Graphiques 3D</a></h2>
+<pre><code class="language-python">from mpl_toolkits.mplot3d import Axes3D
+</code></pre>
+<pre><code class="language-python">ax = plt.axes(projection='3d')
+ax.scatter(x[:, 0], x[:, 1], x[:,2], c=y)
+</code></pre>
+<p><img src="nested/./images/32g2.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">f = lambda x, y: np.sin(x) + np.cos(x+y)
+
+X = np.linspace(0, 5, 50)
+Y = np.linspace(0, 5, 50)
+X, Y = np.meshgrid(X, Y)
+Z = f(X, Y)
+
+ax = plt.axes(projection='3d')
+ax.plot_surface(X, Y, Z, cmap='plasma')
+plt.show()
+</code></pre>
+<p><img src="nested/./images/32g3.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-histogrammes"><a class="header" href="#3-histogrammes">3. Histogrammes</a></h2>
+<pre><code class="language-python">x = np.random.randn(1000)
+
+plt.figure(figsize=(12, 3))
+plt.subplot(121)
+plt.hist(x, bins=10)
+plt.title('bins=10')
+plt.subplot(122)
+plt.hist(x, bins=50)
+plt.title('bins= 50')
+plt.show()
+</code></pre>
+<p><img src="nested/./images/32g4.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">x = iris.data
+
+plt.hist2d(x[:,0], x[:,1], cmap='Blues')
+plt.xlabel('longueur sépal')
+plt.ylabel('largeur sépal')
+plt.colorbar()
+</code></pre>
+<p><img src="nested/./images/32g5.png" alt="Description de l&#39;image" /></p>
+<h1 id="histogramme-dune-image"><a class="header" href="#histogramme-dune-image">histogramme d'une image</a></h1>
+<p>from scipy import misc
+face = misc.face(gray=True)</p>
+<p>plt.figure(figsize=(12, 4))
+plt.subplot(121)
+plt.imshow(face, cmap='gray')
+plt.subplot(122)
+plt.hist(face.ravel(), bins=255)
+plt.show()</p>
+<p><img src="nested/./images/32g6.png" alt="Description de l&#39;image" /></p>
+<h2 id="4-graphiques-contourplot"><a class="header" href="#4-graphiques-contourplot">4. Graphiques ContourPlot()</a></h2>
+<pre><code class="language-python">f = lambda x, y: np.sin(x) + np.cos(x+y)*np.cos(x)
+
+X = np.linspace(0, 5, 50)
+Y = np.linspace(0, 5, 50)
+X, Y = np.meshgrid(X, Y)
+Z = f(X, Y)
+
+plt.contour(X, Y, Z, 20, colors='black')
+</code></pre>
+<p><img src="nested/./images/32g7.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.contourf(X, Y, Z, 20, cmap='RdGy')
+plt.colorbar()
+</code></pre>
+<p><img src="nested/./images/32g8.png" alt="Description de l&#39;image" /></p>
+<h2 id="5-imshow"><a class="header" href="#5-imshow">5. Imshow()</a></h2>
+<pre><code class="language-python">plt.figure(figsize=(12, 3))
+
+# Simple graphique imshow()
+X = np.random.randn(50, 50)
+
+plt.subplot(131)
+plt.imshow(X)
+plt.title('random normal')
+
+# Matrice de corrélation des iris
+from sklearn.datasets import load_iris
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+
+plt.subplot(132)
+plt.imshow(np.corrcoef(X.T, y))
+plt.title('Iris Corrélation')
+
+# Matrice f(X, Y) = sin(X) + cos(Y)
+X = np.linspace(0, 5, 100)
+Y = np.linspace(0, 5, 100)
+X, Y = np.meshgrid(X, Y)
+
+plt.subplot(133)
+plt.imshow(f(X, Y))
+plt.colorbar()
+plt.title('f(x, y) = sin(x) + cos(y)')
+</code></pre>
+<p><img src="nested/./images/32g9.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-4--scipy"><a class="header" href="#chapitre-4--scipy"><center>Chapitre 4 : Scipy</a></h1>
+<p><strong>Scipy</strong> est une bibliothèque puissante et polyvalente conçue pour compléter NumPy. Elle offre des outils avancés pour le calcul scientifique, indispensables dans des domaines comme le machine learning, l'analyse de données, le traitement de signal, le traitement d'images, et bien plus encore.</p>
+<p>Dans ce chapitre, vous découvrirez certaines des fonctionnalités les plus utiles de Scipy, telles que l'interpolation, l'optimisation, le traitement de signal, et le traitement d'images. Ces outils permettent de résoudre des problèmes complexes avec des solutions élégantes et performantes, tout en restant simples à utiliser.</p>
+<hr />
+<h2 id="pourquoi-utiliser-scipy-"><a class="header" href="#pourquoi-utiliser-scipy-">Pourquoi utiliser Scipy ?</a></h2>
+<ul>
+<li><strong>Large éventail de modules spécialisés</strong> : Scipy propose des modules dédiés à des tâches spécifiques (optimisation, intégration, traitement d'images, statistiques, etc.).</li>
+<li><strong>Performance et simplicité</strong> : Basée sur NumPy, Scipy permet d'exécuter des calculs rapides et précis sans compromettre la simplicité.</li>
+<li><strong>Applications pratiques</strong> : De la visualisation à la manipulation avancée des données, elle est essentielle dans de nombreux projets en machine learning et en analyse de données.</li>
+</ul>
+<hr />
+<h2 id="ce-que-vous-allez-apprendre-dans-ce-chapitre"><a class="header" href="#ce-que-vous-allez-apprendre-dans-ce-chapitre">Ce que vous allez apprendre dans ce chapitre</a></h2>
+<h3 id="1-interpolation"><a class="header" href="#1-interpolation"><strong>1. <a href="nested/5_1.html">Interpolation</a></strong></a></h3>
+<p>Découvrez comment combler les lacunes dans des ensembles de données ou reconstruire des signaux manquants à l’aide des fonctions d'interpolation.</p>
+<h3 id="2-optimisation"><a class="header" href="#2-optimisation"><strong>2. <a href="nested/5_2.html">Optimisation</a></strong></a></h3>
+<p>Explorez des outils pour trouver des minimums locaux et globaux, ajuster des modèles statistiques, ou résoudre des problèmes de programmation linéaire.</p>
+<h3 id="3-traitement-du-signal"><a class="header" href="#3-traitement-du-signal"><strong>3. <a href="nested/5_3.html">Traitement du Signal</a></strong></a></h3>
+<p>Plongez dans les techniques de filtrage, de transformation de Fourier, et d'analyse de tendances pour manipuler des signaux avec précision.</p>
+<h3 id="4-traitement-dimages"><a class="header" href="#4-traitement-dimages"><strong>4. <a href="nested/5_4.html">Traitement d'Images</a></strong></a></h3>
+<p>Découvrez les outils de Scipy pour nettoyer, segmenter, et analyser des images de manière efficace.</p>
+<h3 id="5-application--image-processing-cas-réel"><a class="header" href="#5-application--image-processing-cas-réel">**5. <a href="nested/5_5.html">Application : Image processing (cas réel)</a></a></h3>
+<p>Un peu d'application !</p>
+<hr />
+<p>L’objectif de ce chapitre est de vous fournir une boîte à outils polyvalente pour résoudre des problèmes réels, en s'appuyant sur des exemples concrets et visuels. Que ce soit pour analyser des signaux ou traiter des images, Scipy est une bibliothèque incontournable pour tout data scientist ou ingénieur.</p>
+<p><strong>Prêt à commencer ?</strong> Rendez-vous dans la première section : <a href="./nested/5_1.html">Scipy : Interpolation</a> !</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--interpolation"><a class="header" href="#scipy--interpolation"><center>Scipy : Interpolation</a></h1>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<p>Interpoler un signal est parfois tres utile s'il vous manque des données dans un Dataset. Mais c'est une technique dangereuse, qui peut parfois transformer la réalité des choses !</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<pre><code class="language-python"># Création d'un Dataset
+x = np.linspace(0, 10, 10)
+y = np.sin(x)
+plt.scatter(x, y)
+</code></pre>
+<p><img src="nested/./images/4g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">from scipy.interpolate import interp1d
+</code></pre>
+<pre><code class="language-python"># création de la fonction interpolation f
+f = interp1d(x, y, kind='cubic')
+
+# résultats de la fonction interpolation f sur de nouvelles données
+new_x = np.linspace(0, 10, 50)
+result = f(new_x)
+
+# visualisation avec matplotlib
+plt.scatter(x, y)
+plt.plot(new_x, result, c='r')
+</code></pre>
+<p><img src="nested/./images/4g2.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--optimisation"><a class="header" href="#scipy--optimisation"><center> Scipy : Optimisation</a></h1>
+<p>On trouve beaucoup de fonctions dans le module <strong>optimize</strong>. Certaines permettent de faire des minimisations locales, ou globales, d'autres permette de développer des modeles statistiques avec la méthode des moindres carrés. On trouve également des fonctions pour faire de la programmation linéaire.</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<h3 id="curve_fit"><a class="header" href="#curve_fit">curve_fit</a></h3>
+<pre><code class="language-python"># Création d'un Dataset avec du bruit "normal"
+x = np.linspace(0, 2, 100)
+y = 1/3*x**3 - 3/5 * x**2 + 2 + np.random.randn(x.shape[0])/20
+plt.scatter(x, y)
+</code></pre>
+<p><img src="nested/./images/4g3.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Définition d'un modele statistique sensé "coller" au dataset ci-dessus
+def f (x, a, b, c, d):
+    return a * x**3 + b * x**2 + c * x + d
+</code></pre>
+<pre><code class="language-python">from scipy import optimize
+</code></pre>
+<pre><code class="language-python"># curve_fit permet de trouver les parametres du modele f grace a la méthode des moindres carrés
+params, param_cov = optimize.curve_fit(f, x, y)
+</code></pre>
+<pre><code class="language-python"># Visualisation des résultats.
+plt.scatter(x, y)
+plt.plot(x, f(x, params[0], params[1], params[2], params[3]), c='g', lw=3)
+</code></pre>
+<p><img src="nested/./images/4g4.png" alt="Description de l&#39;image" /></p>
+<h2 id="minimisation-1d"><a class="header" href="#minimisation-1d">Minimisation 1D</a></h2>
+<p>la fonction <strong>optimize.minimize</strong> est utile pour trouver un minimum local dans une fonction a N dimensions</p>
+<pre><code class="language-python"># Définition d'une fonction a 1 Dimension
+def f (x):
+    return x**2 + 15*np.sin(x)
+</code></pre>
+<pre><code class="language-python"># Visualisation de la fonction
+x = np.linspace(-10, 10, 100)
+plt.plot(x, f(x))
+</code></pre>
+<p><img src="nested/./images/4g5.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Définition d'un point x0 pour l'algorithme de minimisation
+x0=-5
+result = optimize.minimize(f, x0=x0).x # résultat de la minimisation
+</code></pre>
+<pre><code class="language-python"># Visualisation du résultat
+
+plt.plot(x, f(x), lw=3, zorder=-1) # Courbe de la fonction
+plt.scatter(x0, f(x0), s=200, marker='+', c='g', zorder=1, label='initial') # point initial
+plt.scatter(result, f(result), s=100, c='r', zorder=1, label='final') # point final
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g6.png" alt="Description de l&#39;image" /></p>
+<h2 id="minimisation-2d"><a class="header" href="#minimisation-2d">Minimisation 2D</a></h2>
+<pre><code class="language-python"># Définition d'une fonction 2D. X est un tableau numpy a 2-Dimension
+def f (x):
+    return np.sin(x[0]) + np.cos(x[0]+x[1])*np.cos(x[0])
+</code></pre>
+<pre><code class="language-python"># Génération de la fonction sur un espace 2D.
+x = np.linspace(-3, 3, 100)
+y = np.linspace(-3, 3, 100)
+x, y = np.meshgrid(x, y)
+
+# Visualisation de la fonction
+plt.contour(x, y, f(np.array([x, y])), 20)
+</code></pre>
+<p><img src="nested/./images/4g7.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Exemple de fonction à minimiser (parabole en 2D)
+def f(v):
+    x, y = v[0], v[1]
+    return x**2 + y**2
+
+# Placement d'un point x0 initial aux coordonnées (0, 0)
+x0 = np.array([0, 0])  # Tableau 1D
+
+# Minimisation de la fonction
+result = optimize.minimize(f, x0=x0).x
+print('Le minimum est aux coordonnées', result)
+
+# Création de la grille pour la visualisation
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+Z = f(np.array([X, Y]))
+
+# Visualisation du résultat
+plt.contour(X, Y, Z, 20, cmap='viridis')  # Tracer les contours de la fonction
+plt.scatter(x0[0], x0[1], marker='+', c='r', s=100, label='Initial')  # Point initial
+plt.scatter(result[0], result[1], c='g', s=100, label='Final')  # Point final
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g8.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--traitement-du-signal"><a class="header" href="#scipy--traitement-du-signal"><center>Scipy : Traitement du signal</a></h1>
+<p>Le module <strong>scipy.signal</strong> contient beaucoup de fonctions de convolution et de filtres pour faire du traitement du signal. La fonction <strong>signal.detrend</strong> est parfaite pour éliminer une tendance linéaire dans un signal. Utile pour beaucoup d'applications !</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<p>Le module <strong>scipy.fftpack</strong> contient des fonctions tres puissantes et simples d'utilisation pour effectuer des transformations de Fourier</p>
+<pre><code class="language-python"># Création d'un Dataset avec une tendance linéaire
+x = np.linspace(0, 20, 100)
+y = x + 4*np.sin(x) +np.random.randn(x.shape[0])
+plt.plot(x, y)
+</code></pre>
+<p><img src="nested/./images/4g9.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">from scipy import signal
+</code></pre>
+<pre><code class="language-python"># Élimination de la tendance linéaire
+new_y = signal.detrend(y)
+
+# Visualisation des résultats
+plt.plot(x, y, label='originel')
+plt.plot(x, new_y, label='detrend')
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g10.png" alt="Description de l&#39;image" /></p>
+<h2 id="transformation-de-fourier-fft"><a class="header" href="#transformation-de-fourier-fft">Transformation de Fourier (FFT)</a></h2>
+<p>La transformation de Fourier est une technique mathématique puissante et normalement complexe a mettre en oeuvre. Heureusement <strong>scipy.fftpack</strong> rend cette technique tres simple a implémenter</p>
+<p>La transformation de Fourier permet d'analyser les <strong>fréquences</strong> qui composent un signal <strong>périodique</strong> (qui se répete avec le temps). Cette opération produit un graphique que l'on appelle <strong>Spectre</strong>.</p>
+<p>Une fois le <strong>Spectre</strong> généré, il est possible de filtrer les bruits indésirables, ou bien de sélectionner seulement certaines fréquences, ou d'en atténuer d'autres... les possibilités sont infinies.</p>
+<p>Dans l'exemple ci-dessous, nous voyons comment filtrer un signal noyé dans du bruit.</p>
+<pre><code class="language-python"># Création d'un signal périodique noyé dans du bruit.
+x = np.linspace(0, 30, 1000)
+y = 3*np.sin(x) + 2*np.sin(5*x) + np.sin(10*x) + np.random.random(x.shape[0])*10
+plt.plot(x, y)
+</code></pre>
+<p><img src="nested/./images/4g11.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">from scipy import fftpack
+</code></pre>
+<pre><code class="language-python"># création des variables Fourier et Fréquences, qui permettent de construire le spectre du signal.
+fourier = fftpack.fft(y)
+power = np.abs(fourier) # la variable power est créée pour éiminer les amplitudes négatives
+frequences = fftpack.fftfreq(y.size)
+plt.plot(np.abs(frequences), power)
+</code></pre>
+<p><img src="nested/./images/4g12.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># filtre du spectre avec du boolean indexing de Numpy
+fourier[power&lt;400] = 0
+
+# Visualisation du spetre propre
+plt.plot(np.abs(frequences), np.abs(fourier))
+</code></pre>
+<p><img src="nested/./images/4g13.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Transformation de Fourier Inverse: genere un nouveau signal temporel depuis le spectre filtré
+filtered_signal = fftpack.ifft(fourier)
+</code></pre>
+<pre><code class="language-python"># Visualisation des résultats
+
+plt.figure(figsize=(12, 8))
+plt.plot(x, y, lw=0.5, label='signal originel')
+plt.plot(x, filtered_signal, lw=3, label='signal filtré')
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g14.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--image-processing"><a class="header" href="#scipy--image-processing"><center> Scipy : Image processing</a></h1>
+<p><strong>scipy.ndimage</strong> propose de nombreuses actions pour le traitement d'images: convolutions, filtres de Gauss, méthode de mesures, et morphologie.</p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<p>La morphologie est une technique qui permet de transformer une matrice (et donc une image) par le déplacement d'une structure sur chaque pixel de l'image. Lorsqu'un pixel "blanc" est visité, la structure peut effectuer une opération:</p>
+<ul>
+<li>de dilation: imprime des pixels</li>
+<li>d'érosion : efface des pixels</li>
+</ul>
+<p>Cette technique peut-etre utile pour nettoyer une image des artefacts qui peuvent la composer.</p>
+<pre><code class="language-python">from scipy import ndimage
+</code></pre>
+<pre><code class="language-python"># Création d'une image avec quelques artefacts
+np.random.seed(0)
+X = np.zeros((32, 32))
+X[10:-10, 10:-10] = 1
+X[np.random.randint(0,32,30),np.random.randint(0,32,30)] = 1 #ajout d'artefacts aléatoires
+plt.imshow(X)
+</code></pre>
+<p><img src="nested/./images/4g15.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># opération de binary_opening = érosion puis dilation
+open_X = ndimage.binary_opening(X)
+plt.imshow(open_X)
+</code></pre>
+<p><img src="nested/./images/4g16.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="scipy--application--image-processing-cas-réel"><a class="header" href="#scipy--application--image-processing-cas-réel"><center> Scipy : Application : Image processing (cas réel)</a></h1>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+</code></pre>
+<p>Vous pouvez télécharger sur le book</p>
+<pre><code class="language-python"># importer l'image avec pyplot
+image = plt.imread('bacteria.png')
+image = image[:,:,0] # réduire l'image en 2D
+plt.imshow(image, cmap='gray') # afficher l'image
+image.shape
+</code></pre>
+<pre><code>(507, 537)
+</code></pre>
+<p><img src="nested/./images/4g17.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># copy de l'image, puis création d'un histogramme
+image_2 = np.copy(image)
+plt.hist(image_2.ravel(), bins=255)
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g18.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># boolean indexing: création d'une image binaire
+image= image&lt;0.6
+plt.imshow(image)
+</code></pre>
+<p><img src="nested/./images/4g19.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># morphologie utilisée pour enlever les artefacts
+open_image = ndimage.binary_opening(image)
+plt.imshow(open_image)
+</code></pre>
+<p><img src="nested/./images/4g20.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Segmentation de l'image: label_image contient les différents labels et n_labels est le nombre de labels
+label_image, n_labels = ndimage.label(open_image)
+print(f'il y a {n_labels} groupes')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>il y a 53 groupes
+</code></pre>
+<pre><code class="language-python"># Visualisation de l'image étiquetée
+plt.imshow(label_image)
+</code></pre>
+<p><img src="nested/./images/4g21.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Mesure de la taille de chaque groupes de label_images (fait la somme des pixels)
+sizes = ndimage.sum(open_image, label_image, range(n_labels))
+</code></pre>
+<pre><code class="language-python"># Visualisation des résultats
+plt.scatter(range(n_labels), sizes)
+plt.xlabel('bactérie ID')
+plt.ylabel('taille relative')
+plt.show()
+</code></pre>
+<p><img src="nested/./images/4g22.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-5--pandas"><a class="header" href="#chapitre-5--pandas"><center>Chapitre 5 : Pandas</a></h1>
+<p><strong>Pandas</strong> est une bibliothèque incontournable pour la manipulation et l’analyse de données en Python. Elle offre des structures de données puissantes et flexibles, comme les DataFrames, qui permettent de travailler efficacement avec des données tabulaires. Ce chapitre vous apprendra les bases de Pandas ainsi que des techniques avancées pour explorer, nettoyer, et analyser vos données.</p>
+<hr />
+<h2 id="plan-du-chapitre-3"><a class="header" href="#plan-du-chapitre-3">Plan du chapitre</a></h2>
+<ol>
+<li>
+<p><strong><a href="nested/6_1.html">Pandas : Les bases et Analyse du Titanic</a></strong></p>
+<ul>
+<li>Introduction aux structures de données fondamentales : Series et DataFrames.</li>
+<li>Analyse de données avec un cas pratique : l’étude des passagers du Titanic.</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="nested/6_2.html">Pandas : Séries temporelles</a></strong></p>
+<ul>
+<li>Manipulation de données temporelles.</li>
+<li>Analyse et visualisation de tendances dans des séries chronologiques.</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="pourquoi-utiliser-pandas-"><a class="header" href="#pourquoi-utiliser-pandas-">Pourquoi utiliser Pandas ?</a></h2>
+<ul>
+<li><strong>Facilité de manipulation</strong> : Pandas simplifie des opérations complexes comme le nettoyage, le filtrage, ou le regroupement de données.</li>
+<li><strong>Interopérabilité</strong> : Compatible avec d'autres bibliothèques comme NumPy, Matplotlib et Scipy.</li>
+<li><strong>Applications pratiques</strong> : Pandas est utilisé dans des domaines variés, comme l’analyse financière, le machine learning, ou la gestion de données.</li>
+</ul>
+<hr />
+<h2 id="ce-que-vous-allez-apprendre-1"><a class="header" href="#ce-que-vous-allez-apprendre-1">Ce que vous allez apprendre</a></h2>
+<ul>
+<li>Manipuler des datasets avec les DataFrames de Pandas.</li>
+<li>Charger, explorer et nettoyer des données.</li>
+<li>Utiliser les fonctionnalités avancées de Pandas pour analyser des séries temporelles.</li>
+</ul>
+<hr />
+<h2 id="cas-pratiques"><a class="header" href="#cas-pratiques">Cas Pratiques</a></h2>
+<h3 id="1-les-bases-de-pandas-et-lanalyse-du-titanic"><a class="header" href="#1-les-bases-de-pandas-et-lanalyse-du-titanic"><strong>1. Les bases de Pandas et l'analyse du Titanic</strong></a></h3>
+<p>Nous explorerons un jeu de données bien connu, celui des passagers du Titanic, pour comprendre les bases de Pandas. Vous apprendrez à :</p>
+<ul>
+<li>Charger des données depuis différents formats (CSV, Excel, etc.).</li>
+<li>Explorer et filtrer les données.</li>
+<li>Calculer des statistiques descriptives et visualiser les résultats.</li>
+</ul>
+<h3 id="2-analyse-de-séries-temporelles"><a class="header" href="#2-analyse-de-séries-temporelles"><strong>2. Analyse de séries temporelles</strong></a></h3>
+<p>Les séries temporelles sont essentielles dans des domaines comme la finance et la prévision. Vous apprendrez à :</p>
+<ul>
+<li>Manipuler des indices temporels.</li>
+<li>Rééchantillonner et lisser des données.</li>
+<li>Identifier des tendances et des patterns cycliques.</li>
+</ul>
+<hr />
+<p>Ce chapitre vous donnera une maîtrise solide de Pandas et vous permettra de manipuler et analyser vos propres datasets avec facilité. Plongeons dès maintenant dans le monde fascinant de la manipulation de données avec Pandas !</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pandas--les-bases-et-analyse-du-titanic"><a class="header" href="#pandas--les-bases-et-analyse-du-titanic"><center>Pandas : Les bases et Analyse du Titanic</a></h1>
+<h3 id="sommaire--9"><a class="header" href="#sommaire--9">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/6_1.html#1-charger-vos-donn%C3%A9es-dans-un-dataframe-pandas">Chapitre 1 : Charger vos données dans un DataFrame Pandas</a></li>
+<li><a href="nested/6_1.html#2-nettoyer-votre-dataset-avec-drop-dropna-et-fillna">Chapitire 2 : Nettoyer votre Dataset avec drop(), dropna() et fillna()</a></li>
+<li><a href="nested/6_1.html#3-groupby-et-value_counts">Chapitre 3 : Groupby() et value_counts()</a></li>
+<li><a href="nested/6_1.html#4-exercice-et-solution">Chapitre 4: Exercice et Solution</a></li>
+</ul>
+<br>
+<p><a href="nested/./titanic.xls">📂 Télécharger la base de donnée</a></p>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+</code></pre>
+<h2 id="1-charger-vos-données-dans-un-dataframe-pandas"><a class="header" href="#1-charger-vos-données-dans-un-dataframe-pandas">1. Charger vos données dans un DataFrame Pandas</a></h2>
+<p>Les options les plus courantes :</p>
+<ul>
+<li>read_csv</li>
+<li>read_excel</li>
+</ul>
+<pre><code class="language-python">data = pd.read_excel('titanic.xls')
+</code></pre>
+<pre><code class="language-python">data.shape
+data.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	pclass	survived	name	sex	age	sibsp	parch	ticket	fare	cabin	embarked	boat	body	home.dest
+0	1	1	Allen, Miss. Elisabeth Walton	female	29.0000	0	0	24160	211.3375	B5	S	2	NaN	St Louis, MO
+1	1	1	Allison, Master. Hudson Trevor	male	0.9167	1	2	113781	151.5500	C22 C26	S	11	NaN	Montreal, PQ / Chesterville, ON
+2	1	0	Allison, Miss. Helen Loraine	female	2.0000	1	2	113781	151.5500	C22 C26	S	NaN	NaN	Montreal, PQ / Chesterville, ON
+3	1	0	Allison, Mr. Hudson Joshua Creighton	male	30.0000	1	2	113781	151.5500	C22 C26	S	NaN	135.0	Montreal, PQ / Chesterville, ON
+4	1	0	Allison, Mrs. Hudson J C (Bessie Waldo Daniels)	female	25.0000	1	2	113781	151.5500	C22 C26	S	NaN	NaN	Montreal, PQ / Chesterville, ON
+</code></pre>
+<pre><code class="language-python">data.describe()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>pclass	survived	age	sibsp	parch	fare	body
+count	1309.000000	1309.000000	1046.000000	1309.000000	1309.000000	1308.000000	121.000000
+mean	2.294882	0.381971	29.881135	0.498854	0.385027	33.295479	160.809917
+std	0.837836	0.486055	14.413500	1.041658	0.865560	51.758668	97.696922
+min	1.000000	0.000000	0.166700	0.000000	0.000000	0.000000	1.000000
+25%	2.000000	0.000000	21.000000	0.000000	0.000000	7.895800	72.000000
+50%	3.000000	0.000000	28.000000	0.000000	0.000000	14.454200	155.000000
+75%	3.000000	1.000000	39.000000	1.000000	0.000000	31.275000	256.000000
+max	3.000000	1.000000	80.000000	8.000000	9.000000	512.329200	328.000000
+</code></pre>
+<h2 id="2-nettoyer-votre-dataset-avec-drop-dropna-et-fillna"><a class="header" href="#2-nettoyer-votre-dataset-avec-drop-dropna-et-fillna">2. Nettoyer votre Dataset avec drop(), dropna() et fillna()</a></h2>
+<pre><code class="language-python">data = data.drop(['name', 'sibsp', 'parch', 'ticket', 'fare', 'cabin', 'embarked', 'boat', 'body', 'home.dest'], axis=1)
+</code></pre>
+<pre><code class="language-python">data = data.dropna(axis=0)
+data.shape
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>(1046, 4)
+</code></pre>
+<pre><code class="language-python">data['age'].hist()
+</code></pre>
+<p><img src="nested/./images/6g1.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-groupby-et-value_counts"><a class="header" href="#3-groupby-et-value_counts">3. Groupby() et value_counts()</a></h2>
+<pre><code class="language-python">data.groupby(['sex']).mean()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	pclass	survived	age
+sex			
+female	2.048969	0.752577	28.687071
+male	2.300912	0.205167	30.585233
+</code></pre>
+<pre><code class="language-python">data.groupby(['sex', 'pclass']).mean()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>
+survived	age
+sex	pclass		
+female	1	0.962406	37.037594
+2	0.893204	27.499191
+3	0.473684	22.185307
+male	1	0.350993	41.029250
+2	0.145570	30.815401
+3	0.169054	25.962273
+</code></pre>
+<pre><code class="language-python">data['pclass'].value_counts()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>pclass
+3    501
+1    284
+2    261
+Name: count, dtype: int64
+</code></pre>
+<pre><code class="language-python">data[data['age'] &lt; 18]['pclass'].value_counts()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>pclass
+3    106
+2     33
+1     15
+Name: count, dtype: int64
+</code></pre>
+<h2 id="4-exercice-et-solution-4"><a class="header" href="#4-exercice-et-solution-4">4. Exercice et Solution</a></h2>
+<ul>
+<li>Créer des catégories d'ages avec la fonction map() de pandas</li>
+<li>Créer des catégories de genres avec cat.codes</li>
+</ul>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-7"><a class="header" href="#solution-7">Solution</a></h3>
+<pre><code class="language-python">def category_ages(age):
+    if age &lt;= 20:
+        return '&lt;20 ans'
+    elif (age &gt; 20) &amp; (age &lt;= 30):
+        return '20-30 ans'
+    elif (age &gt; 30) &amp; (age &lt;= 40):
+        return '30-40 ans'
+    else:
+        return '+40 ans'
+</code></pre>
+<pre><code class="language-python">data['age'] = data['age'].map(category_ages)
+data['age']
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0       20-30 ans
+1         &lt;20 ans
+2         &lt;20 ans
+3       20-30 ans
+4       20-30 ans
+          ...    
+1301      +40 ans
+1304      &lt;20 ans
+1306    20-30 ans
+1307    20-30 ans
+1308    20-30 ans
+Name: age, Length: 1046, dtype: object
+</code></pre>
+<pre><code class="language-python">data['sex'].astype('category').cat.codes
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0       0
+1       1
+2       0
+3       1
+4       0
+       ..
+1301    1
+1304    0
+1306    1
+1307    1
+1308    1
+Length: 1046, dtype: int8
+</code></pre>
+</details>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pandas--séries-temporelles"><a class="header" href="#pandas--séries-temporelles"><center>Pandas : séries temporelles</a></h1>
+<h3 id="sommaire--10"><a class="header" href="#sommaire--10">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/6_2.html#1-charger-vos-donn%C3%A9es-dans-un-dataframe-pandas">Chapitre 1 : Travailler avec des séries Temporelles</a></li>
+<li><a href="nested/6_2.html#2-nettoyer-votre-dataset-avec-drop-dropna-et-fillna">Chapitire 2 : Resample</a></li>
+<li><a href="nested/6_2.html#3-groupby-et-value_counts">Chapitre 3 : Aggregate</a></li>
+<li><a href="nested/6_2.html#4-exercice-et-solution">Chapitre 4 : Moving Average et EWM</a></li>
+<li><a href="nested/6_2.html#4-exercice-et-solution">Chapitre 5 : Comparaison de 2 série temporelles</a></li>
+<li><a href="nested/6_2.html#4-exercice-et-solution">Chapitre 6 : Exercice et Solution</a></li>
+</ul>
+<br>
+<p><a href="nested/./BTC-EUR.csv">📂 Télécharger la base de donnée bitcoin</a></p>
+<p><a href="nested/./ETH-EUR.csv">📂 Télécharger la base de etherum</a></p>
+<h2 id="1-travailler-avec-des-séries-temporelles"><a class="header" href="#1-travailler-avec-des-séries-temporelles">1. Travailler avec des séries Temporelles</a></h2>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+</code></pre>
+<pre><code class="language-python">bitcoin = pd.read_csv('BTC-EUR.csv', index_col='Date', parse_dates=True)
+bitcoin.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	Open	High	Low	Close	Adj Close	Volume
+Date						
+2011-10-04	3.700	3.821	3.746	3.750	3.750	1357
+2011-10-05	3.750	3.820	3.650	3.676	3.676	3349
+2011-10-06	3.676	3.743	3.450	3.550	3.550	6642
+2011-10-07	3.550	3.590	2.900	3.293	3.293	7135
+2011-10-08	3.293	3.283	2.872	2.890	2.890	2007
+</code></pre>
+<pre><code class="language-python">bitcoin['Close'].plot(figsize=(9, 6))
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.index
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>DatetimeIndex(['2011-10-04', '2011-10-05', '2011-10-06', '2011-10-07',
+               '2011-10-08', '2011-10-09', '2011-10-10', '2011-10-11',
+               '2011-10-12', '2011-10-13',
+               ...
+               '2019-09-25', '2019-09-26', '2019-09-27', '2019-09-28',
+               '2019-09-29', '2019-09-30', '2019-10-01', '2019-10-02',
+               '2019-10-03', '2019-10-04'],
+              dtype='datetime64[ns]', name='Date', length=2923, freq=None)
+</code></pre>
+<pre><code class="language-python">bitcoin.loc['2017':'2019','Close'].plot()
+</code></pre>
+<p><img src="nested/./images/62g2.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-resample"><a class="header" href="#2-resample">2. Resample</a></h2>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('M').mean().plot()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g3.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('2W').mean().plot()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g4.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('2W').std().plot()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g5.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+bitcoin.loc['2019', 'Close'].plot()
+bitcoin.loc['2019', 'Close'].resample('M').mean().plot(label='moyenne par mois', lw=3, ls=':', alpha=0.8)
+bitcoin.loc['2019', 'Close'].resample('W').mean().plot(label='moyenne par semaine', lw=2, ls='--', alpha=0.8)
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g6.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-aggregate"><a class="header" href="#3-aggregate">3. Aggregate</a></h2>
+<pre><code class="language-python">m = bitcoin['Close'].resample('W').agg(['mean', 'std', 'min', 'max'])
+
+plt.figure(figsize=(12, 8))
+m['mean']['2019'].plot(label='moyenne par semaine')
+plt.fill_between(m.index, m['max'], m['min'], alpha=0.2, label='min-max par semaine')
+
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g7.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">bitcoin.loc['2019', 'Close'].resample('W').agg(['mean', 'std', 'min', 'max']).plot()
+</code></pre>
+<p><img src="nested/./images/62g8.png" alt="Description de l&#39;image" /></p>
+<h2 id="4-moving-average-et-ewm"><a class="header" href="#4-moving-average-et-ewm">4. Moving Average et EWM</a></h2>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+bitcoin.loc['2019-09', 'Close'].plot()
+bitcoin.loc['2019-09', 'Close'].rolling(window=7).mean().plot(label='non centre', lw=3, ls=':', alpha=0.8)
+bitcoin.loc['2019-09', 'Close'].rolling(window=7, center=True).mean().plot(label='centre', lw=3, ls=':', alpha=0.8)
+bitcoin.loc['2019-09', 'Close'].ewm(alpha=0.6).mean().plot(label='ewm', lw=3, ls=':', alpha=0.8)
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g9.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.figure(figsize=(12, 8))
+bitcoin.loc['2019-09', 'Close'].plot()
+for i in np.arange(0.2, 1, 0.2):
+    bitcoin.loc['2019-09', 'Close'].ewm(alpha=i).mean().plot(label=f'ewm {i}', ls='--', alpha=0.8)
+plt.legend()
+plt.show()
+</code></pre>
+<p><img src="nested/./images/62g10.png" alt="Description de l&#39;image" /></p>
+<h2 id="5-comparaison-de-2-série-temporelles"><a class="header" href="#5-comparaison-de-2-série-temporelles">5. Comparaison de 2 série temporelles</a></h2>
+<pre><code class="language-python">ethereum = pd.read_csv('ETH-EUR.csv', index_col='Date', parse_dates=True)
+</code></pre>
+<pre><code class="language-python">btc_eth = pd.merge(bitcoin, ethereum, on='Date', how='inner', suffixes=('_btc', '_eth'))
+</code></pre>
+<pre><code class="language-python">btc_eth.iloc[:, [btc_eth.columns.get_loc('Close_btc'), btc_eth.columns.get_loc('Close_eth')]].loc['2019-09'].plot(subplots=True, figsize=(12, 8))
+</code></pre>
+<p><img src="nested/./images/62g11.png" alt="Description de l&#39;image" /></p>
+<h2 id="6-exercice-et-solution-1"><a class="header" href="#6-exercice-et-solution-1">6. Exercice et Solution</a></h2>
+<h2 id="exercice"><a class="header" href="#exercice">Exercice</a></h2>
+<h3 id="implémentation-de-la-stratégie-de-la-tortue"><a class="header" href="#implémentation-de-la-stratégie-de-la-tortue">Implémentation de la Stratégie de la Tortue</a></h3>
+<p>La <strong>stratégie de la Tortue</strong> est une méthode de trading basée sur des seuils de breakout, en utilisant des moyennes glissantes pour identifier des opportunités d'achat et de vente.</p>
+<p>Dans cet exercice, vous allez :</p>
+<ol>
+<li>Créer deux seuils :
+<ul>
+<li>Le <strong>maximum glissant</strong> sur une fenêtre de 28 jours (RollingMax).</li>
+<li>Le <strong>minimum glissant</strong> sur une fenêtre de 28 jours (RollingMin).</li>
+</ul>
+</li>
+<li>Identifier les signaux d'achat et de vente :
+<ul>
+<li>Un signal d'achat est généré lorsque le prix de clôture dépasse le RollingMax.</li>
+<li>Un signal de vente est généré lorsque le prix de clôture est inférieur au RollingMin.</li>
+</ul>
+</li>
+<li>Afficher les graphiques pour visualiser les signaux d'achat et de vente.</li>
+</ol>
+<hr />
+<h4 id="données"><a class="header" href="#données">Données</a></h4>
+<p>Vous utiliserez les données Bitcoin contenues dans le DataFrame <code>bitcoin</code>, qui contient une colonne <code>'Close'</code> correspondant au prix de clôture.</p>
+<hr />
+<h4 id="Étapes-à-suivre"><a class="header" href="#Étapes-à-suivre">Étapes à suivre</a></h4>
+<ol>
+<li>
+<p><strong>Ajouter des colonnes RollingMax et RollingMin</strong> :</p>
+<ul>
+<li>Utilisez la méthode <code>.rolling(window=28).max()</code> pour calculer le maximum glissant.</li>
+<li>Utilisez la méthode <code>.rolling(window=28).min()</code> pour calculer le minimum glissant.</li>
+</ul>
+</li>
+<li>
+<p><strong>Générer les colonnes Buy et Sell</strong> :</p>
+<ul>
+<li>Ajoutez une colonne <code>'Buy'</code> contenant <code>1</code> si le prix de clôture dépasse RollingMax, et <code>0</code> sinon.</li>
+<li>Ajoutez une colonne <code>'Sell'</code> contenant <code>-1</code> si le prix de clôture est inférieur à RollingMin, et <code>0</code> sinon.</li>
+</ul>
+</li>
+<li>
+<p><strong>Tracer les graphiques</strong> :</p>
+<ul>
+<li>Dans un graphique, affichez :
+<ul>
+<li>Le prix de clôture (<code>Close</code>).</li>
+<li>Le maximum glissant (<code>RollingMax</code>).</li>
+<li>Le minimum glissant (<code>RollingMin</code>).</li>
+</ul>
+</li>
+<li>Dans un second graphique, affichez :
+<ul>
+<li>Les signaux d'achat (<code>Buy</code>).</li>
+<li>Les signaux de vente (<code>Sell</code>).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h4 id="résultat-attendu"><a class="header" href="#résultat-attendu">Résultat attendu</a></h4>
+<p>Votre graphique final devra inclure :</p>
+<ol>
+<li><strong>Premier graphique</strong> :
+<ul>
+<li>La courbe du prix de clôture.</li>
+<li>Les lignes RollingMax et RollingMin.</li>
+</ul>
+</li>
+<li><strong>Deuxième graphique</strong> :
+<ul>
+<li>Les points de signal d'achat (en vert).</li>
+<li>Les points de signal de vente (en rouge).</li>
+</ul>
+</li>
+</ol>
+<hr />
+<p><strong>Exemple attendu :</strong></p>
+<p><img src="nested/./images/62g12.png" alt="Graphique Stratégie de la Tortue" /></p>
+<hr />
+<p><strong>Bonne chance !</strong></p>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-8"><a class="header" href="#solution-8">Solution</a></h3>
+<pre><code class="language-python">data = bitcoin.copy()
+data['Buy'] = np.zeros(len(data))
+data['Sell'] = np.zeros(len(data))
+</code></pre>
+<pre><code class="language-python">data['RollingMax'] = data['Close'].shift(1).rolling(window=28).max()
+data['RollingMin'] = data['Close'].shift(1).rolling(window=28).min()
+data.loc[data['RollingMax'] &lt; data['Close'], 'Buy'] = 1
+data.loc[data['RollingMin'] &gt; data['Close'], 'Sell'] = -1
+</code></pre>
+<pre><code class="language-python">start ='2019'
+end='2019'
+fig, ax = plt.subplots(2, figsize=(12, 8), sharex=True)
+#plt.figure(figsize=(12, 8))
+#plt.subplot(211)
+ax[0].plot(data['Close'][start:end])
+ax[0].plot(data['RollingMin'][start:end])
+ax[0].plot(data['RollingMax'][start:end])
+ax[0].legend(['close', 'min', 'max'])
+ax[1].plot(data['Buy'][start:end], c='g')
+ax[1].plot(data['Sell'][start:end], c='r')
+ax[1].legend(['buy', 'sell'])
+</code></pre>
+<p><img src="nested/./images/62g12.png" alt="Description de l&#39;image" /></p>
+</details><div style="break-before: page; page-break-before: always;"></div><h1 id="chapitre-6--visualisation-de-données-avec-seaborn"><a class="header" href="#chapitre-6--visualisation-de-données-avec-seaborn"><center>Chapitre 6 : Visualisation de Données avec Seaborn</a></h1>
+<p>Seaborn est une bibliothèque de visualisation de données puissante et facile à utiliser, qui s'appuie sur Matplotlib. Elle permet de créer des graphiques élégants et informatifs, adaptés à l'exploration et à l'analyse de données.</p>
+<h2 id="objectifs-du-chapitre-3"><a class="header" href="#objectifs-du-chapitre-3">Objectifs du chapitre</a></h2>
+<p>À la fin de ce chapitre, vous serez capable de :</p>
+<ul>
+<li>Utiliser Seaborn pour créer des graphiques informatifs et esthétiques.</li>
+<li>Explorer les relations entre différentes caractéristiques grâce à des visualisations avancées.</li>
+<li>Analyser les distributions et corrélations dans vos jeux de données.</li>
+</ul>
+<hr />
+<h3 id="sommaire--11"><a class="header" href="#sommaire--11">Sommaire :</a></h3>
+<ul>
+<li><a href="chapitre6.html#1-pairplot--la-vue-densemble">Chapitre 1 : Pairplot() - La vue d'ensemble</a></li>
+<li><a href="chapitre6.html#2-visualiser-de-cat%C3%A9gories">Chapitire 2 : Visualiser de catégories</a></li>
+<li><a href="chapitre6.html#3-visualisation-de-distributions">Chapitre 3 : Visualisation de Distributions</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+</code></pre>
+<pre><code class="language-python">iris = sns.load_dataset('iris')
+iris.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	sepal_length	sepal_width	petal_length	petal_width	species
+0	5.1	3.5	1.4	0.2	setosa
+1	4.9	3.0	1.4	0.2	setosa
+2	4.7	3.2	1.3	0.2	setosa
+3	4.6	3.1	1.5	0.2	setosa
+4	5.0	3.6	1.4	0.2	setosa
+</code></pre>
+<h2 id="1-pairplot--la-vue-densemble"><a class="header" href="#1-pairplot--la-vue-densemble">1. Pairplot() : La vue d'ensemble</a></h2>
+<pre><code class="language-python">sns.pairplot(iris, hue='species')
+</code></pre>
+<p><img src="./images/7g1.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-visualiser-de-catégories"><a class="header" href="#2-visualiser-de-catégories">2. Visualiser de catégories</a></h2>
+<pre><code class="language-python">titanic = sns.load_dataset('titanic')
+titanic.drop(['alone', 'alive', 'who', 'adult_male', 'embark_town', 'class'], axis=1, inplace=True)
+titanic.dropna(axis=0, inplace=True)
+titanic.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>survived	pclass	sex	age	sibsp	parch	fare	embarked	deck
+1	1	1	female	38.0	1	0	71.2833	C	C
+3	1	1	female	35.0	1	0	53.1000	S	C
+6	0	1	male	54.0	0	0	51.8625	S	E
+10	1	3	female	4.0	1	1	16.7000	S	G
+11	1	1	female	58.0	0	0	26.5500	S	C
+</code></pre>
+<pre><code class="language-python">sns.catplot(x='survived', y='age', data=titanic, hue='sex')
+</code></pre>
+<p><img src="./nested/images/7g2.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.figure(figsize=(32, 8))
+sns.boxplot(x='age', y='fare', data=titanic, hue='sex')
+</code></pre>
+<p><img src="./nested/images/7g3.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-visualisation-de-distributions"><a class="header" href="#3-visualisation-de-distributions">3. Visualisation de Distributions</a></h2>
+<pre><code class="language-python">sns.distplot(titanic['fare'])
+</code></pre>
+<p><img src="./nested/images/7g4.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">sns.jointplot(x='age', y='fare', data=titanic, kind='hex')
+</code></pre>
+<p><img src="./nested/images/7g5.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python"># Conversion des colonnes non numériques (object ou category)
+for col in titanic.columns:
+    if titanic[col].dtype == 'object' or titanic[col].dtype.name == 'category':
+        if titanic[col].nunique() == 2:
+            # Colonnes binaires
+            titanic[col] = titanic[col].map({titanic[col].unique()[0]: 0, titanic[col].unique()[1]: 1})
+        else:
+            # Colonnes avec plusieurs catégories
+            titanic[col] = titanic[col].cat.codes if titanic[col].dtype.name == 'category' else pd.factorize(titanic[col])[0]
+
+# Vérification : Toutes les colonnes doivent maintenant être numériques
+print(titanic.dtypes)
+
+# Calcul des corrélations et affichage de la heatmap
+corr = titanic.corr()
+sns.heatmap(corr, annot=True, cmap='coolwarm')
+plt.show()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>survived      int64
+pclass        int64
+sex           int64
+age         float64
+sibsp         int64
+parch         int64
+fare        float64
+embarked      int64
+deck           int8
+dtype: object
+</code></pre>
+<p><img src="./nested/images/7g6.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction-à-scikit-learn"><a class="header" href="#introduction-à-scikit-learn"><center>Introduction à Scikit-learn</a></h1>
+<p>Scikit-learn est l'une des bibliothèques les plus puissantes et populaires pour le machine learning en Python. Elle offre un vaste éventail d'outils pour l'apprentissage supervisé, non-supervisé, le prétraitement des données, la sélection de caractéristiques, et bien plus encore.</p>
+<hr />
+<h2 id="plan-du-chapitre-4"><a class="header" href="#plan-du-chapitre-4">Plan du chapitre</a></h2>
+<p><strong>1. <a href="nested/8_1.html">Sklearn : Ensemble Learning</a></strong><br />
+Découvrez comment combiner plusieurs modèles pour améliorer les performances grâce au Voting, Bagging, Boosting et Stacking.</p>
+<p><strong>2. <a href="nested/8_2.html">Sklearn : Sélection de Modèle</a></strong><br />
+Apprenez à diviser vos données, évaluer vos modèles avec des courbes de validation et optimiser leurs hyperparamètres.</p>
+<p><strong>3. <a href="nested/8_3.html">Sklearn : Pre-processing</a></strong><br />
+Explorez les techniques de prétraitement des données, telles que l'encodage, la normalisation et la construction de pipelines.</p>
+<p><strong>4. <a href="nested/8_4.html">Sklearn : Feature Selection</a></strong><br />
+Identifiez et sélectionnez les caractéristiques les plus pertinentes pour vos modèles grâce à différentes techniques.</p>
+<p><strong>5. <a href="nested/8_5.html">Sklearn : Apprentissage Non-Supervisé</a></strong><br />
+Maîtrisez des techniques telles que le clustering, la réduction de dimensionnalité et la détection d'anomalies.</p>
+<p><strong>6. <a href="nested/8_6.html">Sklearn : Apprentissage Supervisé</a></strong><br />
+Plongez dans les algorithmes supervisés tels que la régression, les forêts aléatoires, et le boosting.</p>
+<hr />
+<h2 id="objectifs-de-cette-partie"><a class="header" href="#objectifs-de-cette-partie">Objectifs de cette partie</a></h2>
+<p>À la fin de cette partie, vous serez capable de :</p>
+<ul>
+<li>Construire des modèles de machine learning supervisés et non-supervisés avec Scikit-learn.</li>
+<li>Optimiser vos modèles grâce à des outils tels que GridSearchCV et les pipelines.</li>
+<li>Identifier les caractéristiques les plus importantes dans vos jeux de données.</li>
+<li>Prétraiter vos données pour améliorer les performances de vos modèles.</li>
+</ul>
+<hr />
+<p><strong>Prêt à commencer ?</strong> Rendez-vous dans la première section : <a href="nested/8_1.html">Sklearn : Ensemble Learning</a> !</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sklearn--ensemble-learning"><a class="header" href="#sklearn--ensemble-learning"><center>Sklearn : Ensemble Learning</a></h1>
+<p>Dans ce chapitre, nous allons explorer les bases de l'apprentissage supervisé avec <strong>Sklearn</strong>, en abordant les concepts de régression, de classification, et de prédiction à travers des exemples concrets. Nous terminerons par un exercice pour affiner nos compétences en paramétrage de modèles.</p>
+<h3 id="sommaire--12"><a class="header" href="#sommaire--12">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/8_1.html#1-r%C3%A9gression">Chapitre 1 : Régression</a></li>
+<li><a href="nested/8_1.html#2-classification">Chapitire 2 : Classification</a></li>
+<li><a href="nested/8_1.html#3-prediction-de-survie">Chapitre 3 : Prediction de survie</a></li>
+<li><a href="nested/8_1.html#4-exercice-et-solution">Chapitre 4 : Exercice et Solution</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+</code></pre>
+<h2 id="1-régression"><a class="header" href="#1-régression">1. Régression</a></h2>
+<pre><code class="language-python">np.random.seed(0)
+m = 100 # creation de 100 échantillons
+X = np.linspace(0, 10, m).reshape(m,1)
+y = X + np.random.randn(m, 1)
+
+plt.scatter(X, y)
+</code></pre>
+<p><img src="nested/./images/81g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">from sklearn.linear_model import LinearRegression
+</code></pre>
+<pre><code class="language-python">model = LinearRegression()
+model.fit(X, y) # entrainement du modele
+model.score(X, y) # évaluation avec le coefficient de corrélation
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.8881140743377214
+</code></pre>
+<pre><code class="language-python">plt.scatter(X, y)
+plt.plot(X, model.predict(X), c='red')
+</code></pre>
+<p><img src="nested/./images/81g2.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-classification"><a class="header" href="#2-classification">2. Classification</a></h2>
+<pre><code class="language-python">titanic = sns.load_dataset('titanic')
+titanic = titanic[['survived', 'pclass', 'sex', 'age']]
+titanic.dropna(axis=0, inplace=True)
+titanic['sex'].replace(['male', 'female'], [0, 1], inplace=True)
+titanic.head()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>	survived	pclass	sex	age
+0	0	3	0	22.0
+1	1	1	1	38.0
+2	1	3	1	26.0
+3	1	1	1	35.0
+4	0	3	0	35.0
+</code></pre>
+<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
+</code></pre>
+<pre><code class="language-python">model = KNeighborsClassifier()
+</code></pre>
+<pre><code class="language-python">y = titanic['survived']
+X = titanic.drop('survived', axis=1)
+</code></pre>
+<pre><code class="language-python">model.fit(X, y) # entrainement du modele
+model.score(X, y) # évaluation
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.8417366946778712
+</code></pre>
+<h2 id="3-prediction-de-survie"><a class="header" href="#3-prediction-de-survie">3. Prediction de survie</a></h2>
+<pre><code class="language-python">def survie(model, pclass=3, sex=0, age=26):
+  x = np.array([pclass, sex, age]).reshape(1, 3)
+  print(model.predict(x))
+  print(model.predict_proba(x))
+</code></pre>
+<pre><code class="language-python">survie(model)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[0]
+[[0.8 0.2]]
+</code></pre>
+<h2 id="4-exercice-et-solution-5"><a class="header" href="#4-exercice-et-solution-5">4. Exercice et Solution</a></h2>
+<p>Écrire un code qui permet de trouver la meilleure valeur de voisin n_neighbors pour le modele de KNeighborsClassifier.</p>
+<p>Dans sklearn, il est possible de faire cela avec la classe GridSearchCV. Mais il peut également etre utile de savoir écrire soi-meme ce genre de code de recherche.</p>
+<details>
+    <summary>💡 Cliquez ici pour voir la solution</summary>
+<h3 id="solution-9"><a class="header" href="#solution-9">SOLUTION</a></h3>
+<pre><code class="language-python">score = []
+best_k = 1
+best_score = 0
+
+for k in range(best_k, 30):
+    model = KNeighborsClassifier(n_neighbors=k)
+    model.fit(X, y)
+    score.append(model.score(X, y))
+    
+    if best_score &lt; model.score(X, y):
+        best_k = k
+        best_score = model.score(X, y)
+
+print(best_k)
+plt.plot(score)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>3
+</code></pre>
+<p><img src="nested/./images/81g3.png" alt="Description de l&#39;image" /></p>
+</details><div style="break-before: page; page-break-before: always;"></div><h1 id="sklearn--sélection-de-modele"><a class="header" href="#sklearn--sélection-de-modele"><center>Sklearn : Sélection de Modele</a></h1>
+<p>Dans ce chapitre, nous explorerons les techniques de sélection de modèles en utilisant <strong>Scikit-learn</strong>. Vous apprendrez à diviser vos données, évaluer les performances de vos modèles avec des courbes de validation et d'apprentissage, et optimiser leurs hyperparamètres à l'aide de GridSearchCV et d'autres outils.</p>
+<h3 id="sommaire--13"><a class="header" href="#sommaire--13">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/8_2.html#1-train-test-split">Chapitre 1 : Train Test Split</a></li>
+<li><a href="nested/8_2.html#2-validation-set-et-cross-validation">Chapitire 2 : Validation Set et Cross Validation</a></li>
+<li><a href="nested/8_2.html#3-validation-curve">Chapitre 3 : Validation Curve</a></li>
+<li><a href="nested/8_2.html#4-gridsearchcv">Chapitre 4 : GridSearchCV</a></li>
+<li><a href="nested/8_2.html#5-confusion-matrix">Chapitre 5 : Confusion Matrix</a></li>
+<li><a href="nested/8_2.html#6-learning-curve">Chapitre 6 : Learning Curve</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+</code></pre>
+<pre><code class="language-python">iris = load_iris()
+X = iris.data
+y = iris.target
+
+plt.scatter(X[:, 0], X[:, 1], c=y, alpha=0.8)
+</code></pre>
+<p><img src="nested/./images/82g1.png" alt="Description de l&#39;image" /></p>
+<h2 id="1-train-test-split"><a class="header" href="#1-train-test-split">1. Train Test Split</a></h2>
+<pre><code class="language-python">from sklearn.model_selection import train_test_split
+</code></pre>
+<pre><code class="language-python">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=5)
+
+print('Train set:', X_train.shape)
+print('Test set:', X_test.shape)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>Train set: (120, 4)
+Test set: (30, 4)
+</code></pre>
+<pre><code class="language-python">plt.figure(figsize=(12, 4))
+plt.subplot(121)
+plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, alpha=0.8)
+plt.title('Train set')
+plt.subplot(122)
+plt.scatter(X_test[:, 0], X_test[:, 1],c=y_test, alpha=0.8)
+plt.title('Test set')
+</code></pre>
+<p><img src="nested/./images/82g2.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
+</code></pre>
+<pre><code class="language-python">model = KNeighborsClassifier(n_neighbors=1)
+
+model.fit(X_train, y_train)
+
+print('train score:', model.score(X_train, y_train))
+print('test score:', model.score(X_test, y_test))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>train score: 1.0
+test score: 0.9
+</code></pre>
+<h2 id="2-validation-set-et-cross-validation"><a class="header" href="#2-validation-set-et-cross-validation">2. Validation Set et Cross Validation</a></h2>
+<pre><code class="language-python">from sklearn.model_selection import cross_val_score
+</code></pre>
+<pre><code class="language-python">model = KNeighborsClassifier()
+cross_val_score(model, X_train, y_train, cv=5, scoring='accuracy')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([1.        , 1.        , 1.        , 0.95833333, 0.95833333])
+</code></pre>
+<pre><code class="language-python">val_score = []
+for k in range(1, 50):
+    score = cross_val_score(KNeighborsClassifier(k), X_train, y_train, cv=5).mean()
+    val_score.append(score)
+
+plt.plot(val_score)
+</code></pre>
+<p><img src="nested/./images/82g3.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-validation-curve"><a class="header" href="#3-validation-curve">3. Validation Curve</a></h2>
+<pre><code class="language-python">from sklearn.model_selection import validation_curve
+</code></pre>
+<pre><code class="language-python">model = KNeighborsClassifier()
+k = np.arange(1, 50)
+
+train_score, val_score = validation_curve(model, X_train, y_train,
+                                          param_name='n_neighbors', param_range=k, cv=5)
+
+plt.plot(k, val_score.mean(axis=1), label='validation')
+plt.plot(k, train_score.mean(axis=1), label='train')
+
+plt.ylabel('score')
+plt.xlabel('n_neighbors')
+plt.legend()
+</code></pre>
+<p><img src="nested/./images/82g4.png" alt="Description de l&#39;image" /></p>
+<h2 id="4-gridsearchcv"><a class="header" href="#4-gridsearchcv">4. GridSearchCV</a></h2>
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
+</code></pre>
+<pre><code class="language-python">param_grid = {'n_neighbors': np.arange(1, 20),
+              'metric': ['euclidean', 'manhattan']}
+
+grid = GridSearchCV(KNeighborsClassifier(), param_grid, cv=5)
+
+grid.fit(X_train, y_train)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>param_grid = {'n_neighbors': np.arange(1, 20),
+              'metric': ['euclidean', 'manhattan']}
+
+grid = GridSearchCV(KNeighborsClassifier(), param_grid, cv=5)
+
+grid.fit(X_train, y_train)
+</code></pre>
+<pre><code class="language-python">print(grid.best_score_)
+print(grid.best_params_)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.9833333333333334
+{'metric': 'euclidean', 'n_neighbors': 5}
+</code></pre>
+<pre><code class="language-python">model = grid.best_estimator_
+model.score(X_test, y_test)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.9333333333333333
+</code></pre>
+<h2 id="5-confusion-matrix"><a class="header" href="#5-confusion-matrix">5. Confusion Matrix</a></h2>
+<pre><code class="language-python">from sklearn.metrics import confusion_matrix
+</code></pre>
+<pre><code class="language-python">confusion_matrix(y_test, model.predict(X_test))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[ 8,  0,  0],
+       [ 0,  9,  2],
+       [ 0,  0, 11]])
+</code></pre>
+<h2 id="6-learning-curve"><a class="header" href="#6-learning-curve">6. Learning Curve</a></h2>
+<pre><code class="language-python">from sklearn.model_selection import learning_curve
+</code></pre>
+<pre><code class="language-python">N, train_score, val_score = learning_curve(model, X_train, y_train,
+                                           train_sizes=np.linspace(0.1, 1, 10), cv=5)
+
+print(N)
+plt.plot(N, train_score.mean(axis=1), label='train')
+plt.plot(N, val_score.mean(axis=1), label='validation')
+plt.xlabel('train_sizes')
+plt.legend()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[ 9 19 28 38 48 57 67 76 86 96]
+</code></pre>
+<p><img src="nested/./images/82g5.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sklearn--pre-processing"><a class="header" href="#sklearn--pre-processing"><center>Sklearn : Pre-processing</a></h1>
+<p>Dans ce chapitre, nous allons explorer les outils de prétraitement de données offerts par <strong>Scikit-learn</strong>. Nous aborderons des techniques d'encodage, de normalisation, de création de caractéristiques polynomiales, de discrétisation, et nous verrons comment les intégrer efficacement dans des pipelines pour optimiser vos workflows de machine learning.</p>
+<h3 id="sommaire--14"><a class="header" href="#sommaire--14">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/8_3.html#1-encodage">Chapitre 1 : Encodage</a></li>
+<li><a href="nested/8_3.html#2-normalisation">Chapitire 2 : Normalisation</a></li>
+<li><a href="nested/8_3.html#3-polynomial-features">Chapitre 3 : Polynomial Features</a></li>
+<li><a href="nested/8_3.html#4-discretisation">Chapitre 4 : Discretisation</a></li>
+<li><a href="nested/8_3.html#5-pipelines">Chapitre 5 : Pipelines</a></li>
+</ul>
+<h2 id="1-encodage"><a class="header" href="#1-encodage">1. Encodage</a></h2>
+<h3 id="encodage-labelencoder-et-labelbinarizer"><a class="header" href="#encodage-labelencoder-et-labelbinarizer">Encodage LabelEncoder et LabelBinarizer</a></h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder, LabelBinarizer, OrdinalEncoder, OneHotEncoder
+</code></pre>
+<pre><code class="language-python">y = np.array(['chat', 'chien', 'chat', 'oiseau'])
+
+encoder = LabelEncoder()
+encoder.fit_transform(y)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([0, 1, 0, 2])
+</code></pre>
+<pre><code class="language-python">encoder.inverse_transform(np.array([0, 0, 2]))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array(['chat', 'chat', 'oiseau'], dtype='&lt;U6')
+</code></pre>
+<pre><code class="language-python">encoder = LabelBinarizer()
+encoder.fit_transform(y)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[1, 0, 0],
+       [0, 1, 0],
+       [1, 0, 0],
+       [0, 0, 1]])
+</code></pre>
+<h3 id="encodage-ordinal-et-encodage-onehot"><a class="header" href="#encodage-ordinal-et-encodage-onehot">Encodage Ordinal et Encodage OneHot</a></h3>
+<pre><code class="language-python">X = np.array([['chat', 'poils'],
+              ['chien', 'poils'],
+              ['chat', 'poils'],
+              ['oiseau', 'plumes']])
+
+encoder = OrdinalEncoder()
+encoder.fit_transform(X)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0., 1.],
+       [1., 1.],
+       [0., 1.],
+       [2., 0.]])
+</code></pre>
+<pre><code class="language-python">encoder = OneHotEncoder(sparse=False)
+encoder.fit_transform(X)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[1., 0., 0., 0., 1.],
+       [0., 1., 0., 0., 1.],
+       [1., 0., 0., 0., 1.],
+       [0., 0., 1., 1., 0.]])
+</code></pre>
+<h2 id="2-normalisation"><a class="header" href="#2-normalisation">2. Normalisation</a></h2>
+<pre><code class="language-python">from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler
+</code></pre>
+<pre><code class="language-python">from sklearn.datasets import load_iris
+iris = load_iris()
+X = iris.data
+</code></pre>
+<h3 id="minmaxscaler"><a class="header" href="#minmaxscaler">MinMaxScaler</a></h3>
+<pre><code class="language-python">X_minmax = MinMaxScaler().fit_transform(X)
+
+plt.scatter(X[:, 2], X[:, 3])
+plt.scatter(X_minmax[:, 2], X_minmax[:, 3])
+</code></pre>
+<p><img src="nested/./images/83g1.png" alt="Description de l&#39;image" /></p>
+<h3 id="standardscaler"><a class="header" href="#standardscaler">StandardScaler</a></h3>
+<pre><code class="language-python">X_stdscl = StandardScaler().fit_transform(X)
+
+plt.scatter(X[:, 2], X[:, 3])
+plt.scatter(X_stdscl[:, 2], X_stdscl[:, 3])
+</code></pre>
+<p><img src="nested/./images/83g2.png" alt="Description de l&#39;image" /></p>
+<h3 id="robustscaler"><a class="header" href="#robustscaler">RobustScaler</a></h3>
+<pre><code class="language-python">X_robust = RobustScaler().fit_transform(X)
+
+plt.scatter(X[:, 2], X[:, 3])
+plt.scatter(X_robust[:, 2], X_robust[:, 3])
+</code></pre>
+<p><img src="nested/./images/83g3.png" alt="Description de l&#39;image" /></p>
+<h1 id="3-polynomial-features"><a class="header" href="#3-polynomial-features">3. Polynomial Features</a></h1>
+<pre><code class="language-python">from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+</code></pre>
+<pre><code class="language-python">m = 100
+X = np.linspace(0, 4, m).reshape((m, 1))
+y = X**2 + 5*np.cos(X) + np.random.randn(m, 1)
+
+model = LinearRegression().fit(X, y)
+y_pred = model.predict(X)
+
+plt.scatter(X, y)
+plt.plot(X, y_pred, c='r', lw=3)
+</code></pre>
+<p><img src="nested/./images/83g4.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">X_poly = PolynomialFeatures(3).fit_transform(X)
+model = LinearRegression().fit(X_poly, y)
+y_pred = model.predict(X_poly)
+
+plt.scatter(X, y)
+plt.plot(X, y_pred, c='r', lw=3)
+</code></pre>
+<p><img src="nested/./images/83g5.png" alt="Description de l&#39;image" /></p>
+<h1 id="4-discretisation"><a class="header" href="#4-discretisation">4. Discretisation</a></h1>
+<pre><code class="language-python">from sklearn.preprocessing import Binarizer, KBinsDiscretizer
+</code></pre>
+<pre><code class="language-python">X = np.linspace(0, 5, 10).reshape((10, 1))
+</code></pre>
+<pre><code class="language-python">np.hstack((X, Binarizer(threshold=3).fit_transform(X)))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[0.        , 0.        ],
+       [0.55555556, 0.        ],
+       [1.11111111, 0.        ],
+       [1.66666667, 0.        ],
+       [2.22222222, 0.        ],
+       [2.77777778, 0.        ],
+       [3.33333333, 1.        ],
+       [3.88888889, 1.        ],
+       [4.44444444, 1.        ],
+       [5.        , 1.        ]])
+</code></pre>
+<pre><code class="language-python">KBinsDiscretizer(n_bins=6).fit_transform(X).toarray()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[1., 0., 0., 0., 0., 0.],
+       [1., 0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0., 0.],
+       [0., 0., 1., 0., 0., 0.],
+       [0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 1., 0., 0.],
+       [0., 0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 0., 1.],
+       [0., 0., 0., 0., 0., 1.]])
+</code></pre>
+<h1 id="5-pipelines"><a class="header" href="#5-pipelines">5. Pipelines</a></h1>
+<pre><code class="language-python">from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import SGDClassifier
+from sklearn.model_selection import train_test_split
+</code></pre>
+<pre><code class="language-python">X = iris.data
+y = iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+</code></pre>
+<pre><code class="language-python">model = make_pipeline(StandardScaler(), SGDClassifier())
+
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.9473684210526315
+</code></pre>
+<pre><code class="language-python">from sklearn.model_selection import GridSearchCV
+</code></pre>
+<pre><code class="language-python">model = make_pipeline(PolynomialFeatures(),
+                      StandardScaler(),
+                      SGDClassifier(random_state=0))
+params = {
+    'polynomialfeatures__degree':[2, 3, 4],
+    'sgdclassifier__penalty':['l1', 'l2']
+}
+
+grid = GridSearchCV(model, param_grid=params, cv=4)
+
+grid.fit(X_train, y_train)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>GridSearchCV
+estimator: Pipeline
+
+PolynomialFeatures
+
+StandardScaler
+
+SGDClassifier
+</code></pre>
+<pre><code class="language-python">grid.score(X_test, y_test)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.9736842105263158
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sklearn--feature-selection"><a class="header" href="#sklearn--feature-selection"><center>Sklearn : Feature Selection</a></h1>
+<p>Dans ce chapitre, nous explorerons différentes techniques pour sélectionner les caractéristiques les plus pertinentes dans vos jeux de données. Ces approches, allant de l'analyse de la variance à la sélection basée sur des modèles, vous aideront à simplifier vos modèles tout en améliorant leurs performances.</p>
+<h3 id="sommaire--15"><a class="header" href="#sommaire--15">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/8_4.html#1-variance-threshold">Chapitre 1 : Variance Threshold</a></li>
+<li><a href="nested/8_4.html#2-selectkbest">Chapitire 2 : SelectKBest</a></li>
+<li><a href="nested/8_4.html#3-recursive-feature-elimination">Chapitre 3 : Recursive feature Elimination</a></li>
+<li><a href="nested/8_4.html#4-selectfrommodel">Chapitre 4 : SelectFromModel</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+</code></pre>
+<h2 id="1-variance-threshold"><a class="header" href="#1-variance-threshold">1. Variance Threshold</a></h2>
+<pre><code class="language-python">from sklearn.feature_selection import VarianceThreshold
+</code></pre>
+<pre><code class="language-python">from sklearn.datasets import load_iris
+
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+plt.plot(X)
+plt.legend(iris.feature_names)
+</code></pre>
+<p><img src="nested/./images/84g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">X.var(axis=0)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([0.68112222, 0.18871289, 3.09550267, 0.57713289])
+</code></pre>
+<pre><code class="language-python">selector = VarianceThreshold(threshold=0.2)
+selector.fit(X)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>VarianceThreshold
+VarianceThreshold(threshold=0.2)
+</code></pre>
+<pre><code class="language-python">selector.get_support()
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([ True, False,  True,  True])
+</code></pre>
+<pre><code class="language-python">np.array(iris.feature_names)[selector.get_support()]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array(['sepal length (cm)', 'petal length (cm)', 'petal width (cm)'],
+      dtype='&lt;U17')
+</code></pre>
+<pre><code class="language-python">selector.variances_
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([0.68112222, 0.18871289, 3.09550267, 0.57713289])
+</code></pre>
+<h2 id="2-selectkbest"><a class="header" href="#2-selectkbest">2. SelectKBest</a></h2>
+<pre><code class="language-python">from sklearn.feature_selection import SelectKBest, chi2, f_classif
+</code></pre>
+<pre><code class="language-python">chi2(X, y)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>(array([ 10.81782088,   3.7107283 , 116.31261309,  67.0483602 ]),
+ array([4.47651499e-03, 1.56395980e-01, 5.53397228e-26, 2.75824965e-15]))
+</code></pre>
+<pre><code class="language-python">selector = SelectKBest(f_classif, k=2)
+selector.fit(X, y)
+selector.scores_
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([ 119.26450218,   49.16004009, 1180.16118225,  960.0071468 ])
+</code></pre>
+<pre><code class="language-python">np.array(iris.feature_names)[selector.get_support()]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array(['petal length (cm)', 'petal width (cm)'], dtype='&lt;U17')
+</code></pre>
+<h2 id="3-recursive-feature-elimination"><a class="header" href="#3-recursive-feature-elimination">3. Recursive feature Elimination</a></h2>
+<pre><code class="language-python">from sklearn.feature_selection import RFECV
+from sklearn.linear_model import SGDClassifier
+</code></pre>
+<pre><code class="language-python">selector = RFECV(SGDClassifier(random_state=0), step=1, min_features_to_select=2, cv=5)
+selector.fit(X, y)
+print(selector.ranking_)
+print(selector.score)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>[2 1 1 1]
+&lt;bound method RFE.score of RFECV(cv=5, estimator=SGDClassifier(random_state=0), min_features_to_select=2)&gt;
+</code></pre>
+<pre><code class="language-python">np.array(iris.feature_names)[selector.get_support()]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array(['sepal width (cm)', 'petal length (cm)', 'petal width (cm)'],
+      dtype='&lt;U17')
+</code></pre>
+<h2 id="4-selectfrommodel"><a class="header" href="#4-selectfrommodel">4. SelectFromModel</a></h2>
+<pre><code class="language-python">from sklearn.feature_selection import SelectFromModel
+</code></pre>
+<pre><code class="language-python">X = iris.data
+y = iris.target
+selector = SelectFromModel(SGDClassifier(random_state=0), threshold='mean')
+selector.fit(X, y)
+selector.estimator_.coef_
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array([[  8.64029104,  27.2851296 , -40.01819009, -17.73533424],
+       [ -5.48888269, -58.79616709,  22.88584985, -54.14457159],
+       [-81.28026953, -75.17372078, 130.76437145, 131.39608339]])
+</code></pre>
+<pre><code class="language-python">np.array(iris.feature_names)[selector.get_support()]
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>array(['petal length (cm)', 'petal width (cm)'], dtype='&lt;U17')
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sklearn--apprentissage-non-supervisé"><a class="header" href="#sklearn--apprentissage-non-supervisé"><center>Sklearn : Apprentissage Non-Supervisé</a></h1>
+<p>Dans ce chapitre, nous explorerons les algorithmes d'apprentissage non-supervisé avec <strong>Scikit-learn</strong>. Vous apprendrez à segmenter des données à l'aide du clustering (K-Means), à détecter des anomalies avec l'Isolation Forest, et à réduire la dimensionnalité avec l'analyse en composantes principales (PCA).</p>
+<h3 id="sommaire--16"><a class="header" href="#sommaire--16">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/8_5.html#1-k-means-clustering">Chapitre 1 : K-Means Clustering</a></li>
+<li><a href="nested/8_5.html#2-detection-danomalies-avec-isolation-forest">Chapitire 2 : Detection d'anomalies avec Isolation Forest</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_blobs
+</code></pre>
+<h2 id="1-k-means-clustering"><a class="header" href="#1-k-means-clustering">1. K-Means Clustering</a></h2>
+<pre><code class="language-python">from sklearn.cluster import KMeans
+</code></pre>
+<pre><code class="language-python"># Génération de données
+X, y = make_blobs(n_samples=100, centers=3, cluster_std=0.4, random_state=0)
+plt.scatter(X[:,0], X[:,1])
+</code></pre>
+<p><img src="nested/./images/85g1.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">model = KMeans(n_clusters=3)
+model.fit(X)
+model.predict(X)
+plt.scatter(X[:,0], X[:,1], c=model.predict(X))
+plt.scatter(model.cluster_centers_[:,0], model.cluster_centers_[:,1], c='r')
+model.score(X)
+</code></pre>
+<p><img src="nested/./images/85g2.png" alt="Description de l&#39;image" /></p>
+<h3 id="elbow-method"><a class="header" href="#elbow-method">Elbow Method</a></h3>
+<pre><code class="language-python">inertia = []
+K_range = range(1, 20)
+for k in K_range:
+    model = KMeans(n_clusters=k).fit(X)
+    inertia.append(model.inertia_)
+
+plt.plot(K_range, inertia)
+plt.xlabel('nombre de clusters')
+plt.ylabel('Cout du modele (Inertia)')
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>Text(0, 0.5, 'Cout du modele (Inertia)')
+</code></pre>
+<p><img src="nested/./images/85g3.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-detection-danomalies-avec-isolation-forest"><a class="header" href="#2-detection-danomalies-avec-isolation-forest">2. Detection d'anomalies avec Isolation Forest</a></h2>
+<pre><code class="language-python">from sklearn.ensemble import IsolationForest
+</code></pre>
+<pre><code class="language-python">X, y = make_blobs(n_samples=50, centers=1, cluster_std=0.1, random_state=0)
+X[-1,:] = np.array([2.25, 5])
+
+plt.scatter(X[:,0], X[:, 1])
+</code></pre>
+<p><img src="nested/./images/85g4.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">model = IsolationForest(contamination=0.01)
+model.fit(X)
+
+plt.scatter(X[:,0], X[:, 1], c=model.predict(X))
+</code></pre>
+<p><img src="nested/./images/85g5.png" alt="Description de l&#39;image" /></p>
+<h3 id="application--digits-outliers"><a class="header" href="#application--digits-outliers">Application : Digits Outliers</a></h3>
+<pre><code class="language-python">from sklearn.datasets import load_digits
+
+digits = load_digits()
+images = digits.images
+X = digits.data
+y = digits.target
+
+plt.imshow(images[0])
+</code></pre>
+<p><img src="nested/./images/85g6.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">model = IsolationForest(random_state=0, contamination=0.02)
+model.fit(X)
+outliers = model.predict(X) == -1 
+
+plt.figure(figsize=(12, 3))
+for i in range(10):
+  plt.subplot(1, 10, i+1)
+  plt.imshow(images[outliers][i])
+  plt.title(y[outliers][i])
+</code></pre>
+<p><img src="nested/./images/85g7.png" alt="Description de l&#39;image" /></p>
+<h2 id="2-pca--reduction-de-dimension"><a class="header" href="#2-pca--reduction-de-dimension">2. PCA : Reduction de dimension</a></h2>
+<h3 id="visualisation-2d"><a class="header" href="#visualisation-2d">Visualisation 2D</a></h3>
+<pre><code class="language-python">from sklearn.decomposition import PCA
+
+model = PCA(n_components=2)
+model.fit(X)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>PCA
+PCA(n_components=2)
+</code></pre>
+<pre><code class="language-python">x_pca = model.transform(X)
+plt.scatter(x_pca[:,0], x_pca[:,1], c=y)
+</code></pre>
+<p><img src="nested/./images/85g8.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">plt.figure()
+plt.xlim(-30, 30)
+plt.ylim(-30, 30)
+
+for i in range(100):
+    plt.text(x_pca[i,0], x_pca[i,1], str(y[i]))
+</code></pre>
+<p><img src="nested/./images/85g9.png" alt="Description de l&#39;image" /></p>
+<h3 id="compression-de-données"><a class="header" href="#compression-de-données">Compression de données</a></h3>
+<pre><code class="language-python">n_dims = X.shape[1]
+model = PCA(n_components=n_dims)
+model.fit(X)
+
+variances = model.explained_variance_ratio_
+
+meilleur_dims = np.argmax(np.cumsum(variances) &gt; 0.90)
+
+
+plt.bar(range(n_dims), np.cumsum(variances))
+plt.hlines(0.90, 0, meilleur_dims, colors='r')
+plt.vlines(meilleur_dims, 0, 0.90, colors='r')
+</code></pre>
+<p><img src="nested/./images/85g10.png" alt="Description de l&#39;image" /></p>
+<pre><code class="language-python">model = PCA(n_components=0.99)
+model.fit(X)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>PCA
+PCA(n_components=0.99)
+</code></pre>
+<pre><code class="language-python">X_compress = model.fit_transform(X)
+X_decompress = model.inverse_transform(X_compress)
+
+plt.subplot(1, 2, 1)
+plt.imshow(X[0,:].reshape((8,8)), cmap='gray')
+plt.title('originel')
+plt.subplot(1, 2, 2)
+plt.imshow(X_decompress[0,:].reshape((8,8)), cmap='gray')
+plt.title('Compressé')
+</code></pre>
+<p><img src="nested/./images/85g11.png" alt="Description de l&#39;image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sklearn--ensemble-learning-1"><a class="header" href="#sklearn--ensemble-learning-1"><center>Sklearn : Ensemble Learning</a></h1>
+<p>Dans ce chapitre, nous découvrirons les approches d'apprentissage par ensemble, qui combinent plusieurs modèles pour améliorer les performances. Nous explorerons le Voting Classifier, le Bagging, le Boosting, et le Stacking, avec des exemples pratiques pour chaque méthode.</p>
+<h3 id="sommaire--17"><a class="header" href="#sommaire--17">Sommaire :</a></h3>
+<ul>
+<li><a href="nested/8_6.html#1-voting-classifier">Chapitre 1 : Voting Classifier</a></li>
+<li><a href="nested/8_6.html#2-bagging">Chapitire 2 : Bagging</a></li>
+<li><a href="nested/8_6.html#3-boosting">Chapitre 3 : Boosting</a></li>
+<li><a href="nested/8_6.html#4-stacking">Chapitre 4 : Stacking</a></li>
+</ul>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_moons
+from sklearn.model_selection import train_test_split
+</code></pre>
+<pre><code class="language-python">from matplotlib.colors import ListedColormap
+
+def plot_decision_boundary(clf, X, y, axes=[-1.5, 2.45, -1, 1.5], alpha=0.5, contour=True):
+    
+    h = .02
+    x_min, x_max = X[:, 0].min() - .5, X[:, 0].max() + .5
+    y_min, y_max = X[:, 1].min() - .5, X[:, 1].max() + .5
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
+                         np.arange(y_min, y_max, h))
+    
+    
+    Z = clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
+    Z = Z.reshape(xx.shape)
+    plt.contourf(xx, yy, Z, alpha=.5)
+    
+    plt.scatter(X[:,0], X[:,1], c=y, alpha=0.8, edgecolors='k')
+</code></pre>
+<pre><code class="language-python">X, y = make_moons(n_samples=500, noise=0.3, random_state=0)
+plt.scatter(X[:,0], X[:,1], c=y, alpha=0.8)
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
+</code></pre>
+<p><img src="nested/./images/86g1.png" alt="Description de l&#39;image" /></p>
+<h2 id="1-voting-classifier"><a class="header" href="#1-voting-classifier">1. Voting Classifier</a></h2>
+<pre><code class="language-python">from sklearn.linear_model import SGDClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import VotingClassifier
+</code></pre>
+<pre><code class="language-python">model_1 = SGDClassifier(random_state=0)
+model_2 = DecisionTreeClassifier(random_state=0)
+model_3 = KNeighborsClassifier(n_neighbors=2)
+
+model_4 = VotingClassifier([('SGD', model_1),
+                            ('Tree', model_2),
+                            ('KNN', model_3)],
+                          voting='hard')
+
+for model in (model_1, model_2, model_3, model_4):
+    model.fit(X_train, y_train)
+    print(model.__class__.__name__, model.score(X_test, y_test))
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>SGDClassifier 0.84
+DecisionTreeClassifier 0.86
+KNeighborsClassifier 0.86
+VotingClassifier 0.8733333333333333
+</code></pre>
+<h2 id="2-bagging"><a class="header" href="#2-bagging">2. Bagging</a></h2>
+<pre><code class="language-python">from sklearn.ensemble import BaggingClassifier, RandomForestClassifier
+</code></pre>
+<pre><code class="language-python">model = BaggingClassifier(base_estimator=KNeighborsClassifier(),
+                         n_estimators=100)
+
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.88
+</code></pre>
+<pre><code class="language-python">model = RandomForestClassifier(n_estimators=100)
+
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.8733333333333333
+</code></pre>
+<pre><code class="language-python">plot_decision_boundary(model, X_train, y_train)
+</code></pre>
+<p><img src="nested/./images/86g2.png" alt="Description de l&#39;image" /></p>
+<h2 id="3-boosting"><a class="header" href="#3-boosting">3. Boosting</a></h2>
+<pre><code class="language-python">from sklearn.ensemble import AdaBoostClassifier, GradientBoostingClassifier
+</code></pre>
+<pre><code class="language-python">model = AdaBoostClassifier(n_estimators=100)
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.88
+</code></pre>
+<pre><code class="language-python">plot_decision_boundary(model, X_train, y_train)
+</code></pre>
+<p><img src="nested/./images/86g3.png" alt="Description de l&#39;image" /></p>
+<h2 id="4-stacking"><a class="header" href="#4-stacking">4. Stacking</a></h2>
+<pre><code class="language-python">from sklearn.ensemble import StackingClassifier
+</code></pre>
+<pre><code class="language-python">model = StackingClassifier([('SGD', model_1),
+                            ('Tree', model_2),
+                            ('KNN', model_3)],
+                             final_estimator=KNeighborsClassifier())
+
+model.fit(X_train, y_train)
+model.score(X_test, y_test)
+</code></pre>
+<p><strong>-</strong></p>
+<pre><code>0.8666666666666667
+</code></pre>
+<pre><code class="language-python">plot_decision_boundary(model, X_train, y_train)
+</code></pre>
+<p><img src="nested/./images/86g4.png" alt="Description de l&#39;image" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
